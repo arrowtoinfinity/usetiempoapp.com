@@ -957,8 +957,35 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto auto auto auto auto;
             gap: var(--space-xl);
+        }
+
+        /* Timeline stacking layout for wide screens */
+        @media (min-width: 769px) {
+            .features-grid {
+                grid-template-areas:
+                    "calendar calendar"
+                    "ai habits"
+                    "ai health"
+                    "ai cycle"
+                    "insights insights";
+            }
+
+            .feature-card:nth-child(1) { grid-area: calendar; }
+            .feature-card:nth-child(2) { grid-area: habits; }
+            .feature-card:nth-child(3) { grid-area: health; }
+            .feature-card:nth-child(4) { grid-area: ai; }
+            .feature-card:nth-child(5) { grid-area: cycle; }
+            .feature-card:nth-child(6) { grid-area: insights; }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
         }
 
         /* Event Bubble Card style for features */
