@@ -441,8 +441,8 @@
             display: inline-block;
             position: relative;
             width: 280px;
-            height: 1.1em;
-            vertical-align: bottom;
+            height: 1.2em;
+            vertical-align: baseline;
             overflow: hidden;
         }
 
@@ -450,10 +450,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: block;
             transform: translateY(100%);
             opacity: 0;
         }
@@ -463,18 +460,30 @@
             opacity: 1;
         }
 
-        /* Word-specific gradients */
+        /* Word-specific gradients with text clipping */
         .cycling-word[data-word="life"] {
             background: linear-gradient(135deg, #ec008c 0%, #f26522 50%, #f9ed32 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .cycling-word[data-word="nutrition"] {
             background: linear-gradient(135deg, #FF9500 0%, #f26522 50%, #f9ed32 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .cycling-word[data-word="health"] {
             background: linear-gradient(135deg, #1c75bc 0%, #34C759 50%, #81C784 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .cycling-word[data-word="day"] {
             background: linear-gradient(135deg, #007AFF 0%, #AF52DE 50%, #ec008c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Slide animations */
