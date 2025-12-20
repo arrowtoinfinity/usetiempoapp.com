@@ -1151,15 +1151,15 @@
             align-items: center;
             gap: var(--space-sm);
             padding: var(--space-sm) var(--space-md);
-            background: var(--color-white);
+            background: var(--child-color);
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .child-emoji {
             width: 30px;
             height: 30px;
-            background: rgba(236, 0, 140, 0.2);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1171,7 +1171,7 @@
         .child-title {
             font-size: 0.8rem;
             font-weight: 500;
-            color: var(--text-primary);
+            color: var(--color-white);
         }
 
         /* How it works - Timeline style */
@@ -1908,41 +1908,33 @@
                         <span class="parent-emoji">✨</span>
                         <div class="parent-info">
                             <h3>AI Productivity</h3>
-                            <span class="parent-time">8 Smart Features</span>
+                            <span class="parent-time">6 Smart Features</span>
                         </div>
                     </div>
                     <div class="child-events">
-                        <div class="child-event">
+                        <div class="child-event" style="--child-color: #007AFF;">
                             <span class="child-emoji">💬</span>
                             <span class="child-title">AI Chat Assistant</span>
                         </div>
-                        <div class="child-event">
+                        <div class="child-event" style="--child-color: #FF9500;">
                             <span class="child-emoji">☀️</span>
-                            <span class="child-title">Rise & Rest Briefings</span>
+                            <span class="child-title">Morning & Evening Briefings</span>
                         </div>
-                        <div class="child-event">
-                            <span class="child-emoji">🔔</span>
-                            <span class="child-title">Smart Notifications</span>
-                        </div>
-                        <div class="child-event">
+                        <div class="child-event" style="--child-color: #34C759;">
                             <span class="child-emoji">📸</span>
                             <span class="child-title">AI Food Scanner</span>
                         </div>
-                        <div class="child-event">
+                        <div class="child-event" style="--child-color: #f26522;">
                             <span class="child-emoji">💪</span>
                             <span class="child-title">Workout Coach</span>
                         </div>
-                        <div class="child-event">
+                        <div class="child-event" style="--child-color: #AF52DE;">
                             <span class="child-emoji">🥗</span>
                             <span class="child-title">Nutrition Coach</span>
                         </div>
-                        <div class="child-event">
+                        <div class="child-event" style="--child-color: #ec008c;">
                             <span class="child-emoji">📋</span>
                             <span class="child-title">Smart Sub-Tasks</span>
-                        </div>
-                        <div class="child-event">
-                            <span class="child-emoji">📊</span>
-                            <span class="child-title">Day Summary</span>
                         </div>
                     </div>
                 </div>
