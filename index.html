@@ -957,47 +957,47 @@
         .review-card:nth-child(6) { --card-color: var(--color-primary); right: 0; left: auto; top: 75%; animation: arcRight3 16s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -9s; }
         .review-card:nth-child(8) { --card-color: var(--color-success); right: 0; left: auto; top: 90%; animation: arcRight1 13s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -1s; }
 
-        /* Left arcs - simple 3-point arc */
+        /* Left arcs - big sweeping arcs */
         @keyframes arcLeft1 {
             0%, 100% { transform: translateX(-100%); opacity: 0; }
             10% { opacity: 0.6; }
-            50% { transform: translateX(80px) translateY(-40px); opacity: 0.5; }
+            50% { transform: translateX(120px) translateY(-180px); opacity: 0.5; }
             90% { opacity: 0.6; }
         }
 
         @keyframes arcLeft2 {
             0%, 100% { transform: translateX(-100%); opacity: 0; }
             10% { opacity: 0.55; }
-            50% { transform: translateX(100px) translateY(-60px); opacity: 0.5; }
+            50% { transform: translateX(140px) translateY(-220px); opacity: 0.5; }
             90% { opacity: 0.55; }
         }
 
         @keyframes arcLeft3 {
             0%, 100% { transform: translateX(-100%); opacity: 0; }
             10% { opacity: 0.5; }
-            50% { transform: translateX(70px) translateY(-50px); opacity: 0.55; }
+            50% { transform: translateX(100px) translateY(-160px); opacity: 0.55; }
             90% { opacity: 0.5; }
         }
 
-        /* Right arcs - simple 3-point arc */
+        /* Right arcs - big sweeping arcs */
         @keyframes arcRight1 {
             0%, 100% { transform: translateX(100%); opacity: 0; }
             10% { opacity: 0.6; }
-            50% { transform: translateX(-85px) translateY(-45px); opacity: 0.5; }
+            50% { transform: translateX(-130px) translateY(-200px); opacity: 0.5; }
             90% { opacity: 0.6; }
         }
 
         @keyframes arcRight2 {
             0%, 100% { transform: translateX(100%); opacity: 0; }
             10% { opacity: 0.55; }
-            50% { transform: translateX(-95px) translateY(-55px); opacity: 0.5; }
+            50% { transform: translateX(-150px) translateY(-240px); opacity: 0.5; }
             90% { opacity: 0.55; }
         }
 
         @keyframes arcRight3 {
             0%, 100% { transform: translateX(100%); opacity: 0; }
             10% { opacity: 0.5; }
-            50% { transform: translateX(-75px) translateY(-35px); opacity: 0.55; }
+            50% { transform: translateX(-110px) translateY(-170px); opacity: 0.55; }
             90% { opacity: 0.5; }
         }
 
