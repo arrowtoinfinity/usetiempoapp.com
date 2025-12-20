@@ -1931,11 +1931,12 @@
                     // Both words move together - current pushed up by next
                     tl.to(currentWord, {
                         y: '-100%',
+                        opacity: 0,
                         duration: ANIMATION_DURATION,
                         ease: 'power2.inOut',
                         onComplete: () => {
                             currentWord.classList.remove('active');
-                            gsap.set(currentWord, { y: '100%' });
+                            gsap.set(currentWord, { y: '100%', opacity: 1 });
                         }
                     }, 0)
                     .to(nextWord, {
