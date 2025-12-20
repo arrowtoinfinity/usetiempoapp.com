@@ -438,26 +438,30 @@
 
         /* Cycling Word Animation */
         .cycling-word-container {
-            display: inline-block;
+            display: inline-flex;
             position: relative;
-            width: 280px;
-            height: 1.2em;
             vertical-align: baseline;
             overflow: hidden;
+            height: 1.15em;
         }
 
         .cycling-word {
-            position: absolute;
-            left: 0;
-            top: 0;
-            display: block;
+            white-space: nowrap;
+            flex-shrink: 0;
             transform: translateY(100%);
             opacity: 0;
+            position: absolute;
+            left: 0;
         }
 
         .cycling-word.active {
+            position: relative;
             transform: translateY(0);
             opacity: 1;
+        }
+
+        .cycling-word.slide-out {
+            position: absolute;
         }
 
         /* Word-specific gradients with text clipping */
@@ -1351,10 +1355,6 @@
                 font-size: 1.1rem;
             }
 
-            .cycling-word-container {
-                width: 180px;
-            }
-
             .hero-tagline {
                 font-size: 1rem;
             }
@@ -1463,7 +1463,7 @@
                 Available on iOS
             </div>
             
-            <h1>Plan your <span class="cycling-word-container"><span class="cycling-word active" data-word="life">life</span><span class="cycling-word" data-word="nutrition">nutrition</span><span class="cycling-word" data-word="health">health</span><span class="cycling-word" data-word="day">day</span></span>.</h1>
+            <h1>Plan your <span class="cycling-word-container"><span class="cycling-word active" data-word="life">life.</span><span class="cycling-word" data-word="nutrition">nutrition.</span><span class="cycling-word" data-word="health">health.</span><span class="cycling-word" data-word="day">day.</span></span></h1>
             <p class="hero-tagline">AI-Powered Daily Planning</p>
 
             <p class="hero-subtitle">
@@ -1914,16 +1914,17 @@
                     const nextIndex = (currentIndex + 1) % words.length;
                     const nextWord = words[nextIndex];
 
-                    currentWord.classList.remove('active', 'slide-in');
+                    // Start exit animation - make current absolute first
                     currentWord.classList.add('slide-out');
+                    currentWord.classList.remove('active');
 
-                    setTimeout(() => {
-                        nextWord.classList.remove('slide-out');
-                        nextWord.classList.add('slide-in', 'active');
-                    }, 150);
+                    // Immediately make next word active (relative) and animate in
+                    nextWord.classList.add('active', 'slide-in');
 
+                    // Clean up after animations complete
                     setTimeout(() => {
-                        currentWord.classList.remove('slide-out');
+                        currentWord.classList.remove('slide-out', 'slide-in');
+                        nextWord.classList.remove('slide-in');
                     }, 600);
 
                     currentIndex = nextIndex;
