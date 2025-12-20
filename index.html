@@ -173,12 +173,13 @@
         }
 
         .btn:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: scale(1.05);
             box-shadow: var(--shadow-lg);
+            color: var(--color-white);
         }
 
         .btn:active {
-            transform: translateY(-1px) scale(0.98);
+            transform: scale(0.98);
         }
 
         .btn-outline {
@@ -441,7 +442,7 @@
             display: inline-block;
             position: relative;
             vertical-align: bottom;
-            overflow: hidden;
+            overflow: visible;
             height: 1.1em;
         }
 
@@ -1311,7 +1312,7 @@
             width: 72px;
             height: 72px;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #f26522 0%, #FF9500 50%, #f9ed32 100%);
+            background: linear-gradient(315deg, #f26522 0%, #FF9500 50%, #f9ed32 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1789,7 +1790,7 @@
 
                 <div class="timeline">
                     <div class="timeline-step">
-                        <div class="timeline-circle pending">📅</div>
+                        <div class="timeline-circle completed">📅</div>
                         <div class="timeline-content">
                             <h3>Connect Your Life</h3>
                             <p>Sync your calendars, wearables, and health apps. Nickel brings everything together in one place.</p>
