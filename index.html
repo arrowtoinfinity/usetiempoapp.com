@@ -436,9 +436,9 @@
             z-index: 1;
         }
 
-        /* Cycling Word Animation */
+        /* Cycling Word Animation - Slot Machine Style */
         .cycling-word-container {
-            display: inline-flex;
+            display: inline-block;
             position: relative;
             vertical-align: baseline;
             overflow: hidden;
@@ -446,22 +446,17 @@
         }
 
         .cycling-word {
-            white-space: nowrap;
-            flex-shrink: 0;
-            transform: translateY(100%);
-            opacity: 0;
             position: absolute;
             left: 0;
+            top: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(100%);
         }
 
         .cycling-word.active {
-            position: relative;
-            transform: translateY(0);
             opacity: 1;
-        }
-
-        .cycling-word.slide-out {
-            position: absolute;
+            transform: translateY(0);
         }
 
         /* Word-specific gradients with text clipping */
@@ -488,27 +483,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        /* Slide animations */
-        @keyframes slideInFromBottom {
-            0% { transform: translateY(100%); opacity: 0; }
-            60% { transform: translateY(-8%); opacity: 1; }
-            80% { transform: translateY(4%); }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes slideOutToTop {
-            0% { transform: translateY(0); opacity: 1; }
-            40% { transform: translateY(8%); }
-            100% { transform: translateY(-100%); opacity: 0; }
-        }
-
-        .cycling-word.slide-in {
-            animation: slideInFromBottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .cycling-word.slide-out {
-            animation: slideOutToTop 0.5s cubic-bezier(0.55, 0, 0.45, 1) forwards;
         }
 
         /* Hero tagline */
@@ -1901,36 +1875,75 @@
                 gsap.delayedCall(i * 2 + 1, () => animateCard(false)); // Right
             }
 
-            // Cycling Word Animation
+            // Cycling Word Animation - Slot Machine with GSAP
             (function() {
+                const container = document.querySelector('.cycling-word-container');
                 const words = document.querySelectorAll('.cycling-word');
-                if (words.length === 0) return;
+                if (!container || words.length === 0) return;
 
                 let currentIndex = 0;
                 const DISPLAY_DURATION = 2500;
+                const ANIMATION_DURATION = 0.5;
+
+                // Measure all word widths and set initial width
+                function getWordWidth(word) {
+                    word.style.opacity = '1';
+                    word.style.position = 'relative';
+                    const width = word.offsetWidth;
+                    word.style.opacity = '';
+                    word.style.position = '';
+                    return width;
+                }
+
+                // Set initial container width
+                const firstWord = words[0];
+                firstWord.classList.add('active');
+                container.style.width = firstWord.offsetWidth + 'px';
 
                 function cycleWord() {
                     const currentWord = words[currentIndex];
                     const nextIndex = (currentIndex + 1) % words.length;
                     const nextWord = words[nextIndex];
+                    const nextWidth = getWordWidth(nextWord);
 
-                    // Start exit animation - make current absolute first
-                    currentWord.classList.add('slide-out');
-                    currentWord.classList.remove('active');
+                    // Animate current word out (slide up)
+                    gsap.to(currentWord, {
+                        y: '-100%',
+                        opacity: 0,
+                        duration: ANIMATION_DURATION,
+                        ease: 'power2.in',
+                        onComplete: () => {
+                            currentWord.classList.remove('active');
+                            gsap.set(currentWord, { y: '100%' });
+                        }
+                    });
 
-                    // Immediately make next word active (relative) and animate in
-                    nextWord.classList.add('active', 'slide-in');
+                    // Animate container width with spring
+                    gsap.to(container, {
+                        width: nextWidth,
+                        duration: ANIMATION_DURATION * 1.2,
+                        ease: 'back.out(1.2)'
+                    });
 
-                    // Clean up after animations complete
-                    setTimeout(() => {
-                        currentWord.classList.remove('slide-out', 'slide-in');
-                        nextWord.classList.remove('slide-in');
-                    }, 600);
+                    // Animate next word in (slide up from below)
+                    gsap.fromTo(nextWord,
+                        { y: '100%', opacity: 0 },
+                        {
+                            y: '0%',
+                            opacity: 1,
+                            duration: ANIMATION_DURATION,
+                            ease: 'back.out(1.7)',
+                            delay: 0.1,
+                            onStart: () => {
+                                nextWord.classList.add('active');
+                            }
+                        }
+                    );
 
                     currentIndex = nextIndex;
                 }
 
-                words[0].classList.add('active');
+                // Start cycling after page load animation
                 setTimeout(() => setInterval(cycleWord, DISPLAY_DURATION), 1500);
             })();
         });
