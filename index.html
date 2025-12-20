@@ -932,11 +932,16 @@
         .timeline {
             margin-top: 4rem;
             position: relative;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .timeline-step {
             display: flex;
-            gap: var(--space-xl);
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             padding: var(--space-xl) 0;
             position: relative;
         }
@@ -945,10 +950,11 @@
         .timeline-step:not(:last-child)::after {
             content: '';
             position: absolute;
-            left: 26px;
-            top: 76px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 72px;
             width: 2px;
-            height: calc(100% - 32px);
+            height: calc(100% - 52px);
             background: var(--color-gray-200);
         }
 
@@ -999,8 +1005,7 @@
         .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); }
 
         .timeline-content {
-            flex: 1;
-            padding-top: var(--space-xs);
+            margin-top: var(--space-lg);
         }
 
         .timeline-content h3 {
@@ -1015,7 +1020,8 @@
             color: var(--text-secondary);
             font-size: 1rem;
             line-height: 1.6;
-            max-width: 400px;
+            max-width: 360px;
+            margin: 0 auto;
         }
 
         /* Mini app preview cards */
@@ -1024,6 +1030,7 @@
             display: flex;
             gap: var(--space-sm);
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .preview-chip {
@@ -1229,10 +1236,6 @@
                 padding: 4rem 1.5rem;
             }
 
-            .timeline-step {
-                gap: var(--space-lg);
-            }
-
             .timeline-circle {
                 width: 44px;
                 height: 44px;
@@ -1241,7 +1244,6 @@
             }
 
             .timeline-step:not(:last-child)::after {
-                left: 22px;
                 top: 64px;
             }
 
@@ -1251,10 +1253,6 @@
 
             .timeline-content p {
                 font-size: 0.9rem;
-            }
-
-            .timeline-preview {
-                gap: var(--space-xs);
             }
 
             .preview-chip {
