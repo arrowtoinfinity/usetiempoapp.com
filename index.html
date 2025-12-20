@@ -942,7 +942,8 @@
             color: var(--text-primary);
             white-space: nowrap;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            opacity: 0.55;
+            opacity: 0;
+            visibility: hidden;
         }
 
         /* Review card positions - GSAP handles animation */
@@ -1704,7 +1705,7 @@
                 const endRot = -startRot;
 
                 gsap.timeline({ onComplete: () => animateCard(card, isLeftSide) })
-                    .set(card, { x: startX, y: startY, opacity: 0, rotation: startRot })
+                    .set(card, { x: startX, y: startY, opacity: 0, rotation: startRot, visibility: "visible" })
                     // Rise phase - decelerate like throwing up
                     .to(card, {
                         x: peakX,
