@@ -592,6 +592,66 @@
             z-index: 1;
         }
 
+        /* Integrations Carousel */
+        .integrations-carousel {
+            margin-top: 2.5rem;
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .integrations-track {
+            display: flex;
+            gap: 1rem;
+            animation: scroll-integrations 25s linear infinite;
+        }
+
+        .integrations-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll-integrations {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .integration-capsule {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .integration-logo {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .integration-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .integration-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
         .phone-mockup {
             width: 300px;
             height: 620px;
@@ -1532,6 +1592,93 @@
                                     <span class="timeline-time">12:00 PM</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrations Carousel -->
+                <div class="integrations-carousel">
+                    <div class="integrations-track">
+                        <div class="integration-capsule">
+                            <span class="integration-logo">🍎</span>
+                            <span class="integration-name">Apple Calendar</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">📅</span>
+                            <span class="integration-name">Google Calendar</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">📧</span>
+                            <span class="integration-name">Outlook</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">⌚</span>
+                            <span class="integration-name">Apple Watch</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">⌚</span>
+                            <span class="integration-name">Garmin</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">💪</span>
+                            <span class="integration-name">Fitbit</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">🗺️</span>
+                            <span class="integration-name">Apple Maps</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">✨</span>
+                            <span class="integration-name">Google Gemini</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">🔄</span>
+                            <span class="integration-name">Routines</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">❤️</span>
+                            <span class="integration-name">Apple Health</span>
+                        </div>
+                        <!-- Duplicate for seamless loop -->
+                        <div class="integration-capsule">
+                            <span class="integration-logo">🍎</span>
+                            <span class="integration-name">Apple Calendar</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">📅</span>
+                            <span class="integration-name">Google Calendar</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">📧</span>
+                            <span class="integration-name">Outlook</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">⌚</span>
+                            <span class="integration-name">Apple Watch</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">⌚</span>
+                            <span class="integration-name">Garmin</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">💪</span>
+                            <span class="integration-name">Fitbit</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">🗺️</span>
+                            <span class="integration-name">Apple Maps</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">✨</span>
+                            <span class="integration-name">Google Gemini</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">🔄</span>
+                            <span class="integration-name">Routines</span>
+                        </div>
+                        <div class="integration-capsule">
+                            <span class="integration-logo">❤️</span>
+                            <span class="integration-name">Apple Health</span>
                         </div>
                     </div>
                 </div>
