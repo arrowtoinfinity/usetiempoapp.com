@@ -1590,6 +1590,7 @@
 
     <!-- GSAP Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
 
     <script>
         // Timeline center-focused scaling
@@ -1676,56 +1677,63 @@
             updateCenteredStep();
             updateCenteredCard();
 
-            // GSAP Review Card Animations - Parabolic arcs with gravity
+            // GSAP Review Card Animations - Natural toss with inverted exit angle
+            gsap.registerPlugin(MotionPathPlugin);
             const reviewCards = document.querySelectorAll('.review-card');
 
             function animateCard(card, isLeftSide) {
-                const duration = gsap.utils.random(8, 14);
+                const duration = gsap.utils.random(7, 12);
 
-                // Randomly choose: launch up or launch down
-                const launchUp = Math.random() > 0.5;
+                // Random entry angle - coming from off-screen
+                const entryFromTop = Math.random() > 0.5;
 
-                // Start off-screen on respective side
-                const startX = isLeftSide ? -150 : 150;
-                const startY = launchUp ? gsap.utils.random(150, 250) : gsap.utils.random(-250, -150);
+                // Start position - off-screen on respective side
+                const startX = isLeftSide ? -200 : 200;
+                const startY = entryFromTop ? -200 : 200;
 
-                // Peak of arc - toward center
-                const peakX = isLeftSide ? gsap.utils.random(80, 160) : gsap.utils.random(-160, -80);
-                const peakY = launchUp ? gsap.utils.random(-100, -50) : gsap.utils.random(50, 100);
+                // Peak - visible area, toward center
+                const peakX = isLeftSide ? gsap.utils.random(60, 140) : gsap.utils.random(-140, -60);
+                const peakY = gsap.utils.random(-40, 40);
 
-                // End - exit off-screen on same side but opposite Y
-                const endX = isLeftSide ? -150 : 150;
-                const endY = launchUp ? gsap.utils.random(-250, -150) : gsap.utils.random(150, 250);
+                // End - inverted angle exit (mirror of entry angle)
+                const endX = isLeftSide ? -200 : 200;
+                const endY = entryFromTop ? 200 : -200; // Inverted from start
 
-                const tl = gsap.timeline({
-                    onComplete: () => animateCard(card, isLeftSide),
-                    delay: gsap.utils.random(0.5, 2)
-                });
+                // Rotation follows the arc
+                const startRot = isLeftSide ? (entryFromTop ? -15 : 15) : (entryFromTop ? 15 : -15);
+                const endRot = -startRot;
 
-                tl.set(card, { x: startX, y: startY, opacity: 0, rotation: 0 })
-                  // Rise phase - enter and arc toward center
-                  .to(card, {
-                      x: peakX,
-                      y: peakY,
-                      opacity: 0.6,
-                      rotation: isLeftSide ? gsap.utils.random(3, 10) : gsap.utils.random(-10, -3),
-                      duration: duration * 0.5,
-                      ease: "power1.out"
-                  })
-                  // Fall phase - continue arc and exit
-                  .to(card, {
-                      x: endX,
-                      y: endY,
-                      opacity: 0,
-                      rotation: isLeftSide ? gsap.utils.random(-5, -2) : gsap.utils.random(2, 5),
-                      duration: duration * 0.5,
-                      ease: "power1.in"
-                  });
+                gsap.timeline({ onComplete: () => animateCard(card, isLeftSide) })
+                    .set(card, { x: startX, y: startY, opacity: 0, rotation: startRot })
+                    .to(card, {
+                        motionPath: {
+                            path: [
+                                { x: startX, y: startY },
+                                { x: peakX, y: peakY },
+                                { x: endX, y: endY }
+                            ],
+                            curviness: 1.5
+                        },
+                        rotation: endRot,
+                        duration: duration,
+                        ease: "none",
+                        onUpdate: function() {
+                            // Fade in then out based on progress
+                            const progress = this.progress();
+                            if (progress < 0.15) {
+                                gsap.set(card, { opacity: progress / 0.15 * 0.6 });
+                            } else if (progress > 0.85) {
+                                gsap.set(card, { opacity: (1 - progress) / 0.15 * 0.6 });
+                            } else {
+                                gsap.set(card, { opacity: 0.6 });
+                            }
+                        }
+                    });
             }
 
             reviewCards.forEach((card, index) => {
                 const actualIsLeft = index === 0 || index === 1 || index === 2 || index === 6;
-                gsap.delayedCall(gsap.utils.random(0, 8), () => animateCard(card, actualIsLeft));
+                gsap.delayedCall(gsap.utils.random(0, 10), () => animateCard(card, actualIsLeft));
             });
         });
     </script>
