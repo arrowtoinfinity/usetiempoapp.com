@@ -945,67 +945,17 @@
             opacity: 0.55;
         }
 
-        /* Review card positions and animations - smooth arcing trajectories */
-        .review-card:nth-child(1) { --card-color: #f9ed32; left: 0; top: 15%; animation: arcLeft1 12s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
-        .review-card:nth-child(2) { --card-color: #f26522; left: 0; top: 40%; animation: arcLeft2 15s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -5s; }
-        .review-card:nth-child(3) { --card-color: var(--color-success); left: 0; top: 65%; animation: arcLeft3 18s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -11s; }
-        .review-card:nth-child(7) { --card-color: #FF9500; left: 0; top: 85%; animation: arcLeft1 14s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -3s; }
+        /* Review card positions - GSAP handles animation */
+        .review-card:nth-child(1) { --card-color: #f9ed32; left: 10px; top: 12%; }
+        .review-card:nth-child(2) { --card-color: #f26522; left: 15px; top: 35%; }
+        .review-card:nth-child(3) { --card-color: var(--color-success); left: 8px; top: 58%; }
+        .review-card:nth-child(7) { --card-color: #FF9500; left: 12px; top: 82%; }
 
         /* Right side cards */
-        .review-card:nth-child(4) { --card-color: #ec008c; right: 0; left: auto; top: 20%; animation: arcRight1 14s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -7s; }
-        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 0; left: auto; top: 50%; animation: arcRight2 12s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -2s; }
-        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 0; left: auto; top: 75%; animation: arcRight3 16s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -9s; }
-        .review-card:nth-child(8) { --card-color: var(--color-success); right: 0; left: auto; top: 90%; animation: arcRight1 13s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -1s; }
-
-        /* Left arcs - continuous trajectory, exit different than entry */
-        @keyframes arcLeft1 {
-            0% { transform: translateX(-100%) translateY(100px); opacity: 0; }
-            15% { opacity: 0.6; }
-            50% { transform: translateX(130px) translateY(-120px); opacity: 0.5; }
-            85% { opacity: 0.6; }
-            100% { transform: translateX(-80%) translateY(-280px); opacity: 0; }
-        }
-
-        @keyframes arcLeft2 {
-            0% { transform: translateX(-100%) translateY(-50px); opacity: 0; }
-            15% { opacity: 0.55; }
-            50% { transform: translateX(150px) translateY(80px); opacity: 0.5; }
-            85% { opacity: 0.55; }
-            100% { transform: translateX(-60%) translateY(220px); opacity: 0; }
-        }
-
-        @keyframes arcLeft3 {
-            0% { transform: translateX(-100%) translateY(60px); opacity: 0; }
-            15% { opacity: 0.5; }
-            50% { transform: translateX(110px) translateY(-90px); opacity: 0.55; }
-            85% { opacity: 0.5; }
-            100% { transform: translateX(-90%) translateY(-200px); opacity: 0; }
-        }
-
-        /* Right arcs - continuous trajectory, exit different than entry */
-        @keyframes arcRight1 {
-            0% { transform: translateX(100%) translateY(-80px); opacity: 0; }
-            15% { opacity: 0.6; }
-            50% { transform: translateX(-140px) translateY(100px); opacity: 0.5; }
-            85% { opacity: 0.6; }
-            100% { transform: translateX(70%) translateY(260px); opacity: 0; }
-        }
-
-        @keyframes arcRight2 {
-            0% { transform: translateX(100%) translateY(120px); opacity: 0; }
-            15% { opacity: 0.55; }
-            50% { transform: translateX(-160px) translateY(-60px); opacity: 0.5; }
-            85% { opacity: 0.55; }
-            100% { transform: translateX(80%) translateY(-240px); opacity: 0; }
-        }
-
-        @keyframes arcRight3 {
-            0% { transform: translateX(100%) translateY(40px); opacity: 0; }
-            15% { opacity: 0.5; }
-            50% { transform: translateX(-120px) translateY(140px); opacity: 0.55; }
-            85% { opacity: 0.5; }
-            100% { transform: translateX(60%) translateY(300px); opacity: 0; }
-        }
+        .review-card:nth-child(4) { --card-color: #ec008c; right: 12px; left: auto; top: 18%; }
+        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 8px; left: auto; top: 45%; }
+        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 15px; left: auto; top: 68%; }
+        .review-card:nth-child(8) { --card-color: var(--color-success); right: 10px; left: auto; top: 88%; }
 
         .how-it-works-content {
             max-width: 900px;
@@ -1638,6 +1588,9 @@
         </div>
     </footer>
 
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
     <script>
         // Timeline center-focused scaling
         document.addEventListener('DOMContentLoaded', function() {
@@ -1722,6 +1675,41 @@
             // Initial update
             updateCenteredStep();
             updateCenteredCard();
+
+            // GSAP Review Card Animations
+            const reviewCards = document.querySelectorAll('.review-card');
+
+            reviewCards.forEach((card, index) => {
+                const isLeftSide = index < 4 || index === 6; // Cards 1-4 and 7 are left side
+                const startX = isLeftSide ? -150 : 150;
+                const endX = isLeftSide ? -150 : 150;
+                const midX = isLeftSide ? gsap.utils.random(60, 120) : gsap.utils.random(-120, -60);
+
+                // Randomize each card's arc
+                const duration = gsap.utils.random(10, 18);
+                const startY = gsap.utils.random(-100, 100);
+                const peakY = gsap.utils.random(-200, 200);
+                const endY = gsap.utils.random(-100, 100);
+                const delay = gsap.utils.random(0, 8);
+
+                // Create the arc animation
+                gsap.timeline({ repeat: -1, delay: delay })
+                    .set(card, { x: startX, y: startY, opacity: 0 })
+                    .to(card, {
+                        x: midX,
+                        y: peakY,
+                        opacity: 0.6,
+                        duration: duration / 2,
+                        ease: "power1.out"
+                    })
+                    .to(card, {
+                        x: endX,
+                        y: endY,
+                        opacity: 0,
+                        duration: duration / 2,
+                        ease: "power1.in"
+                    });
+            });
         });
     </script>
 </body>
