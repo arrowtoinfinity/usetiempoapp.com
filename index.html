@@ -1714,12 +1714,10 @@
                         duration: duration * 0.4,
                         ease: "power2.out"
                     })
-                    // Pause at peak - slow float
+                    // Pause at peak - brief stillness
                     .to(card, {
-                        x: peakX + (isLeftSide ? 10 : -10),
-                        y: peakY - 15,
                         duration: duration * 0.1,
-                        ease: "power1.inOut"
+                        ease: "none"
                     })
                     // Fall phase - accelerate like falling
                     .to(card, {
