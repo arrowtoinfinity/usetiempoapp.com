@@ -945,64 +945,180 @@
             opacity: 0.55;
         }
 
-        /* Review card positions and animations - each with unique trajectory */
-        .review-card:nth-child(1) { --card-color: #f9ed32; left: 6px; animation: driftUpLeft 18s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .review-card:nth-child(2) { --card-color: #f26522; left: 10px; animation: driftDownLeft 22s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -5s; }
-        .review-card:nth-child(3) { --card-color: var(--color-success); left: 4px; animation: driftUpLeftSlow 25s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -12s; }
-        .review-card:nth-child(7) { --card-color: #FF9500; left: 8px; animation: driftDownLeftFast 16s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -8s; }
+        /* Review card positions and animations - arcing trajectories */
+        .review-card:nth-child(1) { --card-color: #f9ed32; left: 0; top: 15%; animation: arcFromLeft1 14s ease-in-out infinite; }
+        .review-card:nth-child(2) { --card-color: #f26522; left: 0; top: 40%; animation: arcFromLeft2 18s ease-in-out infinite; animation-delay: -6s; }
+        .review-card:nth-child(3) { --card-color: var(--color-success); left: 0; top: 65%; animation: arcFromLeft3 16s ease-in-out infinite; animation-delay: -12s; }
+        .review-card:nth-child(7) { --card-color: #FF9500; left: 0; top: 85%; animation: arcFromLeft1 20s ease-in-out infinite; animation-delay: -3s; }
 
         /* Right side cards */
-        .review-card:nth-child(4) { --card-color: #ec008c; right: 8px; left: auto; animation: driftDownRight 20s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -3s; }
-        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 5px; left: auto; animation: driftUpRight 24s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -10s; }
-        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 10px; left: auto; animation: driftDownRightSlow 28s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -18s; }
-        .review-card:nth-child(8) { --card-color: var(--color-success); right: 6px; left: auto; animation: driftUpRightFast 15s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -2s; }
+        .review-card:nth-child(4) { --card-color: #ec008c; right: 0; left: auto; top: 20%; animation: arcFromRight1 16s ease-in-out infinite; animation-delay: -4s; }
+        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 0; left: auto; top: 45%; animation: arcFromRight2 14s ease-in-out infinite; animation-delay: -9s; }
+        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 0; left: auto; top: 70%; animation: arcFromRight3 18s ease-in-out infinite; animation-delay: -15s; }
+        .review-card:nth-child(8) { --card-color: var(--color-success); right: 0; left: auto; top: 90%; animation: arcFromRight1 22s ease-in-out infinite; animation-delay: -1s; }
 
-        /* Left side - starts low, floats up */
-        @keyframes driftUpLeft {
-            0%, 100% { top: 75%; transform: translate(0, 0) rotate(0deg); }
-            50% { top: 15%; transform: translate(12px, 0) rotate(2deg); }
+        /* Left side arcs - enter from left, arc toward center, fall back left */
+        @keyframes arcFromLeft1 {
+            0%, 100% {
+                transform: translateX(-120%) translateY(0) rotate(-8deg);
+                opacity: 0;
+            }
+            15% {
+                transform: translateX(20px) translateY(-30px) rotate(-2deg);
+                opacity: 0.6;
+            }
+            35% {
+                transform: translateX(80px) translateY(-50px) rotate(2deg);
+                opacity: 0.55;
+            }
+            50% {
+                transform: translateX(100px) translateY(-40px) rotate(0deg);
+                opacity: 0.5;
+            }
+            65% {
+                transform: translateX(70px) translateY(-20px) rotate(-2deg);
+                opacity: 0.55;
+            }
+            85% {
+                transform: translateX(15px) translateY(20px) rotate(-5deg);
+                opacity: 0.5;
+            }
         }
 
-        /* Left side - starts high, floats down */
-        @keyframes driftDownLeft {
-            0%, 100% { top: 10%; transform: translate(0, 0) rotate(0deg); }
-            50% { top: 60%; transform: translate(8px, 0) rotate(-1.5deg); }
+        @keyframes arcFromLeft2 {
+            0%, 100% {
+                transform: translateX(-120%) translateY(0) rotate(5deg);
+                opacity: 0;
+            }
+            12% {
+                transform: translateX(15px) translateY(20px) rotate(1deg);
+                opacity: 0.55;
+            }
+            30% {
+                transform: translateX(60px) translateY(-40px) rotate(-1deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateX(90px) translateY(-60px) rotate(2deg);
+                opacity: 0.55;
+            }
+            70% {
+                transform: translateX(50px) translateY(-30px) rotate(0deg);
+                opacity: 0.5;
+            }
+            88% {
+                transform: translateX(10px) translateY(15px) rotate(4deg);
+                opacity: 0.55;
+            }
         }
 
-        /* Left side - slow upward drift */
-        @keyframes driftUpLeftSlow {
-            0%, 100% { top: 85%; transform: translate(0, 0) rotate(-1deg); }
-            50% { top: 25%; transform: translate(15px, 0) rotate(1.5deg); }
+        @keyframes arcFromLeft3 {
+            0%, 100% {
+                transform: translateX(-120%) translateY(0) rotate(-3deg);
+                opacity: 0;
+            }
+            18% {
+                transform: translateX(25px) translateY(-20px) rotate(1deg);
+                opacity: 0.5;
+            }
+            40% {
+                transform: translateX(70px) translateY(-70px) rotate(3deg);
+                opacity: 0.6;
+            }
+            55% {
+                transform: translateX(85px) translateY(-55px) rotate(-1deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateX(40px) translateY(-25px) rotate(2deg);
+                opacity: 0.55;
+            }
+            90% {
+                transform: translateX(8px) translateY(10px) rotate(-4deg);
+                opacity: 0.5;
+            }
         }
 
-        /* Left side - faster downward */
-        @keyframes driftDownLeftFast {
-            0%, 100% { top: 20%; transform: translate(0, 0) rotate(1deg); }
-            50% { top: 70%; transform: translate(10px, 0) rotate(-2deg); }
+        /* Right side arcs - enter from right, arc toward center, fall back right */
+        @keyframes arcFromRight1 {
+            0%, 100% {
+                transform: translateX(120%) translateY(0) rotate(8deg);
+                opacity: 0;
+            }
+            15% {
+                transform: translateX(-20px) translateY(-35px) rotate(2deg);
+                opacity: 0.6;
+            }
+            35% {
+                transform: translateX(-85px) translateY(-55px) rotate(-2deg);
+                opacity: 0.55;
+            }
+            50% {
+                transform: translateX(-105px) translateY(-45px) rotate(0deg);
+                opacity: 0.5;
+            }
+            65% {
+                transform: translateX(-75px) translateY(-25px) rotate(2deg);
+                opacity: 0.55;
+            }
+            85% {
+                transform: translateX(-18px) translateY(18px) rotate(5deg);
+                opacity: 0.5;
+            }
         }
 
-        /* Right side - starts high, floats down */
-        @keyframes driftDownRight {
-            0%, 100% { top: 12%; transform: translate(0, 0) rotate(0deg); }
-            50% { top: 65%; transform: translate(-10px, 0) rotate(1.5deg); }
+        @keyframes arcFromRight2 {
+            0%, 100% {
+                transform: translateX(120%) translateY(0) rotate(-5deg);
+                opacity: 0;
+            }
+            12% {
+                transform: translateX(-18px) translateY(25px) rotate(-1deg);
+                opacity: 0.55;
+            }
+            30% {
+                transform: translateX(-65px) translateY(-35px) rotate(1deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateX(-95px) translateY(-65px) rotate(-2deg);
+                opacity: 0.55;
+            }
+            70% {
+                transform: translateX(-55px) translateY(-35px) rotate(0deg);
+                opacity: 0.5;
+            }
+            88% {
+                transform: translateX(-12px) translateY(12px) rotate(-4deg);
+                opacity: 0.55;
+            }
         }
 
-        /* Right side - starts low, floats up */
-        @keyframes driftUpRight {
-            0%, 100% { top: 80%; transform: translate(0, 0) rotate(1deg); }
-            50% { top: 20%; transform: translate(-8px, 0) rotate(-1deg); }
-        }
-
-        /* Right side - slow downward */
-        @keyframes driftDownRightSlow {
-            0%, 100% { top: 8%; transform: translate(0, 0) rotate(-0.5deg); }
-            50% { top: 55%; transform: translate(-12px, 0) rotate(2deg); }
-        }
-
-        /* Right side - faster upward */
-        @keyframes driftUpRightFast {
-            0%, 100% { top: 88%; transform: translate(0, 0) rotate(0.5deg); }
-            50% { top: 30%; transform: translate(-6px, 0) rotate(-1.5deg); }
+        @keyframes arcFromRight3 {
+            0%, 100% {
+                transform: translateX(120%) translateY(0) rotate(3deg);
+                opacity: 0;
+            }
+            18% {
+                transform: translateX(-22px) translateY(-25px) rotate(-1deg);
+                opacity: 0.5;
+            }
+            40% {
+                transform: translateX(-75px) translateY(-65px) rotate(-3deg);
+                opacity: 0.6;
+            }
+            55% {
+                transform: translateX(-90px) translateY(-50px) rotate(1deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateX(-45px) translateY(-20px) rotate(-2deg);
+                opacity: 0.55;
+            }
+            90% {
+                transform: translateX(-10px) translateY(15px) rotate(4deg);
+                opacity: 0.5;
+            }
         }
 
         .how-it-works-content {
