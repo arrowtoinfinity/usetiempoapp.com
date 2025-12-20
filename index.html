@@ -1711,8 +1711,15 @@
                         y: peakY,
                         opacity: 0.6,
                         rotation: 0,
-                        duration: duration * 0.5,
+                        duration: duration * 0.4,
                         ease: "power2.out"
+                    })
+                    // Pause at peak - slow float
+                    .to(card, {
+                        x: peakX + (isLeftSide ? 10 : -10),
+                        y: peakY - 15,
+                        duration: duration * 0.3,
+                        ease: "power1.inOut"
                     })
                     // Fall phase - accelerate like falling
                     .to(card, {
@@ -1720,7 +1727,7 @@
                         y: endY,
                         opacity: 0,
                         rotation: endRot,
-                        duration: duration * 0.5,
+                        duration: duration * 0.3,
                         ease: "power2.in"
                     });
             }
