@@ -1092,32 +1092,13 @@
         /* Left line - from left edge to near center */
         .current-time-line::before {
             left: 0;
-            right: calc(50% + 40px);
+            right: calc(50% + 80px);
         }
 
         /* Right line - from right edge to near center */
         .current-time-line::after {
             right: 0;
-            left: calc(50% + 40px);
-        }
-
-        /* Small circle at each end near the timeline circle */
-        .time-line-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #FF3B30;
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .time-line-dot.left {
-            right: calc(50% + 36px);
-        }
-
-        .time-line-dot.right {
-            left: calc(50% + 36px);
+            left: calc(50% + 80px);
         }
 
         /* Floating Review Cards */
@@ -1519,19 +1500,11 @@
 
             /* Current time line adjustments for mobile */
             .current-time-line::before {
-                right: calc(50% + 32px);
+                right: calc(50% + 60px);
             }
 
             .current-time-line::after {
-                left: calc(50% + 32px);
-            }
-
-            .time-line-dot.left {
-                right: calc(50% + 28px);
-            }
-
-            .time-line-dot.right {
-                left: calc(50% + 28px);
+                left: calc(50% + 60px);
             }
 
             .footer-content {
@@ -1806,10 +1779,7 @@
 
         <section id="how-it-works" class="how-it-works">
             <!-- Current Time Indicator Line -->
-            <div class="current-time-line">
-                <span class="time-line-dot left"></span>
-                <span class="time-line-dot right"></span>
-            </div>
+            <div class="current-time-line"></div>
 
             <div class="how-it-works-content">
                 <div class="section-header">
