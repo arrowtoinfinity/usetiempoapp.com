@@ -209,6 +209,152 @@
             66% { transform: translate(-1%, 1%) rotate(-1deg); }
         }
 
+        /* Floating Event Circles */
+        .event-circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .event-circle {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            animation: floatUp 15s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        /* Unfilled/Pending state - outlined with tint */
+        .event-circle.pending {
+            background: #F2F2F7;
+            border: 2.5px solid var(--circle-color);
+        }
+
+        .event-circle.pending::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--circle-color);
+            opacity: 0.2;
+        }
+
+        /* Filled/Completed state - solid fill */
+        .event-circle.completed {
+            background: var(--circle-color);
+            border: none;
+        }
+
+        /* Circle sizes */
+        .event-circle.size-sm { width: 36px; height: 36px; font-size: 1rem; }
+        .event-circle.size-md { width: 44px; height: 44px; font-size: 1.25rem; }
+        .event-circle.size-lg { width: 56px; height: 56px; font-size: 1.5rem; }
+
+        /* Float animation */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.7;
+                transform: translateY(90vh) rotate(10deg) scale(1);
+            }
+            50% {
+                opacity: 0.5;
+            }
+            95% {
+                opacity: 0.7;
+                transform: translateY(-10vh) rotate(-10deg) scale(1);
+            }
+            100% {
+                transform: translateY(-20vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Pop in animation variant */
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(-20deg);
+                opacity: 0;
+            }
+            20% {
+                transform: scale(1.2) rotate(10deg);
+                opacity: 0.8;
+            }
+            40% {
+                transform: scale(0.9) rotate(-5deg);
+                opacity: 0.6;
+            }
+            60% {
+                transform: scale(1.05) rotate(3deg);
+                opacity: 0.5;
+            }
+            80% {
+                transform: scale(0.95) rotate(-2deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        /* Drift animation variant */
+        @keyframes drift {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(30px, 70vh) rotate(15deg);
+            }
+            50% {
+                transform: translate(-20px, 40vh) rotate(-10deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translate(25px, 15vh) rotate(20deg);
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(0, -20vh) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        /* Individual circle positions and timing */
+        .event-circle:nth-child(1) { left: 5%; animation: floatUp 18s ease-in-out infinite; animation-delay: 0s; --circle-color: #007AFF; }
+        .event-circle:nth-child(2) { left: 15%; animation: drift 22s ease-in-out infinite; animation-delay: -3s; --circle-color: #f9ed32; }
+        .event-circle:nth-child(3) { left: 25%; animation: popIn 12s ease-in-out infinite; animation-delay: -6s; --circle-color: #34C759; }
+        .event-circle:nth-child(4) { left: 35%; animation: floatUp 20s ease-in-out infinite; animation-delay: -2s; --circle-color: #f26522; }
+        .event-circle:nth-child(5) { left: 45%; animation: drift 25s ease-in-out infinite; animation-delay: -8s; --circle-color: #AF52DE; }
+        .event-circle:nth-child(6) { left: 55%; animation: popIn 14s ease-in-out infinite; animation-delay: -4s; --circle-color: #ec008c; }
+        .event-circle:nth-child(7) { left: 65%; animation: floatUp 19s ease-in-out infinite; animation-delay: -10s; --circle-color: #FF9500; }
+        .event-circle:nth-child(8) { left: 75%; animation: drift 21s ease-in-out infinite; animation-delay: -1s; --circle-color: #1c75bc; }
+        .event-circle:nth-child(9) { left: 85%; animation: popIn 16s ease-in-out infinite; animation-delay: -5s; --circle-color: #007AFF; }
+        .event-circle:nth-child(10) { left: 92%; animation: floatUp 23s ease-in-out infinite; animation-delay: -7s; --circle-color: #34C759; }
+        .event-circle:nth-child(11) { left: 10%; animation: drift 17s ease-in-out infinite; animation-delay: -12s; --circle-color: #f26522; }
+        .event-circle:nth-child(12) { left: 30%; animation: popIn 20s ease-in-out infinite; animation-delay: -9s; --circle-color: #AF52DE; }
+        .event-circle:nth-child(13) { left: 50%; animation: floatUp 24s ease-in-out infinite; animation-delay: -11s; --circle-color: #ec008c; }
+        .event-circle:nth-child(14) { left: 70%; animation: drift 18s ease-in-out infinite; animation-delay: -13s; --circle-color: #f9ed32; }
+        .event-circle:nth-child(15) { left: 88%; animation: popIn 22s ease-in-out infinite; animation-delay: -15s; --circle-color: #FF9500; }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -224,6 +370,8 @@
             animation: fadeInUp 0.8s ease forwards;
             opacity: 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge-icon {
@@ -252,6 +400,8 @@
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease 0.1s forwards;
             opacity: 0;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-subtitle {
@@ -261,6 +411,8 @@
             margin-bottom: 2.5rem;
             animation: fadeInUp 0.8s ease 0.2s forwards;
             opacity: 0;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-cta {
@@ -270,6 +422,8 @@
             justify-content: center;
             animation: fadeInUp 0.8s ease 0.3s forwards;
             opacity: 0;
+            position: relative;
+            z-index: 1;
         }
 
         .app-store-btn {
@@ -316,6 +470,7 @@
             animation: fadeInUp 1s ease 0.5s forwards;
             opacity: 0;
             position: relative;
+            z-index: 1;
         }
 
         .phone-mockup {
@@ -934,6 +1089,25 @@
 
     <main>
         <section class="hero">
+            <!-- Animated Event Circles Background -->
+            <div class="event-circles">
+                <div class="event-circle pending size-md">💪</div>
+                <div class="event-circle completed size-lg">🎯</div>
+                <div class="event-circle pending size-sm">🧘</div>
+                <div class="event-circle completed size-md">📅</div>
+                <div class="event-circle pending size-lg">💧</div>
+                <div class="event-circle completed size-sm">✨</div>
+                <div class="event-circle pending size-md">🏃</div>
+                <div class="event-circle completed size-lg">📊</div>
+                <div class="event-circle pending size-sm">🌙</div>
+                <div class="event-circle completed size-md">❤️</div>
+                <div class="event-circle pending size-lg">🎯</div>
+                <div class="event-circle completed size-sm">💪</div>
+                <div class="event-circle pending size-md">🧘</div>
+                <div class="event-circle completed size-lg">📅</div>
+                <div class="event-circle pending size-sm">✨</div>
+            </div>
+
             <div class="hero-badge">
                 <span class="hero-badge-icon">
                     <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
