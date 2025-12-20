@@ -824,16 +824,15 @@
         /* Event Bubble Card style for features */
         .feature-card {
             background: var(--card-color);
-            border: 3px solid transparent;
+            border: 3px solid var(--card-color);
             border-radius: var(--radius-md);
             padding: var(--space-lg) var(--space-xl);
-            transition: all 0.2s ease-out;
+            transition: background 0.2s ease-out;
             position: relative;
             overflow: visible;
         }
 
         .feature-card:hover {
-            border-color: var(--card-color);
             background: var(--color-white);
         }
 
