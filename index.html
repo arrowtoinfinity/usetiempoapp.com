@@ -916,6 +916,93 @@
             padding: 6rem 2rem;
             background: var(--color-white);
             position: relative;
+            overflow: hidden;
+        }
+
+        /* Floating Review Cards */
+        .review-cards {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .review-card {
+            position: absolute;
+            background: var(--color-white);
+            border: 2.5px solid var(--card-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-md);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            opacity: 0;
+        }
+
+        /* Review card colors */
+        .review-card:nth-child(1) { --card-color: #f9ed32; left: 3%; animation: floatUpCard 20s ease-in-out infinite; animation-delay: 0s; }
+        .review-card:nth-child(2) { --card-color: #f26522; left: 12%; animation: driftCard 24s ease-in-out infinite; animation-delay: -4s; }
+        .review-card:nth-child(3) { --card-color: var(--color-success); left: 22%; animation: floatUpCard 18s ease-in-out infinite; animation-delay: -8s; }
+        .review-card:nth-child(4) { --card-color: #ec008c; left: 75%; animation: driftCard 22s ease-in-out infinite; animation-delay: -2s; }
+        .review-card:nth-child(5) { --card-color: var(--color-purple); left: 82%; animation: floatUpCard 26s ease-in-out infinite; animation-delay: -6s; }
+        .review-card:nth-child(6) { --card-color: var(--color-primary); left: 88%; animation: driftCard 19s ease-in-out infinite; animation-delay: -10s; }
+        .review-card:nth-child(7) { --card-color: #FF9500; left: 6%; animation: driftCard 21s ease-in-out infinite; animation-delay: -12s; }
+        .review-card:nth-child(8) { --card-color: var(--color-success); left: 78%; animation: floatUpCard 23s ease-in-out infinite; animation-delay: -14s; }
+
+        @keyframes floatUpCard {
+            0% {
+                transform: translateY(100%) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.9;
+                transform: translateY(80%) rotate(3deg) scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(40%) rotate(-2deg) scale(1);
+            }
+            92% {
+                opacity: 0.9;
+                transform: translateY(0%) rotate(2deg) scale(1);
+            }
+            100% {
+                transform: translateY(-10%) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes driftCard {
+            0% {
+                transform: translate(0, 100%) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.85;
+            }
+            25% {
+                transform: translate(15px, 70%) rotate(4deg);
+            }
+            50% {
+                transform: translate(-10px, 40%) rotate(-3deg);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translate(12px, 15%) rotate(3deg);
+            }
+            90% {
+                opacity: 0.85;
+            }
+            100% {
+                transform: translate(0, -10%) rotate(0deg);
+                opacity: 0;
+            }
         }
 
         .how-it-works-content {
@@ -1456,6 +1543,18 @@
         </section>
 
         <section id="how-it-works" class="how-it-works">
+            <!-- Floating Review Cards Background -->
+            <div class="review-cards">
+                <div class="review-card">"I need this!"</div>
+                <div class="review-card">"A lifesaver!"</div>
+                <div class="review-card">"Finally, an app that gets it."</div>
+                <div class="review-card">"Love this app!"</div>
+                <div class="review-card">"So intuitive."</div>
+                <div class="review-card">"Game changer!"</div>
+                <div class="review-card">"Best planner ever."</div>
+                <div class="review-card">"5 stars!"</div>
+            </div>
+
             <div class="how-it-works-content">
                 <div class="section-header">
                     <p class="section-label">How It Works</p>
