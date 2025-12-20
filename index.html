@@ -937,19 +937,6 @@
             margin-right: auto;
         }
 
-        /* Continuous connecting line behind all circles */
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 26px;
-            bottom: 26px;
-            width: 2px;
-            background: var(--color-gray-200);
-            z-index: 0;
-        }
-
         .timeline-step {
             display: flex;
             flex-direction: column;
@@ -957,6 +944,19 @@
             text-align: center;
             padding: var(--space-xl) 0;
             position: relative;
+        }
+
+        /* Line connecting circles only */
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 52px;
+            width: 2px;
+            height: calc(100% - 32px);
+            background: var(--color-gray-200);
+            z-index: 0;
         }
 
         /* Event circle - matches app's event bubble style */
@@ -1007,6 +1007,8 @@
 
         .timeline-content {
             margin-top: var(--space-lg);
+            position: relative;
+            z-index: 1;
         }
 
         .timeline-content h3 {
@@ -1015,6 +1017,7 @@
             font-weight: 600;
             margin-bottom: var(--space-sm);
             color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.8);
         }
 
         .timeline-content p {
@@ -1023,6 +1026,7 @@
             line-height: 1.6;
             max-width: 360px;
             margin: 0 auto;
+            text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.8);
         }
 
         /* Mini app preview cards */
