@@ -946,17 +946,16 @@
             position: relative;
         }
 
-        /* Connecting line */
+        /* Connecting line - only between circles */
         .timeline-step:not(:last-child)::after {
             content: '';
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            top: 72px;
+            bottom: -20px;
             width: 2px;
-            height: calc(100% - 52px);
+            height: 40px;
             background: var(--color-gray-200);
-            z-index: 0;
         }
 
         /* Event circle - matches app's event bubble style */
@@ -1007,10 +1006,6 @@
 
         .timeline-content {
             margin-top: var(--space-lg);
-            position: relative;
-            z-index: 1;
-            background: var(--color-white);
-            padding: 0 var(--space-lg);
         }
 
         .timeline-content h3 {
@@ -1246,10 +1241,6 @@
                 height: 44px;
                 min-width: 44px;
                 font-size: 1.25rem;
-            }
-
-            .timeline-step:not(:last-child)::after {
-                top: 64px;
             }
 
             .timeline-content h3 {
