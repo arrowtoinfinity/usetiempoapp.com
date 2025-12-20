@@ -1676,39 +1676,54 @@
             updateCenteredStep();
             updateCenteredCard();
 
-            // GSAP Review Card Animations
+            // GSAP Review Card Animations - Physics-like with gravity
             const reviewCards = document.querySelectorAll('.review-card');
 
+            function animateCard(card, isLeftSide) {
+                // Gravity pulls toward the side (left cards go left, right cards go right)
+                const gravityX = isLeftSide ? -200 : 200;
+
+                // Random launch parameters
+                const launchX = isLeftSide ? gsap.utils.random(80, 180) : gsap.utils.random(-180, -80);
+                const launchY = gsap.utils.random(-250, -100); // Always launch upward
+                const duration = gsap.utils.random(6, 12);
+
+                // Start from rest position at the side
+                const startX = isLeftSide ? -20 : 20;
+                const startY = gsap.utils.random(-30, 30);
+
+                const tl = gsap.timeline({
+                    onComplete: () => animateCard(card, isLeftSide), // Loop with new random values
+                    delay: gsap.utils.random(0, 2)
+                });
+
+                tl.set(card, { x: startX, y: startY, opacity: 0.6, rotation: 0 })
+                  // Launch phase - shoot out and up
+                  .to(card, {
+                      x: launchX,
+                      y: launchY,
+                      rotation: isLeftSide ? gsap.utils.random(5, 15) : gsap.utils.random(-15, -5),
+                      duration: duration * 0.4,
+                      ease: "power2.out"
+                  })
+                  // Fall phase - gravity pulls back to side and down
+                  .to(card, {
+                      x: gravityX,
+                      y: gsap.utils.random(100, 200),
+                      rotation: isLeftSide ? gsap.utils.random(-10, -5) : gsap.utils.random(5, 10),
+                      opacity: 0,
+                      duration: duration * 0.6,
+                      ease: "power2.in" // Accelerate like falling
+                  });
+            }
+
             reviewCards.forEach((card, index) => {
-                const isLeftSide = index < 4 || index === 6; // Cards 1-4 and 7 are left side
-                const startX = isLeftSide ? -150 : 150;
-                const endX = isLeftSide ? -150 : 150;
-                const midX = isLeftSide ? gsap.utils.random(60, 120) : gsap.utils.random(-120, -60);
+                // Determine which side based on CSS positioning
+                const isLeftSide = !card.style.right && index < 4 || index === 6;
+                const actualIsLeft = index === 0 || index === 1 || index === 2 || index === 6;
 
-                // Randomize each card's arc
-                const duration = gsap.utils.random(10, 18);
-                const startY = gsap.utils.random(-100, 100);
-                const peakY = gsap.utils.random(-200, 200);
-                const endY = gsap.utils.random(-100, 100);
-                const delay = gsap.utils.random(0, 8);
-
-                // Create the arc animation
-                gsap.timeline({ repeat: -1, delay: delay })
-                    .set(card, { x: startX, y: startY, opacity: 0 })
-                    .to(card, {
-                        x: midX,
-                        y: peakY,
-                        opacity: 0.6,
-                        duration: duration / 2,
-                        ease: "power1.out"
-                    })
-                    .to(card, {
-                        x: endX,
-                        y: endY,
-                        opacity: 0,
-                        duration: duration / 2,
-                        ease: "power1.in"
-                    });
+                // Stagger the start
+                gsap.delayedCall(gsap.utils.random(0, 6), () => animateCard(card, actualIsLeft));
             });
         });
     </script>
