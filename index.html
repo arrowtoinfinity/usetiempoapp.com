@@ -1064,6 +1064,62 @@
             overflow: hidden;
         }
 
+        /* Current Time Indicator Line */
+        .current-time-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.3s ease, top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .current-time-line.active {
+            opacity: 1;
+        }
+
+        .current-time-line::before,
+        .current-time-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background: #FF3B30;
+        }
+
+        /* Left line - from left edge to near center */
+        .current-time-line::before {
+            left: 0;
+            right: calc(50% + 40px);
+        }
+
+        /* Right line - from right edge to near center */
+        .current-time-line::after {
+            right: 0;
+            left: calc(50% + 40px);
+        }
+
+        /* Small circle at each end near the timeline circle */
+        .time-line-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #FF3B30;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .time-line-dot.left {
+            right: calc(50% + 36px);
+        }
+
+        .time-line-dot.right {
+            left: calc(50% + 36px);
+        }
+
         /* Floating Review Cards */
         .review-cards {
             position: absolute;
@@ -1461,6 +1517,23 @@
                 padding: 6px 10px;
             }
 
+            /* Current time line adjustments for mobile */
+            .current-time-line::before {
+                right: calc(50% + 32px);
+            }
+
+            .current-time-line::after {
+                left: calc(50% + 32px);
+            }
+
+            .time-line-dot.left {
+                right: calc(50% + 28px);
+            }
+
+            .time-line-dot.right {
+                left: calc(50% + 28px);
+            }
+
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -1732,6 +1805,12 @@
         </section>
 
         <section id="how-it-works" class="how-it-works">
+            <!-- Current Time Indicator Line -->
+            <div class="current-time-line">
+                <span class="time-line-dot left"></span>
+                <span class="time-line-dot right"></span>
+            </div>
+
             <div class="how-it-works-content">
                 <div class="section-header">
                     <p class="section-label">How It Works</p>
@@ -1857,6 +1936,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const timelineSteps = document.querySelectorAll('.timeline-step');
             const featureCards = document.querySelectorAll('.feature-card');
+            const currentTimeLine = document.querySelector('.current-time-line');
+            const howItWorksSection = document.querySelector('.how-it-works');
             let ticking = false;
 
             function updateCenteredStep() {
@@ -1876,13 +1957,29 @@
                 });
 
                 // Only apply centered class if the closest step is reasonably close to center
+                const isActive = closestDistance < window.innerHeight * 0.4;
                 timelineSteps.forEach(step => {
-                    if (step === closestStep && closestDistance < window.innerHeight * 0.4) {
+                    if (step === closestStep && isActive) {
                         step.classList.add('centered');
                     } else {
                         step.classList.remove('centered');
                     }
                 });
+
+                // Update current time line position
+                if (currentTimeLine && howItWorksSection && closestStep && isActive) {
+                    const sectionRect = howItWorksSection.getBoundingClientRect();
+                    const circle = closestStep.querySelector('.timeline-circle');
+                    if (circle) {
+                        const circleRect = circle.getBoundingClientRect();
+                        const circleCenter = circleRect.top + circleRect.height / 2;
+                        const lineTop = circleCenter - sectionRect.top;
+                        currentTimeLine.style.top = lineTop + 'px';
+                        currentTimeLine.classList.add('active');
+                    }
+                } else if (currentTimeLine) {
+                    currentTimeLine.classList.remove('active');
+                }
             }
 
             function updateCenteredCard() {
