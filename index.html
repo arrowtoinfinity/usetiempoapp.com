@@ -1701,8 +1701,9 @@
             gsap.registerPlugin(MotionPathPlugin);
             const reviewCards = Array.from(document.querySelectorAll('.review-card'));
             const colors = ['#f9ed32', '#f26522', '#34C759', '#ec008c', '#AF52DE', '#007AFF', '#FF9500', '#1c75bc'];
-            const MAX_VISIBLE = 6;
-            let activeCards = 0;
+            const MAX_PER_SIDE = 3;
+            let activeLeft = 0;
+            let activeRight = 0;
 
             // Assign colors to all cards
             reviewCards.forEach((card, index) => {
@@ -1715,16 +1716,30 @@
                 return shuffled.length > 0 ? shuffled[Math.floor(Math.random() * shuffled.length)] : null;
             }
 
-            function animateCard() {
-                if (activeCards >= MAX_VISIBLE) return;
+            function animateCard(forceSide = null) {
+                // Determine which side needs a card
+                let isLeftSide;
+                if (forceSide !== null) {
+                    isLeftSide = forceSide;
+                } else if (activeLeft < MAX_PER_SIDE && activeRight < MAX_PER_SIDE) {
+                    isLeftSide = Math.random() > 0.5;
+                } else if (activeLeft < MAX_PER_SIDE) {
+                    isLeftSide = true;
+                } else if (activeRight < MAX_PER_SIDE) {
+                    isLeftSide = false;
+                } else {
+                    return; // Both sides full
+                }
 
                 const card = getAvailableCard();
                 if (!card) return;
 
                 card.dataset.animating = "true";
-                activeCards++;
-
-                const isLeftSide = Math.random() > 0.5;
+                if (isLeftSide) {
+                    activeLeft++;
+                } else {
+                    activeRight++;
+                }
                 const duration = gsap.utils.random(7, 12);
                 const entryFromTop = Math.random() > 0.5;
 
@@ -1752,9 +1767,13 @@
                 gsap.timeline({
                     onComplete: () => {
                         card.dataset.animating = "";
-                        activeCards--;
-                        // Start another card after a delay
-                        gsap.delayedCall(gsap.utils.random(0.5, 2), animateCard);
+                        if (isLeftSide) {
+                            activeLeft--;
+                        } else {
+                            activeRight--;
+                        }
+                        // Start another card on the same side after a delay
+                        gsap.delayedCall(gsap.utils.random(0.5, 2), () => animateCard(isLeftSide));
                     }
                 })
                     .set(card, { x: startX, y: startY, opacity: 0, rotation: startRot, visibility: "visible" })
@@ -1780,9 +1799,10 @@
                     });
             }
 
-            // Start initial batch of cards with staggered timing
-            for (let i = 0; i < MAX_VISIBLE; i++) {
-                gsap.delayedCall(i * 0.8, animateCard);
+            // Start initial batch of cards - 3 left, 3 right with staggered timing
+            for (let i = 0; i < MAX_PER_SIDE; i++) {
+                gsap.delayedCall(i * 1.2, () => animateCard(true));  // Left
+                gsap.delayedCall(i * 1.2 + 0.5, () => animateCard(false)); // Right
             }
         });
     </script>
