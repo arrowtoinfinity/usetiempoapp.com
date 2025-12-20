@@ -1072,7 +1072,6 @@
             right: 0;
             bottom: 0;
             overflow: hidden;
-            z-index: 2;
             pointer-events: none;
         }
 
@@ -1268,7 +1267,7 @@
             border-radius: var(--radius-xl);
             padding: 3rem 2rem;
             position: relative;
-            z-index: 0;
+            z-index: 1;
         }
 
         .cta-icon {
@@ -2004,6 +2003,10 @@
                     card.style.left = 'auto';
                     card.style.right = '0';
                 }
+
+                // Randomly layer half in front, half behind
+                const inFront = Math.random() > 0.5;
+                card.style.zIndex = inFront ? '3' : '-1';
 
                 gsap.timeline({
                     onComplete: () => {
