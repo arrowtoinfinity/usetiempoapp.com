@@ -1701,7 +1701,7 @@
             gsap.registerPlugin(MotionPathPlugin);
             const reviewCards = Array.from(document.querySelectorAll('.review-card'));
             const colors = ['#f9ed32', '#f26522', '#34C759', '#ec008c', '#AF52DE', '#007AFF', '#FF9500', '#1c75bc'];
-            const MAX_VISIBLE = 9;
+            const MAX_VISIBLE = 5;
             let activeCards = 0;
 
             // Assign colors to all cards
@@ -1728,12 +1728,15 @@
                 const duration = gsap.utils.random(7, 12);
                 const entryFromTop = Math.random() > 0.5;
 
+                // Random vertical position in the section
+                const baseY = gsap.utils.random(-300, 300);
+
                 const startX = isLeftSide ? -200 : 200;
-                const startY = entryFromTop ? -200 : 200;
+                const startY = baseY + (entryFromTop ? -150 : 150);
                 const peakX = isLeftSide ? gsap.utils.random(60, 140) : gsap.utils.random(-140, -60);
-                const peakY = gsap.utils.random(-40, 40);
+                const peakY = baseY;
                 const endX = isLeftSide ? -200 : 200;
-                const endY = entryFromTop ? 200 : -200;
+                const endY = baseY + (entryFromTop ? 150 : -150);
                 const startRot = isLeftSide ? (entryFromTop ? -15 : 15) : (entryFromTop ? 15 : -15);
                 const endRot = -startRot;
 
