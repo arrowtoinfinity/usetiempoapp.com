@@ -944,6 +944,20 @@
             text-align: center;
             padding: var(--space-xl) 0;
             position: relative;
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+            transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .timeline-step.visible {
+            opacity: 1;
+            transform: scale(1.08) translateY(0);
+        }
+
+        .timeline-step.scrolled-past {
+            opacity: 1;
+            transform: scale(1) translateY(0);
         }
 
         /* Line connecting circles only */
@@ -1537,5 +1551,91 @@
             <p class="footer-copy">© 2025 Nickel. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Timeline scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineSteps = document.querySelectorAll('.timeline-step');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-10% 0px -10% 0px',
+                threshold: [0, 0.5, 1]
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const element = entry.target;
+                    const rect = element.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    const elementCenter = rect.top + rect.height / 2;
+                    const viewportCenter = viewportHeight / 2;
+
+                    if (entry.isIntersecting) {
+                        // Element is in viewport
+                        if (elementCenter < viewportCenter - 100) {
+                            // Scrolled past center - return to normal size
+                            element.classList.remove('visible');
+                            element.classList.add('scrolled-past');
+                        } else if (elementCenter > viewportCenter + 100) {
+                            // Not yet at center - still approaching
+                            element.classList.add('visible');
+                            element.classList.remove('scrolled-past');
+                        } else {
+                            // At or near center - zoomed
+                            element.classList.add('visible');
+                            element.classList.remove('scrolled-past');
+                        }
+                    } else {
+                        // Check if scrolled past (above viewport)
+                        if (rect.bottom < 0) {
+                            element.classList.remove('visible');
+                            element.classList.add('scrolled-past');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            timelineSteps.forEach(step => observer.observe(step));
+
+            // Also update on scroll for smoother transitions
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        timelineSteps.forEach(element => {
+                            const rect = element.getBoundingClientRect();
+                            const viewportHeight = window.innerHeight;
+                            const elementCenter = rect.top + rect.height / 2;
+                            const viewportCenter = viewportHeight / 2;
+
+                            if (rect.top < viewportHeight && rect.bottom > 0) {
+                                // Element is in viewport
+                                if (elementCenter < viewportCenter - 50) {
+                                    // Scrolled past center
+                                    element.classList.remove('visible');
+                                    element.classList.add('scrolled-past');
+                                } else {
+                                    // At or approaching center
+                                    element.classList.add('visible');
+                                    element.classList.remove('scrolled-past');
+                                }
+                            } else if (rect.bottom < 0) {
+                                // Above viewport
+                                element.classList.remove('visible');
+                                element.classList.add('scrolled-past');
+                            } else {
+                                // Below viewport
+                                element.classList.remove('visible');
+                                element.classList.remove('scrolled-past');
+                            }
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
