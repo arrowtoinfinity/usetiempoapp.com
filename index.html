@@ -1160,6 +1160,62 @@
             padding: var(--space-md);
             background: #ec008c;
             border-radius: 8px;
+            border: 2.5px solid #ec008c;
+            position: relative;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            pointer-events: auto;
+        }
+
+        .child-event:hover {
+            background: var(--color-white);
+            border-color: #ec008c;
+        }
+
+        .child-event:hover .child-title {
+            color: var(--text-primary);
+        }
+
+        .child-event:hover .child-desc {
+            color: var(--text-secondary);
+        }
+
+        .child-event:hover .child-tag {
+            background: rgba(236, 0, 140, 0.15);
+            color: #ec008c;
+        }
+
+        .child-event:hover .child-emoji {
+            background: rgba(236, 0, 140, 0.15);
+        }
+
+        /* Child event handles */
+        .child-event::before,
+        .child-event::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 5px;
+            background: white;
+            border: 2px solid #ec008c;
+            border-radius: 100px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .child-event::before {
+            top: -5px;
+            left: 10px;
+        }
+
+        .child-event::after {
+            bottom: -5px;
+            right: 10px;
+        }
+
+        .child-event:hover::before,
+        .child-event:hover::after {
+            opacity: 1;
         }
 
         .child-emoji {
