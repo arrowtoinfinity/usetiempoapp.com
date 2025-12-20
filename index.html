@@ -1737,6 +1737,15 @@
                 const startRot = isLeftSide ? (entryFromTop ? -15 : 15) : (entryFromTop ? 15 : -15);
                 const endRot = -startRot;
 
+                // Position card on correct side
+                if (isLeftSide) {
+                    card.style.left = '0';
+                    card.style.right = 'auto';
+                } else {
+                    card.style.left = 'auto';
+                    card.style.right = '0';
+                }
+
                 gsap.timeline({
                     onComplete: () => {
                         card.dataset.animating = "";
