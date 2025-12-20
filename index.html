@@ -99,10 +99,7 @@
             font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
-            background: var(--gradient-sunrise);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--color-ink);
         }
 
         nav {
@@ -128,7 +125,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: var(--gradient-sunrise);
+            background: var(--color-blue);
             color: var(--color-white);
             font-family: var(--font-body);
             font-size: 0.9rem;
@@ -138,12 +135,12 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(242,101,34,0.3);
+            box-shadow: 0 4px 15px rgba(28,117,188,0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(242,101,34,0.4);
+            box-shadow: 0 6px 20px rgba(28,117,188,0.4);
         }
 
         .btn-outline {
@@ -154,8 +151,8 @@
         }
 
         .btn-outline:hover {
-            border-color: var(--color-orange);
-            color: var(--color-orange);
+            border-color: var(--color-blue);
+            color: var(--color-blue);
             box-shadow: none;
         }
 
@@ -652,7 +649,6 @@
         .feature-icon {
             width: 56px;
             height: 56px;
-            background: var(--gradient-sunrise-soft);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -661,9 +657,25 @@
             font-size: 1.5rem;
         }
 
+        .feature-card:nth-child(1) .feature-icon {
+            background: rgba(249,237,50,0.15);
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: rgba(242,101,34,0.15);
+        }
+
         .feature-card:nth-child(3) .feature-icon,
         .feature-card:nth-child(6) .feature-icon {
             background: rgba(76,175,80,0.1);
+        }
+
+        .feature-card:nth-child(4) .feature-icon {
+            background: rgba(236,0,140,0.15);
+        }
+
+        .feature-card:nth-child(5) .feature-icon {
+            background: rgba(28,117,188,0.15);
         }
 
         .feature-card h3 {
@@ -705,7 +717,6 @@
         .step-number {
             width: 48px;
             height: 48px;
-            background: var(--gradient-sunrise);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -715,6 +726,19 @@
             font-size: 1.25rem;
             font-weight: 700;
             color: white;
+        }
+
+        .step:nth-child(1) .step-number {
+            background: var(--color-yellow);
+            color: var(--color-ink);
+        }
+
+        .step:nth-child(2) .step-number {
+            background: var(--color-magenta);
+        }
+
+        .step:nth-child(3) .step-number {
+            background: var(--color-blue);
         }
 
         .step h3 {
@@ -813,7 +837,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--color-orange);
+            color: var(--color-blue);
         }
 
         .footer-copy {
