@@ -917,9 +917,9 @@
             line-height: 1.7;
         }
 
-        /* How it works - Apple-style sticky scroll */
+        /* How it works - Timeline style */
         .how-it-works {
-            padding: 0;
+            padding: 6rem 2rem;
             background: var(--color-white);
             position: relative;
         }
@@ -929,27 +929,43 @@
             margin: 0 auto;
         }
 
-        .how-it-works .section-header {
-            padding: 6rem 2rem 2rem;
-            position: sticky;
-            top: 80px;
-            z-index: 10;
-            background: var(--color-white);
-        }
-
         .timeline-container {
-            position: relative;
-            height: 300vh; /* 100vh per step */
+            display: contents;
         }
 
         .timeline {
-            position: sticky;
-            top: 50%;
-            transform: translateY(-50%);
+            margin-top: 4rem;
+            position: relative;
             max-width: 500px;
-            margin: 0 auto;
-            padding: 2rem;
-            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Gray connecting line behind all steps */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 32px;
+            bottom: 32px;
+            width: 2px;
+            background: var(--color-gray-200);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        /* Colored progress line that grows */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 32px;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-purple), var(--color-success));
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: height 0.5s ease;
+            border-radius: 2px;
         }
 
         .timeline-step {
@@ -957,110 +973,42 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: var(--space-xl) 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
+            padding: var(--space-2xl) 0;
+            position: relative;
             opacity: 0;
+            transform: scale(0.85) translateY(20px);
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 100%;
-            pointer-events: none;
         }
 
         .timeline-step.active {
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1.1);
-            pointer-events: auto;
-            z-index: 5;
+            transform: scale(1.05) translateY(0);
         }
 
         .timeline-step.completed {
-            opacity: 0.3;
-            transform: translate(-50%, -50%) scale(0.85);
-            z-index: 1;
+            opacity: 1;
+            transform: scale(1) translateY(0);
         }
 
         .timeline-step.upcoming {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.7);
-        }
-
-        /* Connecting line that draws as you scroll */
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 3px;
-            height: 0;
-            background: linear-gradient(to bottom, var(--color-primary), var(--color-purple), var(--color-success));
-            z-index: 0;
-            transition: height 0.5s ease;
-            border-radius: 2px;
-        }
-
-        .timeline-line.step-1 {
-            height: 80px;
-        }
-
-        .timeline-line.step-2 {
-            height: 160px;
-        }
-
-        .timeline-line.step-3 {
-            height: 240px;
-        }
-
-        /* Progress indicator dots */
-        .timeline-progress {
-            position: fixed;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .timeline-progress.visible {
-            opacity: 1;
-        }
-
-        .timeline-progress-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--color-gray-200);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-progress-dot.active {
-            background: var(--color-primary);
-            transform: scale(1.3);
-        }
-
-        .timeline-progress-dot.completed {
-            background: var(--color-success);
+            opacity: 0.3;
+            transform: scale(0.9) translateY(10px);
         }
 
         /* Event circle - matches app's event bubble style */
         .timeline-circle {
-            width: 64px;
-            height: 64px;
-            min-width: 64px;
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             position: relative;
-            z-index: 1;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 2;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            background: var(--color-white);
         }
 
         /* Pending style (outlined) */
@@ -1090,25 +1038,28 @@
         .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); }
 
         .timeline-content {
-            margin-top: var(--space-xl);
+            margin-top: var(--space-lg);
             position: relative;
             z-index: 1;
-            padding: var(--space-lg) var(--space-xl);
+            padding: var(--space-md) var(--space-xl);
+            background: rgba(255,255,255,0.7);
+            box-shadow: 0 0 25px 20px rgba(255,255,255,0.6);
+            border-radius: var(--radius-md);
         }
 
         .timeline-content h3 {
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-sm);
             color: var(--text-primary);
         }
 
         .timeline-content p {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
             line-height: 1.6;
-            max-width: 400px;
+            max-width: 360px;
             margin: 0 auto;
         }
 
@@ -1330,40 +1281,28 @@
                 padding: 4rem 1.5rem;
             }
 
-            .how-it-works .section-header {
-                padding: 4rem 1.5rem 2rem;
-            }
-
-            .timeline-container {
-                height: 250vh;
-            }
-
-            .timeline {
-                padding: 1.5rem;
+            .how-it-works {
+                padding: 4rem 1.5rem;
             }
 
             .timeline-circle {
-                width: 52px;
-                height: 52px;
-                min-width: 52px;
-                font-size: 1.5rem;
-            }
-
-            .timeline-content h3 {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
                 font-size: 1.25rem;
             }
 
+            .timeline-content h3 {
+                font-size: 1.1rem;
+            }
+
             .timeline-content p {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .preview-chip {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
                 padding: 6px 10px;
-            }
-
-            .timeline-progress {
-                right: 1rem;
             }
 
             .cta-card {
@@ -1558,14 +1497,12 @@
                     <p class="section-label">How It Works</p>
                     <h2 class="section-title">Your journey starts here</h2>
                 </div>
-            </div>
 
-            <div class="timeline-container">
                 <div class="timeline">
-                    <!-- Connecting line -->
+                    <!-- Colored progress line -->
                     <div class="timeline-line" id="timelineLine"></div>
 
-                    <div class="timeline-step active" data-step="0">
+                    <div class="timeline-step" data-step="0">
                         <div class="timeline-circle pending">📅</div>
                         <div class="timeline-content">
                             <h3>Connect Your Life</h3>
@@ -1577,7 +1514,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-step upcoming" data-step="1">
+                    <div class="timeline-step" data-step="1">
                         <div class="timeline-circle completed">✨</div>
                         <div class="timeline-content">
                             <h3>Plan with AI</h3>
@@ -1588,7 +1525,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-step upcoming" data-step="2">
+                    <div class="timeline-step" data-step="2">
                         <div class="timeline-circle completed">🌱</div>
                         <div class="timeline-content">
                             <h3>Watch Yourself Grow</h3>
@@ -1601,13 +1538,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Progress dots -->
-            <div class="timeline-progress" id="timelineProgress">
-                <div class="timeline-progress-dot active" data-step="0"></div>
-                <div class="timeline-progress-dot" data-step="1"></div>
-                <div class="timeline-progress-dot" data-step="2"></div>
             </div>
         </section>
 
@@ -1644,83 +1574,69 @@
     </footer>
 
     <script>
-        // Apple-style sticky scroll timeline
+        // Timeline scroll animations
         document.addEventListener('DOMContentLoaded', function() {
-            const timelineContainer = document.querySelector('.timeline-container');
+            const timeline = document.querySelector('.timeline');
             const timelineSteps = document.querySelectorAll('.timeline-step');
-            const progressDots = document.querySelectorAll('.timeline-progress-dot');
-            const progressContainer = document.getElementById('timelineProgress');
             const timelineLine = document.getElementById('timelineLine');
-            const totalSteps = timelineSteps.length;
 
-            // Track the highest step reached (completed steps stay completed)
-            let highestStepReached = 0;
+            // Track completed steps (once completed, stays completed)
+            const completedSteps = new Set();
             let ticking = false;
 
             function updateTimeline() {
-                const containerRect = timelineContainer.getBoundingClientRect();
-                const containerTop = containerRect.top;
-                const containerHeight = containerRect.height;
                 const viewportHeight = window.innerHeight;
+                const viewportCenter = viewportHeight * 0.6;
 
-                // Calculate scroll progress within the container (0 to 1)
-                const scrollStart = -viewportHeight * 0.3;
-                const scrollEnd = containerHeight - viewportHeight;
-                const scrollProgress = Math.max(0, Math.min(1, (scrollStart - containerTop) / scrollEnd));
+                let maxCompletedIndex = -1;
 
-                // Determine which step should be active based on scroll progress
-                const stepProgress = scrollProgress * totalSteps;
-                const currentStep = Math.min(Math.floor(stepProgress), totalSteps - 1);
-
-                // Update highest step reached (only goes up, never down)
-                if (currentStep > highestStepReached) {
-                    highestStepReached = currentStep;
-                }
-
-                // Show/hide progress dots
-                if (containerTop < viewportHeight * 0.5 && containerTop > -containerHeight + viewportHeight * 0.5) {
-                    progressContainer.classList.add('visible');
-                } else {
-                    progressContainer.classList.remove('visible');
-                }
-
-                // Update timeline line based on highest step reached
-                timelineLine.className = 'timeline-line';
-                if (highestStepReached >= 0) {
-                    timelineLine.classList.add('step-' + (highestStepReached + 1));
-                }
-
-                // Update each step
                 timelineSteps.forEach((step, index) => {
+                    const rect = step.getBoundingClientRect();
+                    const stepCenter = rect.top + rect.height / 2;
+
+                    // Check if step has scrolled past the viewport center
+                    if (stepCenter < viewportCenter) {
+                        completedSteps.add(index);
+                    }
+
+                    // Track the highest completed index
+                    if (completedSteps.has(index) && index > maxCompletedIndex) {
+                        maxCompletedIndex = index;
+                    }
+
+                    // Apply states
                     step.classList.remove('active', 'completed', 'upcoming');
 
-                    if (index < highestStepReached) {
-                        // Previously completed - stays completed permanently
+                    if (completedSteps.has(index)) {
+                        // Step has been scrolled past - stays completed
                         step.classList.add('completed');
-                    } else if (index === currentStep) {
-                        // Currently active
+                    } else if (rect.top < viewportHeight && rect.bottom > 0) {
+                        // Step is in viewport but not completed yet - active
                         step.classList.add('active');
-                    } else if (index < currentStep) {
-                        // Just scrolled past
-                        step.classList.add('completed');
                     } else {
-                        // Not yet reached
+                        // Step is below viewport - upcoming
                         step.classList.add('upcoming');
                     }
                 });
 
-                // Update progress dots (these also stay completed permanently)
-                progressDots.forEach((dot, index) => {
-                    dot.classList.remove('active', 'completed');
+                // Update line height based on completed steps
+                if (maxCompletedIndex >= 0 && timeline) {
+                    const firstStep = timelineSteps[0];
+                    const lastCompletedStep = timelineSteps[maxCompletedIndex];
 
-                    if (index < highestStepReached) {
-                        dot.classList.add('completed');
-                    } else if (index === currentStep) {
-                        dot.classList.add('active');
-                    } else if (index < currentStep) {
-                        dot.classList.add('completed');
+                    if (firstStep && lastCompletedStep) {
+                        const timelineRect = timeline.getBoundingClientRect();
+                        const firstRect = firstStep.getBoundingClientRect();
+                        const lastRect = lastCompletedStep.getBoundingClientRect();
+
+                        // Calculate line height from first circle to last completed circle
+                        const lineStart = firstRect.top - timelineRect.top + 26; // 26 = half of circle
+                        const lineEnd = lastRect.top - timelineRect.top + 26;
+                        const lineHeight = lineEnd - lineStart + 52; // Add circle diameter
+
+                        timelineLine.style.height = Math.max(0, lineHeight) + 'px';
                     }
-                });
+                }
             }
 
             window.addEventListener('scroll', () => {
