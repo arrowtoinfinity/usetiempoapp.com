@@ -956,6 +956,7 @@
             width: 2px;
             height: calc(100% - 52px);
             background: var(--color-gray-200);
+            z-index: 0;
         }
 
         /* Event circle - matches app's event bubble style */
@@ -1006,6 +1007,10 @@
 
         .timeline-content {
             margin-top: var(--space-lg);
+            position: relative;
+            z-index: 1;
+            background: var(--color-white);
+            padding: 0 var(--space-lg);
         }
 
         .timeline-content h3 {
