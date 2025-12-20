@@ -444,6 +444,8 @@
             vertical-align: bottom;
             overflow: visible;
             height: 1.1em;
+            /* Clip bottom to hide incoming text, but allow top overflow for fade out */
+            clip-path: inset(-100% -100% 0 -100%);
         }
 
         .cycling-word {
