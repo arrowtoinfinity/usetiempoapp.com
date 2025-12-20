@@ -945,82 +945,64 @@
             opacity: 0.55;
         }
 
-        /* Review card positions and animations - Left side cards */
-        .review-card:nth-child(1) { --card-color: #f9ed32; left: 8px; top: 12%; animation: floatLeftSide1 6s ease-in-out infinite; }
-        .review-card:nth-child(2) { --card-color: #f26522; left: 12px; top: 38%; animation: floatLeftSide2 7s ease-in-out infinite; animation-delay: -2s; }
-        .review-card:nth-child(3) { --card-color: var(--color-success); left: 6px; top: 62%; animation: floatLeftSide1 5.5s ease-in-out infinite; animation-delay: -4s; }
-        .review-card:nth-child(7) { --card-color: #FF9500; left: 10px; top: 85%; animation: floatLeftSide2 6.5s ease-in-out infinite; animation-delay: -1s; }
+        /* Review card positions and animations - each with unique trajectory */
+        .review-card:nth-child(1) { --card-color: #f9ed32; left: 6px; animation: driftUpLeft 18s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .review-card:nth-child(2) { --card-color: #f26522; left: 10px; animation: driftDownLeft 22s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -5s; }
+        .review-card:nth-child(3) { --card-color: var(--color-success); left: 4px; animation: driftUpLeftSlow 25s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -12s; }
+        .review-card:nth-child(7) { --card-color: #FF9500; left: 8px; animation: driftDownLeftFast 16s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -8s; }
 
-        /* Review card positions and animations - Right side cards */
-        .review-card:nth-child(4) { --card-color: #ec008c; right: 8px; left: auto; top: 18%; animation: floatRightSide1 6.5s ease-in-out infinite; animation-delay: -3s; }
-        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 12px; left: auto; top: 45%; animation: floatRightSide2 5.5s ease-in-out infinite; animation-delay: -1s; }
-        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 6px; left: auto; top: 72%; animation: floatRightSide1 7s ease-in-out infinite; animation-delay: -5s; }
-        .review-card:nth-child(8) { --card-color: var(--color-success); right: 10px; left: auto; top: 92%; animation: floatRightSide2 6s ease-in-out infinite; animation-delay: -2s; }
+        /* Right side cards */
+        .review-card:nth-child(4) { --card-color: #ec008c; right: 8px; left: auto; animation: driftDownRight 20s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -3s; }
+        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 5px; left: auto; animation: driftUpRight 24s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -10s; }
+        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 10px; left: auto; animation: driftDownRightSlow 28s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -18s; }
+        .review-card:nth-child(8) { --card-color: var(--color-success); right: 6px; left: auto; animation: driftUpRightFast 15s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: -2s; }
 
-        @keyframes floatLeftSide1 {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(6px, -12px) rotate(1.5deg);
-            }
-            50% {
-                transform: translate(3px, 8px) rotate(-1deg);
-            }
-            75% {
-                transform: translate(8px, -5px) rotate(0.5deg);
-            }
+        /* Left side - starts low, floats up */
+        @keyframes driftUpLeft {
+            0%, 100% { top: 75%; transform: translate(0, 0) rotate(0deg); }
+            50% { top: 15%; transform: translate(12px, 0) rotate(2deg); }
         }
 
-        @keyframes floatLeftSide2 {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            20% {
-                transform: translate(5px, 10px) rotate(-1deg);
-            }
-            40% {
-                transform: translate(10px, -8px) rotate(1.5deg);
-            }
-            60% {
-                transform: translate(4px, 6px) rotate(-0.5deg);
-            }
-            80% {
-                transform: translate(8px, -10px) rotate(1deg);
-            }
+        /* Left side - starts high, floats down */
+        @keyframes driftDownLeft {
+            0%, 100% { top: 10%; transform: translate(0, 0) rotate(0deg); }
+            50% { top: 60%; transform: translate(8px, 0) rotate(-1.5deg); }
         }
 
-        @keyframes floatRightSide1 {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(-6px, -10px) rotate(-1.5deg);
-            }
-            50% {
-                transform: translate(-3px, 12px) rotate(1deg);
-            }
-            75% {
-                transform: translate(-8px, -6px) rotate(-0.5deg);
-            }
+        /* Left side - slow upward drift */
+        @keyframes driftUpLeftSlow {
+            0%, 100% { top: 85%; transform: translate(0, 0) rotate(-1deg); }
+            50% { top: 25%; transform: translate(15px, 0) rotate(1.5deg); }
         }
 
-        @keyframes floatRightSide2 {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            20% {
-                transform: translate(-5px, 8px) rotate(1deg);
-            }
-            40% {
-                transform: translate(-10px, -10px) rotate(-1.5deg);
-            }
-            60% {
-                transform: translate(-4px, 5px) rotate(0.5deg);
-            }
-            80% {
-                transform: translate(-8px, -8px) rotate(-1deg);
-            }
+        /* Left side - faster downward */
+        @keyframes driftDownLeftFast {
+            0%, 100% { top: 20%; transform: translate(0, 0) rotate(1deg); }
+            50% { top: 70%; transform: translate(10px, 0) rotate(-2deg); }
+        }
+
+        /* Right side - starts high, floats down */
+        @keyframes driftDownRight {
+            0%, 100% { top: 12%; transform: translate(0, 0) rotate(0deg); }
+            50% { top: 65%; transform: translate(-10px, 0) rotate(1.5deg); }
+        }
+
+        /* Right side - starts low, floats up */
+        @keyframes driftUpRight {
+            0%, 100% { top: 80%; transform: translate(0, 0) rotate(1deg); }
+            50% { top: 20%; transform: translate(-8px, 0) rotate(-1deg); }
+        }
+
+        /* Right side - slow downward */
+        @keyframes driftDownRightSlow {
+            0%, 100% { top: 8%; transform: translate(0, 0) rotate(-0.5deg); }
+            50% { top: 55%; transform: translate(-12px, 0) rotate(2deg); }
+        }
+
+        /* Right side - faster upward */
+        @keyframes driftUpRightFast {
+            0%, 100% { top: 88%; transform: translate(0, 0) rotate(0.5deg); }
+            50% { top: 30%; transform: translate(-6px, 0) rotate(-1.5deg); }
         }
 
         .how-it-works-content {
