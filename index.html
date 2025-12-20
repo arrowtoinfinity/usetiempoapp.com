@@ -1945,19 +1945,34 @@
             let activeLeft = 0;
             let activeRight = 0;
 
+            // Track occupied Y positions per side to prevent overlap
+            const occupiedLeft = [];
+            const occupiedRight = [];
+            const MIN_Y_GAP = 80; // Minimum vertical gap between cards
+            const Y_BOUNDS = { min: -100, max: 100 }; // Keep cards in middle area
+
             // Assign colors to all cards
             reviewCards.forEach((card, index) => {
                 card.style.setProperty('--card-color', colors[index % colors.length]);
             });
 
             function getAvailableCard() {
-                // Shuffle and find a card that's not currently animating
                 const shuffled = reviewCards.filter(card => !card.dataset.animating);
                 return shuffled.length > 0 ? shuffled[Math.floor(Math.random() * shuffled.length)] : null;
             }
 
+            function findNonOverlappingY(occupiedList) {
+                // Try to find a Y position that doesn't overlap
+                for (let attempt = 0; attempt < 20; attempt++) {
+                    const candidateY = gsap.utils.random(Y_BOUNDS.min, Y_BOUNDS.max);
+                    const hasOverlap = occupiedList.some(y => Math.abs(y - candidateY) < MIN_Y_GAP);
+                    if (!hasOverlap) return candidateY;
+                }
+                // Fallback: return random Y if no non-overlapping found
+                return gsap.utils.random(Y_BOUNDS.min, Y_BOUNDS.max);
+            }
+
             function animateCard(forceSide = null) {
-                // Determine which side needs a card
                 let isLeftSide;
                 if (forceSide !== null) {
                     isLeftSide = forceSide;
@@ -1968,30 +1983,34 @@
                 } else if (activeRight < MAX_PER_SIDE) {
                     isLeftSide = false;
                 } else {
-                    return; // Both sides full
+                    return;
                 }
 
                 const card = getAvailableCard();
                 if (!card) return;
 
                 card.dataset.animating = "true";
+                const occupiedList = isLeftSide ? occupiedLeft : occupiedRight;
+
                 if (isLeftSide) {
                     activeLeft++;
                 } else {
                     activeRight++;
                 }
+
                 const duration = gsap.utils.random(7, 12);
                 const entryFromTop = Math.random() > 0.5;
 
-                // Random vertical position in the section
-                const baseY = gsap.utils.random(-300, 300);
+                // Find non-overlapping Y position
+                const baseY = findNonOverlappingY(occupiedList);
+                occupiedList.push(baseY);
 
                 const startX = isLeftSide ? -200 : 200;
-                const startY = baseY + (entryFromTop ? -150 : 150);
+                const startY = baseY + (entryFromTop ? -80 : 80);
                 const peakX = isLeftSide ? gsap.utils.random(60, 140) : gsap.utils.random(-140, -60);
                 const peakY = baseY;
                 const endX = isLeftSide ? -200 : 200;
-                const endY = baseY + (entryFromTop ? 150 : -150);
+                const endY = baseY + (entryFromTop ? 80 : -80);
                 const startRot = isLeftSide ? (entryFromTop ? -15 : 15) : (entryFromTop ? 15 : -15);
                 const endRot = -startRot;
 
@@ -2011,6 +2030,10 @@
                 gsap.timeline({
                     onComplete: () => {
                         card.dataset.animating = "";
+                        // Remove Y position from occupied list
+                        const idx = occupiedList.indexOf(baseY);
+                        if (idx > -1) occupiedList.splice(idx, 1);
+
                         if (isLeftSide) {
                             activeLeft--;
                         } else {
