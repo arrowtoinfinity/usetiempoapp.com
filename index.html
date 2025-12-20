@@ -1699,33 +1699,53 @@
 
             // GSAP Review Card Animations - Natural toss with inverted exit angle
             gsap.registerPlugin(MotionPathPlugin);
-            const reviewCards = document.querySelectorAll('.review-card');
+            const reviewCards = Array.from(document.querySelectorAll('.review-card'));
+            const colors = ['#f9ed32', '#f26522', '#34C759', '#ec008c', '#AF52DE', '#007AFF', '#FF9500', '#1c75bc'];
+            const MAX_VISIBLE = 9;
+            let activeCards = 0;
 
-            function animateCard(card, isLeftSide) {
+            // Assign colors to all cards
+            reviewCards.forEach((card, index) => {
+                card.style.setProperty('--card-color', colors[index % colors.length]);
+            });
+
+            function getAvailableCard() {
+                // Shuffle and find a card that's not currently animating
+                const shuffled = reviewCards.filter(card => !card.dataset.animating);
+                return shuffled.length > 0 ? shuffled[Math.floor(Math.random() * shuffled.length)] : null;
+            }
+
+            function animateCard() {
+                if (activeCards >= MAX_VISIBLE) return;
+
+                const card = getAvailableCard();
+                if (!card) return;
+
+                card.dataset.animating = "true";
+                activeCards++;
+
+                const isLeftSide = Math.random() > 0.5;
                 const duration = gsap.utils.random(7, 12);
-
-                // Random entry angle - coming from off-screen
                 const entryFromTop = Math.random() > 0.5;
 
-                // Start position - off-screen on respective side
                 const startX = isLeftSide ? -200 : 200;
                 const startY = entryFromTop ? -200 : 200;
-
-                // Peak - visible area, toward center
                 const peakX = isLeftSide ? gsap.utils.random(60, 140) : gsap.utils.random(-140, -60);
                 const peakY = gsap.utils.random(-40, 40);
-
-                // End - inverted angle exit (mirror of entry angle)
                 const endX = isLeftSide ? -200 : 200;
-                const endY = entryFromTop ? 200 : -200; // Inverted from start
-
-                // Rotation follows the arc
+                const endY = entryFromTop ? 200 : -200;
                 const startRot = isLeftSide ? (entryFromTop ? -15 : 15) : (entryFromTop ? 15 : -15);
                 const endRot = -startRot;
 
-                gsap.timeline({ onComplete: () => animateCard(card, isLeftSide) })
+                gsap.timeline({
+                    onComplete: () => {
+                        card.dataset.animating = "";
+                        activeCards--;
+                        // Start another card after a delay
+                        gsap.delayedCall(gsap.utils.random(0.5, 2), animateCard);
+                    }
+                })
                     .set(card, { x: startX, y: startY, opacity: 0, rotation: startRot, visibility: "visible" })
-                    // Rise phase - decelerate like throwing up
                     .to(card, {
                         x: peakX,
                         y: peakY,
@@ -1734,12 +1754,10 @@
                         duration: duration * 0.49,
                         ease: "power2.out"
                     })
-                    // Pause at peak - brief stillness
                     .to(card, {
                         duration: duration * 0.01,
                         ease: "none"
                     })
-                    // Fall phase - accelerate like falling
                     .to(card, {
                         x: endX,
                         y: endY,
@@ -1750,20 +1768,10 @@
                     });
             }
 
-            // Assign random colors to cards
-            const colors = ['#f9ed32', '#f26522', '#34C759', '#ec008c', '#AF52DE', '#007AFF', '#FF9500', '#1c75bc'];
-
-            reviewCards.forEach((card, index) => {
-                // Randomly assign left or right side
-                const isLeft = Math.random() > 0.5;
-
-                // Assign random color
-                const color = colors[index % colors.length];
-                card.style.setProperty('--card-color', color);
-
-                // Stagger start times more for more cards
-                gsap.delayedCall(gsap.utils.random(0, 15), () => animateCard(card, isLeft));
-            });
+            // Start initial batch of cards with staggered timing
+            for (let i = 0; i < MAX_VISIBLE; i++) {
+                gsap.delayedCall(i * 0.8, animateCard);
+            }
         });
     </script>
 </body>
