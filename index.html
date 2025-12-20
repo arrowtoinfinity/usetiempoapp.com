@@ -937,6 +937,19 @@
             margin-right: auto;
         }
 
+        /* Single continuous line behind all steps */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 46px;
+            bottom: 46px;
+            width: 2px;
+            background: var(--color-gray-200);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
         .timeline-step {
             display: flex;
             flex-direction: column;
@@ -955,19 +968,6 @@
 
         .timeline-step:not(.centered) {
             opacity: 0.7;
-        }
-
-        /* Line connecting circles only */
-        .timeline-step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 52px;
-            width: 2px;
-            height: calc(100% - 32px);
-            background: var(--color-gray-200);
-            z-index: 0;
         }
 
         /* Event circle - matches app's event bubble style */
