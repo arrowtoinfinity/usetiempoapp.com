@@ -986,6 +986,32 @@
             transform: translate(-50%, -50%) scale(0.7);
         }
 
+        /* Connecting line that draws as you scroll */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-purple), var(--color-success));
+            z-index: 0;
+            transition: height 0.5s ease;
+            border-radius: 2px;
+        }
+
+        .timeline-line.step-1 {
+            height: 80px;
+        }
+
+        .timeline-line.step-2 {
+            height: 160px;
+        }
+
+        .timeline-line.step-3 {
+            height: 240px;
+        }
+
         /* Progress indicator dots */
         .timeline-progress {
             position: fixed;
@@ -1536,6 +1562,9 @@
 
             <div class="timeline-container">
                 <div class="timeline">
+                    <!-- Connecting line -->
+                    <div class="timeline-line" id="timelineLine"></div>
+
                     <div class="timeline-step active" data-step="0">
                         <div class="timeline-circle pending">📅</div>
                         <div class="timeline-content">
@@ -1621,8 +1650,11 @@
             const timelineSteps = document.querySelectorAll('.timeline-step');
             const progressDots = document.querySelectorAll('.timeline-progress-dot');
             const progressContainer = document.getElementById('timelineProgress');
+            const timelineLine = document.getElementById('timelineLine');
             const totalSteps = timelineSteps.length;
 
+            // Track the highest step reached (completed steps stay completed)
+            let highestStepReached = 0;
             let ticking = false;
 
             function updateTimeline() {
@@ -1638,7 +1670,12 @@
 
                 // Determine which step should be active based on scroll progress
                 const stepProgress = scrollProgress * totalSteps;
-                const activeStep = Math.min(Math.floor(stepProgress), totalSteps - 1);
+                const currentStep = Math.min(Math.floor(stepProgress), totalSteps - 1);
+
+                // Update highest step reached (only goes up, never down)
+                if (currentStep > highestStepReached) {
+                    highestStepReached = currentStep;
+                }
 
                 // Show/hide progress dots
                 if (containerTop < viewportHeight * 0.5 && containerTop > -containerHeight + viewportHeight * 0.5) {
@@ -1647,27 +1684,41 @@
                     progressContainer.classList.remove('visible');
                 }
 
+                // Update timeline line based on highest step reached
+                timelineLine.className = 'timeline-line';
+                if (highestStepReached >= 0) {
+                    timelineLine.classList.add('step-' + (highestStepReached + 1));
+                }
+
                 // Update each step
                 timelineSteps.forEach((step, index) => {
                     step.classList.remove('active', 'completed', 'upcoming');
 
-                    if (index < activeStep) {
+                    if (index < highestStepReached) {
+                        // Previously completed - stays completed permanently
                         step.classList.add('completed');
-                    } else if (index === activeStep) {
+                    } else if (index === currentStep) {
+                        // Currently active
                         step.classList.add('active');
+                    } else if (index < currentStep) {
+                        // Just scrolled past
+                        step.classList.add('completed');
                     } else {
+                        // Not yet reached
                         step.classList.add('upcoming');
                     }
                 });
 
-                // Update progress dots
+                // Update progress dots (these also stay completed permanently)
                 progressDots.forEach((dot, index) => {
                     dot.classList.remove('active', 'completed');
 
-                    if (index < activeStep) {
+                    if (index < highestStepReached) {
                         dot.classList.add('completed');
-                    } else if (index === activeStep) {
+                    } else if (index === currentStep) {
                         dot.classList.add('active');
+                    } else if (index < currentStep) {
+                        dot.classList.add('completed');
                     }
                 });
             }
