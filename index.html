@@ -929,10 +929,6 @@
             margin: 0 auto;
         }
 
-        .timeline-container {
-            display: contents;
-        }
-
         .timeline {
             margin-top: 4rem;
             position: relative;
@@ -941,58 +937,26 @@
             margin-right: auto;
         }
 
-        /* Gray connecting line behind all steps */
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 32px;
-            bottom: 32px;
-            width: 2px;
-            background: var(--color-gray-200);
-            transform: translateX(-50%);
-            z-index: 0;
-        }
-
-        /* Colored progress line that grows */
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 32px;
-            width: 3px;
-            height: 0;
-            background: linear-gradient(to bottom, var(--color-primary), var(--color-purple), var(--color-success));
-            transform: translateX(-50%);
-            z-index: 1;
-            transition: height 0.5s ease;
-            border-radius: 2px;
-        }
-
         .timeline-step {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: var(--space-2xl) 0;
+            padding: var(--space-xl) 0;
             position: relative;
-            opacity: 0;
-            transform: scale(0.85) translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .timeline-step.active {
-            opacity: 1;
-            transform: scale(1.05) translateY(0);
-        }
-
-        .timeline-step.completed {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        .timeline-step.upcoming {
-            opacity: 0.3;
-            transform: scale(0.9) translateY(10px);
+        /* Line connecting circles only */
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 52px;
+            width: 2px;
+            height: calc(100% - 32px);
+            background: var(--color-gray-200);
+            z-index: 0;
         }
 
         /* Event circle - matches app's event bubble style */
@@ -1006,9 +970,13 @@
             justify-content: center;
             font-size: 1.5rem;
             position: relative;
-            z-index: 2;
+            z-index: 1;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            background: var(--color-white);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .timeline-step:hover .timeline-circle {
+            transform: scale(1.1);
         }
 
         /* Pending style (outlined) */
@@ -1499,10 +1467,7 @@
                 </div>
 
                 <div class="timeline">
-                    <!-- Colored progress line -->
-                    <div class="timeline-line" id="timelineLine"></div>
-
-                    <div class="timeline-step" data-step="0">
+                    <div class="timeline-step">
                         <div class="timeline-circle pending">📅</div>
                         <div class="timeline-content">
                             <h3>Connect Your Life</h3>
@@ -1514,7 +1479,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-step" data-step="1">
+                    <div class="timeline-step">
                         <div class="timeline-circle completed">✨</div>
                         <div class="timeline-content">
                             <h3>Plan with AI</h3>
@@ -1525,7 +1490,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-step" data-step="2">
+                    <div class="timeline-step">
                         <div class="timeline-circle completed">🌱</div>
                         <div class="timeline-content">
                             <h3>Watch Yourself Grow</h3>
@@ -1572,86 +1537,5 @@
             <p class="footer-copy">© 2025 Nickel. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        // Timeline scroll animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const timeline = document.querySelector('.timeline');
-            const timelineSteps = document.querySelectorAll('.timeline-step');
-            const timelineLine = document.getElementById('timelineLine');
-
-            // Track completed steps (once completed, stays completed)
-            const completedSteps = new Set();
-            let ticking = false;
-
-            function updateTimeline() {
-                const viewportHeight = window.innerHeight;
-                const viewportCenter = viewportHeight * 0.6;
-
-                let maxCompletedIndex = -1;
-
-                timelineSteps.forEach((step, index) => {
-                    const rect = step.getBoundingClientRect();
-                    const stepCenter = rect.top + rect.height / 2;
-
-                    // Check if step has scrolled past the viewport center
-                    if (stepCenter < viewportCenter) {
-                        completedSteps.add(index);
-                    }
-
-                    // Track the highest completed index
-                    if (completedSteps.has(index) && index > maxCompletedIndex) {
-                        maxCompletedIndex = index;
-                    }
-
-                    // Apply states
-                    step.classList.remove('active', 'completed', 'upcoming');
-
-                    if (completedSteps.has(index)) {
-                        // Step has been scrolled past - stays completed
-                        step.classList.add('completed');
-                    } else if (rect.top < viewportHeight && rect.bottom > 0) {
-                        // Step is in viewport but not completed yet - active
-                        step.classList.add('active');
-                    } else {
-                        // Step is below viewport - upcoming
-                        step.classList.add('upcoming');
-                    }
-                });
-
-                // Update line height based on completed steps
-                if (maxCompletedIndex >= 0 && timeline) {
-                    const firstStep = timelineSteps[0];
-                    const lastCompletedStep = timelineSteps[maxCompletedIndex];
-
-                    if (firstStep && lastCompletedStep) {
-                        const timelineRect = timeline.getBoundingClientRect();
-                        const firstRect = firstStep.getBoundingClientRect();
-                        const lastRect = lastCompletedStep.getBoundingClientRect();
-
-                        // Calculate line height from first circle to last completed circle
-                        const lineStart = firstRect.top - timelineRect.top + 26; // 26 = half of circle
-                        const lineEnd = lastRect.top - timelineRect.top + 26;
-                        const lineHeight = lineEnd - lineStart + 52; // Add circle diameter
-
-                        timelineLine.style.height = Math.max(0, lineHeight) + 'px';
-                    }
-                }
-            }
-
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        updateTimeline();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-
-            // Initial update
-            updateTimeline();
-        });
-    </script>
 </body>
 </html>
