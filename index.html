@@ -946,17 +946,11 @@
             visibility: hidden;
         }
 
-        /* Review card positions - GSAP handles animation */
-        .review-card:nth-child(1) { --card-color: #f9ed32; left: 10px; top: 12%; }
-        .review-card:nth-child(2) { --card-color: #f26522; left: 15px; top: 35%; }
-        .review-card:nth-child(3) { --card-color: var(--color-success); left: 8px; top: 58%; }
-        .review-card:nth-child(7) { --card-color: #FF9500; left: 12px; top: 82%; }
-
-        /* Right side cards */
-        .review-card:nth-child(4) { --card-color: #ec008c; right: 12px; left: auto; top: 18%; }
-        .review-card:nth-child(5) { --card-color: var(--color-purple); right: 8px; left: auto; top: 45%; }
-        .review-card:nth-child(6) { --card-color: var(--color-primary); right: 15px; left: auto; top: 68%; }
-        .review-card:nth-child(8) { --card-color: var(--color-success); right: 10px; left: auto; top: 88%; }
+        /* Review card positions - GSAP handles animation and positioning */
+        .review-card {
+            left: 0;
+            top: 50%;
+        }
 
         .how-it-works-content {
             max-width: 900px;
@@ -1508,6 +1502,31 @@
                 <div class="review-card">"Game changer!"</div>
                 <div class="review-card">"Best planner ever."</div>
                 <div class="review-card">"5 stars!"</div>
+                <div class="review-card">"Changed my routine!"</div>
+                <div class="review-card">"So simple yet powerful."</div>
+                <div class="review-card">"My productivity soared."</div>
+                <div class="review-card">"Can't live without it."</div>
+                <div class="review-card">"Beautifully designed."</div>
+                <div class="review-card">"Finally organized!"</div>
+                <div class="review-card">"Worth every penny."</div>
+                <div class="review-card">"Obsessed with this app."</div>
+                <div class="review-card">"Life changing!"</div>
+                <div class="review-card">"So easy to use."</div>
+                <div class="review-card">"My new favorite app."</div>
+                <div class="review-card">"Highly recommend!"</div>
+                <div class="review-card">"Perfect for busy people."</div>
+                <div class="review-card">"Keeps me on track."</div>
+                <div class="review-card">"Amazing features!"</div>
+                <div class="review-card">"Such a clean UI."</div>
+                <div class="review-card">"Love the AI planning."</div>
+                <div class="review-card">"Exactly what I needed."</div>
+                <div class="review-card">"Goodbye chaos!"</div>
+                <div class="review-card">"10/10 would recommend."</div>
+                <div class="review-card">"My daily essential."</div>
+                <div class="review-card">"Best decision ever."</div>
+                <div class="review-card">"So glad I found this."</div>
+                <div class="review-card">"Pure genius!"</div>
+                <div class="review-card">"Absolutely love it."</div>
             </div>
 
             <div class="how-it-works-content">
@@ -1731,9 +1750,19 @@
                     });
             }
 
+            // Assign random colors to cards
+            const colors = ['#f9ed32', '#f26522', '#34C759', '#ec008c', '#AF52DE', '#007AFF', '#FF9500', '#1c75bc'];
+
             reviewCards.forEach((card, index) => {
-                const actualIsLeft = index === 0 || index === 1 || index === 2 || index === 6;
-                gsap.delayedCall(gsap.utils.random(0, 10), () => animateCard(card, actualIsLeft));
+                // Randomly assign left or right side
+                const isLeft = Math.random() > 0.5;
+
+                // Assign random color
+                const color = colors[index % colors.length];
+                card.style.setProperty('--card-color', color);
+
+                // Stagger start times more for more cards
+                gsap.delayedCall(gsap.utils.random(0, 15), () => animateCard(card, isLeft));
             });
         });
     </script>
