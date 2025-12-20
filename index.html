@@ -1705,29 +1705,23 @@
 
                 gsap.timeline({ onComplete: () => animateCard(card, isLeftSide) })
                     .set(card, { x: startX, y: startY, opacity: 0, rotation: startRot })
+                    // Rise phase - decelerate like throwing up
                     .to(card, {
-                        motionPath: {
-                            path: [
-                                { x: startX, y: startY },
-                                { x: peakX, y: peakY },
-                                { x: endX, y: endY }
-                            ],
-                            curviness: 1.5
-                        },
+                        x: peakX,
+                        y: peakY,
+                        opacity: 0.6,
+                        rotation: 0,
+                        duration: duration * 0.5,
+                        ease: "power2.out"
+                    })
+                    // Fall phase - accelerate like falling
+                    .to(card, {
+                        x: endX,
+                        y: endY,
+                        opacity: 0,
                         rotation: endRot,
-                        duration: duration,
-                        ease: "none",
-                        onUpdate: function() {
-                            // Fade in then out based on progress
-                            const progress = this.progress();
-                            if (progress < 0.15) {
-                                gsap.set(card, { opacity: progress / 0.15 * 0.6 });
-                            } else if (progress > 0.85) {
-                                gsap.set(card, { opacity: (1 - progress) / 0.15 * 0.6 });
-                            } else {
-                                gsap.set(card, { opacity: 0.6 });
-                            }
-                        }
+                        duration: duration * 0.5,
+                        ease: "power2.in"
                     });
             }
 
