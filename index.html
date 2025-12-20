@@ -1950,7 +1950,8 @@
             const occupiedRight = [];
             const MIN_Y_GAP = 80; // Minimum vertical gap between cards
             const Y_BOUNDS = { min: -180, max: 180 }; // Allow more vertical variety
-            let lastLayerFront = false; // Track last layer to alternate
+            let lastLayerFrontLeft = false; // Track last layer per side
+            let lastLayerFrontRight = false;
 
             // Assign colors to all cards
             reviewCards.forEach((card, index) => {
@@ -2024,9 +2025,14 @@
                     card.style.right = '0';
                 }
 
-                // Alternate layers: if last was under, this one goes over
-                lastLayerFront = !lastLayerFront;
-                card.style.zIndex = lastLayerFront ? '3' : '-1';
+                // Alternate layers per side: if last was under, this one goes over
+                if (isLeftSide) {
+                    lastLayerFrontLeft = !lastLayerFrontLeft;
+                    card.style.zIndex = lastLayerFrontLeft ? '3' : '-1';
+                } else {
+                    lastLayerFrontRight = !lastLayerFrontRight;
+                    card.style.zIndex = lastLayerFrontRight ? '3' : '-1';
+                }
 
                 gsap.timeline({
                     onComplete: () => {
