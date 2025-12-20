@@ -1701,7 +1701,7 @@
             gsap.registerPlugin(MotionPathPlugin);
             const reviewCards = Array.from(document.querySelectorAll('.review-card'));
             const colors = ['#f9ed32', '#f26522', '#34C759', '#ec008c', '#AF52DE', '#007AFF', '#FF9500', '#1c75bc'];
-            const MAX_PER_SIDE = 3;
+            const MAX_PER_SIDE = 4;
             let activeLeft = 0;
             let activeRight = 0;
 
@@ -1799,10 +1799,11 @@
                     });
             }
 
-            // Start initial batch of cards - 3 left, 3 right with staggered timing
+            // Start initial batch of cards - 4 left, 4 right with staggered timing
+            // Stagger by ~2 seconds to ensure 2+ cards always visible
             for (let i = 0; i < MAX_PER_SIDE; i++) {
-                gsap.delayedCall(i * 1.2, () => animateCard(true));  // Left
-                gsap.delayedCall(i * 1.2 + 0.5, () => animateCard(false)); // Right
+                gsap.delayedCall(i * 2, () => animateCard(true));  // Left
+                gsap.delayedCall(i * 2 + 1, () => animateCard(false)); // Right
             }
         });
     </script>
