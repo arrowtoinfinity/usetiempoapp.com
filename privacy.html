@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Nickel</title>
+    <meta name="description" content="Privacy Policy for Nickel: AI Daily Planner">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-white: #FFFFFF;
+            --color-light: #F8F9FA;
+            --color-gray-100: #F1F3F5;
+            --color-gray-200: #E9ECEF;
+            --color-gray-400: #ADB5BD;
+            --color-gray-600: #6C757D;
+            --color-ink: #212529;
+            --color-ink-soft: #495057;
+            --color-blue: #1c75bc;
+
+            --font-display: 'Outfit', -apple-system, sans-serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-white);
+            color: var(--color-gray-600);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-ink);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--color-ink-soft);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-ink);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-blue);
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(28,117,188,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(28,117,188,0.4);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .policy-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .policy-header h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--color-gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .policy-header .meta {
+            font-size: 0.85rem;
+            color: var(--color-gray-400);
+        }
+
+        .policy-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-ink);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .policy-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-ink);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .policy-content h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-ink);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-content p {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .policy-content ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .policy-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-content strong {
+            color: var(--color-ink);
+            font-weight: 600;
+        }
+
+        .toc {
+            background: var(--color-light);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-ink);
+            margin-bottom: 1rem;
+            margin-top: 0;
+        }
+
+        .toc ol {
+            padding-left: 1.25rem;
+            margin: 0;
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.35rem;
+            font-size: 0.85rem;
+        }
+
+        .toc a {
+            color: var(--color-gray-600);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            color: var(--color-blue);
+        }
+
+        .summary-box {
+            background: var(--color-light);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-box h4 {
+            margin-top: 0;
+        }
+
+        .qa-item {
+            margin-bottom: 1rem;
+        }
+
+        .qa-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--color-gray-100);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.9rem;
+            color: var(--color-ink-soft);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-blue);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--color-gray-600);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            nav a:not(.btn) {
+                display: none;
+            }
+
+            main {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .policy-header h1 {
+                font-size: 2rem;
+            }
+
+            .toc ol {
+                columns: 1;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="logo.png" alt="Nickel Logo">
+            <span class="logo-text">Nickel</span>
+        </a>
+        <nav>
+            <a href="/#features">Features</a>
+            <a href="/#how-it-works">How it Works</a>
+            <a href="/" class="btn">Download</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="policy-header">
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">Nickel: AI Daily Planner — Calendar, Habits, Health Goals</p>
+            <p class="meta">Effective Date: December 20, 2024 | Last Updated: December 20, 2024 | Version 1.0</p>
+        </div>
+
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#summary">Privacy Summary</a></li>
+                <li><a href="#introduction">Introduction and Scope</a></li>
+                <li><a href="#collect">Information We Collect</a></li>
+                <li><a href="#use">How We Use Your Information</a></li>
+                <li><a href="#share">How We Share Your Information</a></li>
+                <li><a href="#categories">Categories of Personal Information</a></li>
+                <li><a href="#ai">Artificial Intelligence and Machine Learning</a></li>
+                <li><a href="#security">Data Security</a></li>
+                <li><a href="#retention">Data Retention</a></li>
+                <li><a href="#rights">Your Rights and Choices</a></li>
+                <li><a href="#controls">Privacy Controls and Settings</a></li>
+                <li><a href="#children">Children's Privacy</a></li>
+                <li><a href="#international">International Data Transfers</a></li>
+                <li><a href="#third-party">Third-Party Services</a></li>
+                <li><a href="#cookies">Cookies and Tracking</a></li>
+                <li><a href="#dnt">Do Not Track Signals</a></li>
+                <li><a href="#ccpa">California Privacy Rights (CCPA/CPRA)</a></li>
+                <li><a href="#vcdpa">Virginia Privacy Rights (VCDPA)</a></li>
+                <li><a href="#cpa">Colorado Privacy Rights (CPA)</a></li>
+                <li><a href="#other-states">Other U.S. State Privacy Rights</a></li>
+                <li><a href="#gdpr">European Privacy Rights (GDPR)</a></li>
+                <li><a href="#uk">United Kingdom Privacy Rights</a></li>
+                <li><a href="#lgpd">Brazilian Privacy Rights (LGPD)</a></li>
+                <li><a href="#pipeda">Canadian Privacy Rights (PIPEDA)</a></li>
+                <li><a href="#australia">Australian Privacy Rights</a></li>
+                <li><a href="#changes">Changes to This Privacy Policy</a></li>
+                <li><a href="#disputes">Dispute Resolution</a></li>
+                <li><a href="#contact">Contact Information</a></li>
+                <li><a href="#definitions">Definitions and Glossary</a></li>
+            </ol>
+        </div>
+
+        <div class="policy-content">
+            <h2 id="summary">1. Privacy Summary</h2>
+            <p>Your privacy is very important to us. Before reading the complete policy, here is a comprehensive summary of our key privacy practices organized by topic.</p>
+
+            <h3>1.1 Data Collection and Use</h3>
+            <div class="summary-box">
+                <div class="qa-item">
+                    <strong>Do we sell your personal information for monetary value?</strong>
+                    No. We never sell your personal information to third parties for monetary compensation. Your data is not a product we monetize through sales.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we sell aggregated or de-identified data?</strong>
+                    No. We do not sell aggregated information for monetary value.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we share your personal information with third parties?</strong>
+                    Yes, but only with service providers who help us operate the App (such as cloud hosting providers), and only when you provide consent, or when required by law. We do not share your data with third parties for their own marketing purposes.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we share your personal information for targeted advertising?</strong>
+                    No. We do not share your personal information with advertising networks for targeted advertising purposes. We do not run third-party ads in our App.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we use sensitive categories of data, like health information?</strong>
+                    Yes, with your explicit consent. Health data is used solely to provide our wellness features and is subject to enhanced privacy protections. We never share health data with insurers, employers, or data brokers.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we use AI to process your data?</strong>
+                    Yes. We use artificial intelligence and machine learning to provide personalized planning recommendations, analyze your habits, and generate insights. Your personal data is not used to train AI models for other customers without your explicit consent.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we provide additional privacy protections for minors?</strong>
+                    Yes. We do not knowingly collect data from children under 13. Users aged 13-17 receive additional protections and parental guidance is recommended.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we delete your data when you request it?</strong>
+                    Yes. Upon your request, we permanently delete your personal information within 30 days, unless retention is required by law or for legitimate business purposes.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we retain your data after you request account deletion?</strong>
+                    No, except where required by law or necessary for fraud prevention, legal compliance, or dispute resolution.
+                </div>
+            </div>
+
+            <h3>1.2 Your Privacy Controls</h3>
+            <div class="summary-box">
+                <div class="qa-item">
+                    <strong>Can you control who sees your information?</strong>
+                    Yes. You have complete control over your data through comprehensive in-app privacy settings.
+                </div>
+                <div class="qa-item">
+                    <strong>Can you control what data we collect?</strong>
+                    Yes. You can adjust permissions in your device settings and within the App. You can also withdraw consent for optional data collection at any time.
+                </div>
+                <div class="qa-item">
+                    <strong>Can you access and download your data?</strong>
+                    Yes. You can request a complete copy of your personal data in machine-readable format at any time through your account settings or by contacting us.
+                </div>
+                <div class="qa-item">
+                    <strong>Can you correct inaccurate data?</strong>
+                    Yes. You can update your information directly in the App or request corrections from our support team.
+                </div>
+                <div class="qa-item">
+                    <strong>Can you delete your account and data?</strong>
+                    Yes. You can delete your account and all associated data at any time through your account settings. Deletion is permanent and irreversible.
+                </div>
+                <div class="qa-item">
+                    <strong>Do all users worldwide have the same privacy controls?</strong>
+                    Yes. We provide the same comprehensive suite of privacy controls to all users regardless of location.
+                </div>
+            </div>
+
+            <h3>1.3 Location and Tracking</h3>
+            <div class="summary-box">
+                <div class="qa-item">
+                    <strong>Do we track your device location while you are not using the App?</strong>
+                    No. We never track your location in the background. Location data is only collected when you actively use location-based features while the App is open and in the foreground.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we track your device location to provide services?</strong>
+                    Yes, but only with your explicit consent and only while you are actively using location-based features.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we use non-essential cookies?</strong>
+                    Yes, with your consent on our website. You can manage cookie preferences at any time through our cookie banner.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we track your browsing activities on other sites?</strong>
+                    No. We do not track your activity outside of our Services. We do not use cross-site tracking.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we listen to you using your device microphone?</strong>
+                    No. We do not access your microphone for any purpose.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we access your camera without permission?</strong>
+                    No. We only access your camera if you explicitly choose to add photos to your entries, and only with your device permission.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we read your contacts or address book?</strong>
+                    No. We do not access your contacts or address book without your explicit permission.
+                </div>
+            </div>
+
+            <h3>1.4 Communication</h3>
+            <div class="summary-box">
+                <div class="qa-item">
+                    <strong>Do we give you advance notice of important Privacy Policy changes?</strong>
+                    Yes. We notify you via email and/or in-app notification at least 30 days before material changes take effect.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we send you marketing communications?</strong>
+                    Only with your consent. You can opt out at any time, and we will honor your preference immediately.
+                </div>
+                <div class="qa-item">
+                    <strong>Do we send you push notifications?</strong>
+                    Yes, with your consent. You control which notifications you receive through your device and App settings.
+                </div>
+                <div class="qa-item">
+                    <strong>Can you opt out of all non-essential communications?</strong>
+                    Yes. You can manage all communication preferences in your account settings. We will only send essential service-related communications (such as security alerts or important account notices).
+                </div>
+            </div>
+
+            <h2 id="introduction">2. Introduction and Scope</h2>
+
+            <h3>2.1 About This Privacy Policy</h3>
+            <p>Nickel Time Labs ("Company," "we," "our," or "us") operates the Nickel: AI Daily Planner mobile application (the "App") and related websites, services, and features (collectively, the "Services"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Services.</p>
+            <p>This Privacy Policy applies to all users of our Services worldwide, including users who access the Services through our mobile applications for iOS and Android, our website at usenickelapp.com, any subdomains or related domains, our customer support channels, and any other platforms or interfaces we may offer.</p>
+            <p>We are committed to protecting your privacy and handling your personal information with transparency, care, and in accordance with applicable laws. We believe you should always know what data we collect from you and how we use it, and that you should have meaningful control over both.</p>
+
+            <h3>2.2 Our Commitment to Privacy</h3>
+            <p>At Nickel Time Labs, we believe that privacy is a fundamental right. Our commitment to your privacy is built on the following core principles:</p>
+            <ul>
+                <li><strong>Transparency:</strong> We clearly explain what data we collect, why we collect it, and how we use it. We avoid hidden practices, dark patterns, or confusing language.</li>
+                <li><strong>User Control:</strong> You have meaningful control over your data. We provide easy-to-use tools to access, correct, delete, and export your information.</li>
+                <li><strong>Data Security:</strong> We implement strong technical and organizational security measures to protect your information from unauthorized access, disclosure, alteration, or destruction.</li>
+                <li><strong>Data Minimization:</strong> We only collect data that is necessary to provide and improve our Services. We do not collect data for its own sake.</li>
+                <li><strong>Purpose Limitation:</strong> We use your data only for the purposes we disclose to you. We do not use your data in unexpected ways or sell it to third parties.</li>
+                <li><strong>Accountability:</strong> We take responsibility for our data practices. We have designated a Data Protection Officer and maintain compliance programs.</li>
+                <li><strong>Privacy by Design:</strong> We build privacy considerations into our products and services from the ground up, not as an afterthought.</li>
+            </ul>
+
+            <h3>2.3 Scope and Application</h3>
+            <p>This Privacy Policy applies to all information collected through our Services, including:</p>
+            <ul>
+                <li>Our mobile applications (Nickel for iOS and Nickel for Android)</li>
+                <li>Our website (usenickelapp.com and related domains)</li>
+                <li>Our customer support channels (email, in-app support, help center)</li>
+                <li>Our social media pages and interactions</li>
+                <li>Marketing and promotional communications</li>
+                <li>Any other services, features, or content we offer</li>
+            </ul>
+            <p>This Privacy Policy does not apply to:</p>
+            <ul>
+                <li>Third-party websites or services linked from our Services</li>
+                <li>Information collected by third parties through integrations you authorize</li>
+                <li>Information collected by third-party analytics providers, except as described in this policy</li>
+                <li>Services or products offered by third parties, even if they integrate with our Services</li>
+            </ul>
+
+            <h3>2.4 Agreement to This Policy</h3>
+            <p>By accessing or using the Services, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy. If you do not agree with the terms of this Privacy Policy, please do not access or use the Services.</p>
+
+            <h2 id="collect">3. Information We Collect</h2>
+            <p>We collect information about you from various sources. This section describes in detail the categories of information we collect, the sources from which we collect it, and the specific data points within each category.</p>
+
+            <h3>3.1 Information You Provide Directly</h3>
+
+            <h4>3.1.1 Account Registration Information</h4>
+            <p>When you create an account with Nickel, we collect:</p>
+            <ul>
+                <li>Your name (first and last name, or a display name of your choosing)</li>
+                <li>Email address (used for account verification, authentication, and communication)</li>
+                <li>Password (stored in encrypted/hashed form; we never store plain-text passwords)</li>
+                <li>Date of birth (used to verify age requirements and personalize your experience)</li>
+                <li>Optional profile photo</li>
+            </ul>
+
+            <h4>3.1.2 Profile Information</h4>
+            <p>You may choose to provide additional profile information including biographical information, time zone preferences, preferred language, and notification preferences.</p>
+
+            <h4>3.1.3 Calendar and Scheduling Data</h4>
+            <p>When you use our calendar and planning features, we collect information about your events including titles, descriptions, dates, times, locations, recurrence patterns, reminders, and categories.</p>
+
+            <h4>3.1.4 Habits and Goals Data</h4>
+            <p>When you use our habit tracking and goal management features, we collect habit names, frequencies, completion records, streak counts, goal definitions, and progress data.</p>
+
+            <h4>3.1.5 Health and Wellness Data (Sensitive Personal Information)</h4>
+            <p>With your explicit consent, we collect sensitive health-related information including:</p>
+            <ul>
+                <li><strong>Workout and Exercise Data:</strong> Activity type, duration, intensity, calories burned, distance, pace, and exercise notes</li>
+                <li><strong>Nutrition and Diet Data:</strong> Food logs, calorie intake, macronutrients, hydration tracking, and dietary preferences</li>
+                <li><strong>Menstrual and Reproductive Health Data:</strong> Cycle dates, patterns, symptoms, and related tracking</li>
+                <li><strong>Sleep Data:</strong> Bedtime, wake time, sleep duration, and quality ratings</li>
+                <li><strong>Body Measurements:</strong> Weight, height, BMI, and body composition data</li>
+                <li><strong>Mental Wellness Data:</strong> Mood tracking, stress levels, journaling entries, and meditation logs</li>
+            </ul>
+            <p><strong>Important:</strong> We require your explicit consent before collecting any health data. You can withdraw consent at any time. Health data is stored with additional encryption and access controls. We never share health data with insurers, employers, or data brokers.</p>
+
+            <h3>3.2 Information Collected Automatically</h3>
+            <p>When you access the Services, we automatically collect device information (type, model, OS), usage data (features accessed, actions taken), log data (IP address, timestamps), and location information (only with your consent and only while actively using location features).</p>
+
+            <h3>3.3 Information from Third-Party Sources</h3>
+            <p>If you connect third-party services, we receive data from those services including sign-in information, health and fitness data from connected apps (Apple Health, Google Fit, wearables), and calendar data from connected calendar services.</p>
+
+            <h3>3.4 Information We Do NOT Collect</h3>
+            <p>We explicitly do NOT:</p>
+            <ul>
+                <li>Access your contacts without permission</li>
+                <li>Read your emails or text messages</li>
+                <li>Record audio through your microphone</li>
+                <li>Track your location when not using location features</li>
+                <li>Collect data from other apps on your device</li>
+                <li>Purchase data from data brokers</li>
+                <li>Collect genetic or biometric data for identification</li>
+            </ul>
+
+            <h2 id="use">4. How We Use Your Information</h2>
+            <p>We use the information we collect for specific, legitimate purposes:</p>
+
+            <h3>4.1 To Provide and Maintain the Services</h3>
+            <p>Account management, core features, notifications and reminders, data synchronization, and customer support.</p>
+
+            <h3>4.2 To Provide AI-Powered Features</h3>
+            <p>Smart scheduling, habit recommendations, health insights, goal optimization, and natural language understanding.</p>
+
+            <h3>4.3 To Personalize Your Experience</h3>
+            <p>Recommending features, customizing the interface, and adapting to your preferences.</p>
+
+            <h3>4.4 To Communicate with You</h3>
+            <p>Service communications and marketing communications (with your consent).</p>
+
+            <h3>4.5 To Improve the Services</h3>
+            <p>Analyzing usage patterns, identifying improvements, and conducting research using aggregated data.</p>
+
+            <h3>4.6 To Ensure Safety and Security</h3>
+            <p>Detecting fraud, enforcing our terms, and protecting users and systems.</p>
+
+            <h2 id="share">5. How We Share Your Information</h2>
+            <p>We share your information only in the following circumstances:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> With vendors who help us operate the Services (hosting, analytics, payment processing)</li>
+                <li><strong>With Your Consent:</strong> When you explicitly authorize sharing</li>
+                <li><strong>Legal Requirements:</strong> When required by law or to protect rights and safety</li>
+                <li><strong>Business Transfers:</strong> In connection with mergers, acquisitions, or asset sales</li>
+            </ul>
+            <p>We do NOT sell your personal information. We do NOT share your data with third parties for their marketing purposes.</p>
+
+            <h2 id="categories">6. Categories of Personal Information</h2>
+            <p>Under various privacy laws, we collect the following categories: Identifiers, personal information, protected characteristics, commercial information, internet activity, geolocation data, sensory data, professional information, education information, and inferences.</p>
+
+            <h2 id="ai">7. Artificial Intelligence and Machine Learning</h2>
+            <p>We use AI and machine learning to enhance your experience. Your personal data is processed by AI to provide personalized recommendations. We do not use your data to train AI models for other customers without explicit consent. You can opt out of AI-powered features in your settings.</p>
+
+            <h2 id="security">8. Data Security</h2>
+            <p>We implement comprehensive security measures including encryption (TLS 1.3, AES-256), access controls, security monitoring, regular audits, and incident response procedures. Health data receives enhanced protection with additional encryption and restricted access.</p>
+
+            <h2 id="retention">9. Data Retention</h2>
+            <p>We retain your data for as long as your account is active or as needed to provide Services. Upon account deletion, we permanently delete your data within 30 days, except where retention is required by law.</p>
+
+            <h2 id="rights">10. Your Rights and Choices</h2>
+            <p>You have the right to access, correct, delete, and export your data. You can withdraw consent, object to processing, and lodge complaints with supervisory authorities. We honor these rights for all users regardless of location.</p>
+
+            <h2 id="controls">11. Privacy Controls and Settings</h2>
+            <p>You can manage your privacy through in-app settings, device permissions, communication preferences, and connected services management.</p>
+
+            <h2 id="children">12. Children's Privacy</h2>
+            <p>Our Services are not intended for children under 13. We do not knowingly collect data from children under 13. If we learn we have collected such data, we will delete it promptly.</p>
+
+            <h2 id="international">13. International Data Transfers</h2>
+            <p>Your data may be transferred to and processed in the United States. We use appropriate safeguards for international transfers, including Standard Contractual Clauses.</p>
+
+            <h2 id="third-party">14. Third-Party Services and Integrations</h2>
+            <p>Our Services may integrate with third-party services. These services have their own privacy policies, and we encourage you to review them.</p>
+
+            <h2 id="cookies">15. Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar technologies on our website for essential functionality, analytics, and preferences. You can manage cookie preferences through our cookie banner.</p>
+
+            <h2 id="dnt">16. Do Not Track Signals</h2>
+            <p>We honor Do Not Track signals and do not track users across third-party websites.</p>
+
+            <h2 id="ccpa">17. California Privacy Rights (CCPA/CPRA)</h2>
+            <p>California residents have additional rights including the right to know, delete, correct, and opt out of sales. We do not sell personal information. Contact us to exercise your rights.</p>
+
+            <h2 id="vcdpa">18. Virginia Privacy Rights (VCDPA)</h2>
+            <p>Virginia residents have rights to access, correct, delete, and obtain a copy of their data, and to opt out of targeted advertising and sales.</p>
+
+            <h2 id="cpa">19. Colorado Privacy Rights (CPA)</h2>
+            <p>Colorado residents have similar rights under the Colorado Privacy Act.</p>
+
+            <h2 id="other-states">20. Other U.S. State Privacy Rights</h2>
+            <p>We comply with applicable state privacy laws including those in Connecticut, Utah, and other states with privacy legislation.</p>
+
+            <h2 id="gdpr">21. European Privacy Rights (GDPR)</h2>
+            <p>EEA residents have rights under GDPR including access, rectification, erasure, restriction, portability, and objection. Our legal bases for processing include consent, contract performance, and legitimate interests.</p>
+
+            <h2 id="uk">22. United Kingdom Privacy Rights</h2>
+            <p>UK residents have similar rights under UK GDPR and the Data Protection Act 2018.</p>
+
+            <h2 id="lgpd">23. Brazilian Privacy Rights (LGPD)</h2>
+            <p>Brazilian residents have rights under LGPD including confirmation, access, correction, anonymization, portability, and deletion.</p>
+
+            <h2 id="pipeda">24. Canadian Privacy Rights (PIPEDA)</h2>
+            <p>Canadian residents have rights under PIPEDA including access and correction of personal information.</p>
+
+            <h2 id="australia">25. Australian Privacy Rights</h2>
+            <p>Australian residents have rights under the Privacy Act 1988 including access and correction.</p>
+
+            <h2 id="changes">26. Changes to This Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of material changes at least 30 days before they take effect via email and/or in-app notification. Your continued use after changes take effect constitutes acceptance.</p>
+
+            <h2 id="disputes">27. Dispute Resolution</h2>
+            <p>If you have concerns about our privacy practices, please contact us first. We will work to resolve any issues. You may also file complaints with applicable regulatory authorities.</p>
+
+            <h2 id="contact">28. Contact Information</h2>
+            <p>For privacy-related inquiries, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> privacy@usenickelapp.com</li>
+                <li><strong>Website:</strong> usenickelapp.com</li>
+            </ul>
+
+            <h2 id="definitions">29. Definitions and Glossary</h2>
+            <ul>
+                <li><strong>Personal Information:</strong> Information that identifies, relates to, or could reasonably be linked with you</li>
+                <li><strong>Sensitive Personal Information:</strong> Personal information revealing health data, precise geolocation, or other sensitive categories</li>
+                <li><strong>Processing:</strong> Any operation performed on personal information</li>
+                <li><strong>Data Controller:</strong> The entity that determines the purposes and means of processing</li>
+                <li><strong>Data Processor:</strong> An entity that processes data on behalf of the controller</li>
+                <li><strong>Services:</strong> The Nickel App and related websites, features, and services</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Nickel Logo" style="height: 32px;">
+                <span class="logo-text">Nickel</span>
+            </a>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+            <p class="footer-copy">© 2025 Nickel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
