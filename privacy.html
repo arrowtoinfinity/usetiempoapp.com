@@ -6,23 +6,28 @@
     <title>Privacy Policy — Nickel</title>
     <meta name="description" content="Privacy Policy for Nickel: AI Daily Planner">
     <link rel="icon" type="image/png" href="logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-white: #FFFFFF;
-            --color-light: #F8F9FA;
-            --color-gray-100: #F1F3F5;
-            --color-gray-200: #E9ECEF;
-            --color-gray-400: #ADB5BD;
-            --color-gray-600: #6C757D;
-            --color-ink: #212529;
-            --color-ink-soft: #495057;
-            --color-blue: #1c75bc;
+            /* App Design System Colors */
+            --color-primary: #007AFF;
+            --color-success: #34C759;
+            --color-warning: #FF9500;
+            --color-danger: #FF3B30;
+            --color-purple: #AF52DE;
 
-            --font-display: 'Outfit', -apple-system, sans-serif;
-            --font-body: 'DM Sans', -apple-system, sans-serif;
+            /* Neutrals - iOS style */
+            --color-white: #FFFFFF;
+            --color-background: #F2F2F7;
+            --color-card: #FFFFFF;
+            --color-gray-200: #E5E5EA;
+            --color-gray-400: #C7C7CC;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #C7C7CC;
+
+            /* Typography - SF Pro system fonts */
+            --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
         }
 
         * {
@@ -38,7 +43,7 @@
         body {
             font-family: var(--font-body);
             background: var(--color-white);
-            color: var(--color-gray-600);
+            color: var(--text-secondary);
             line-height: 1.7;
             font-size: 0.9rem;
         }
@@ -53,9 +58,10 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--color-gray-100);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-gray-200);
         }
 
         .logo {
@@ -73,8 +79,8 @@
         .logo-text {
             font-family: var(--font-display);
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-ink);
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         nav {
@@ -86,13 +92,13 @@
         nav a {
             font-size: 0.95rem;
             font-weight: 500;
-            color: var(--color-ink-soft);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.2s ease;
         }
 
         nav a:hover {
-            color: var(--color-ink);
+            color: var(--text-primary);
         }
 
         .btn {
@@ -100,22 +106,22 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: var(--color-blue);
+            background: var(--color-primary);
             color: var(--color-white);
             font-family: var(--font-body);
             font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
-            border-radius: 100px;
+            border-radius: 12px;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(28,117,188,0.3);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0,122,255,0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(28,117,188,0.4);
+            box-shadow: 0 6px 20px rgba(0,122,255,0.4);
         }
 
         main {
@@ -134,26 +140,26 @@
             font-family: var(--font-display);
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--color-ink);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
         .policy-header .subtitle {
             font-size: 1.1rem;
-            color: var(--color-gray-600);
+            color: var(--text-secondary);
             margin-bottom: 1rem;
         }
 
         .policy-header .meta {
             font-size: 0.85rem;
-            color: var(--color-gray-400);
+            color: var(--text-tertiary);
         }
 
         .policy-content h2 {
             font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--color-ink);
+            color: var(--text-primary);
             margin-top: 3rem;
             margin-bottom: 1rem;
         }
@@ -162,7 +168,7 @@
             font-family: var(--font-display);
             font-size: 1.15rem;
             font-weight: 600;
-            color: var(--color-ink);
+            color: var(--text-primary);
             margin-top: 2rem;
             margin-bottom: 0.75rem;
         }
@@ -171,7 +177,7 @@
             font-family: var(--font-display);
             font-size: 1rem;
             font-weight: 600;
-            color: var(--color-ink);
+            color: var(--text-primary);
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
         }
@@ -191,12 +197,12 @@
         }
 
         .policy-content strong {
-            color: var(--color-ink);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
         .toc {
-            background: var(--color-light);
+            background: var(--color-background);
             border-radius: 12px;
             padding: 1.5rem 2rem;
             margin-bottom: 2rem;
@@ -206,7 +212,7 @@
             font-family: var(--font-display);
             font-size: 1rem;
             font-weight: 600;
-            color: var(--color-ink);
+            color: var(--text-primary);
             margin-bottom: 1rem;
             margin-top: 0;
         }
@@ -224,16 +230,16 @@
         }
 
         .toc a {
-            color: var(--color-gray-600);
+            color: var(--text-secondary);
             text-decoration: none;
         }
 
         .toc a:hover {
-            color: var(--color-blue);
+            color: var(--color-primary);
         }
 
         .summary-box {
-            background: var(--color-light);
+            background: var(--color-background);
             border-radius: 12px;
             padding: 1.5rem 2rem;
             margin: 1.5rem 0;
@@ -254,7 +260,7 @@
 
         footer {
             padding: 3rem 2rem;
-            border-top: 1px solid var(--color-gray-100);
+            border-top: 1px solid var(--color-gray-200);
         }
 
         .footer-content {
@@ -274,18 +280,18 @@
 
         .footer-links a {
             font-size: 0.9rem;
-            color: var(--color-ink-soft);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.2s ease;
         }
 
         .footer-links a:hover {
-            color: var(--color-blue);
+            color: var(--color-primary);
         }
 
         .footer-copy {
             font-size: 0.85rem;
-            color: var(--color-gray-600);
+            color: var(--text-tertiary);
         }
 
         @media (max-width: 768px) {
