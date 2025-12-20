@@ -854,18 +854,16 @@
             z-index: 10;
         }
 
-        /* End time handle - top edge */
+        /* End time handle - top-left, half in half out */
         .feature-card::before {
             top: -3px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 14px;
         }
 
-        /* Start time handle - bottom edge */
+        /* Start time handle - bottom-right, half in half out */
         .feature-card::after {
             bottom: -3px;
-            left: 50%;
-            transform: translateX(-50%);
+            right: 14px;
         }
 
         .feature-card:hover::before,
@@ -875,7 +873,7 @@
 
         .feature-card:hover::before:hover,
         .feature-card:hover::after:hover {
-            transform: translateX(-50%) scale(1.2);
+            transform: scale(1.2);
             cursor: ns-resize;
         }
 
