@@ -1230,6 +1230,32 @@
         .timeline-step:nth-child(2) .timeline-circle { --circle-color: var(--color-purple); }
         .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); }
 
+        /* Radar pulse effect for centered/active timeline circle */
+        .timeline-step.centered .timeline-circle {
+            box-shadow: 0 0 0 3px #FF3B30, 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .timeline-step.centered .timeline-circle::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 59, 48, 0.5);
+            animation: radar-pulse 1.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes radar-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
         .timeline-content {
             margin-top: var(--space-lg);
             position: relative;
