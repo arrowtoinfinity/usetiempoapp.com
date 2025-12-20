@@ -957,48 +957,54 @@
         .review-card:nth-child(6) { --card-color: var(--color-primary); right: 0; left: auto; top: 75%; animation: arcRight3 16s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -9s; }
         .review-card:nth-child(8) { --card-color: var(--color-success); right: 0; left: auto; top: 90%; animation: arcRight1 13s cubic-bezier(0.45, 0, 0.55, 1) infinite; animation-delay: -1s; }
 
-        /* Left arcs - big sweeping arcs */
+        /* Left arcs - continuous trajectory, exit different than entry */
         @keyframes arcLeft1 {
-            0%, 100% { transform: translateX(-100%); opacity: 0; }
-            10% { opacity: 0.6; }
-            50% { transform: translateX(120px) translateY(-180px); opacity: 0.5; }
-            90% { opacity: 0.6; }
+            0% { transform: translateX(-100%) translateY(100px); opacity: 0; }
+            15% { opacity: 0.6; }
+            50% { transform: translateX(130px) translateY(-120px); opacity: 0.5; }
+            85% { opacity: 0.6; }
+            100% { transform: translateX(-80%) translateY(-280px); opacity: 0; }
         }
 
         @keyframes arcLeft2 {
-            0%, 100% { transform: translateX(-100%); opacity: 0; }
-            10% { opacity: 0.55; }
-            50% { transform: translateX(140px) translateY(-220px); opacity: 0.5; }
-            90% { opacity: 0.55; }
+            0% { transform: translateX(-100%) translateY(-50px); opacity: 0; }
+            15% { opacity: 0.55; }
+            50% { transform: translateX(150px) translateY(80px); opacity: 0.5; }
+            85% { opacity: 0.55; }
+            100% { transform: translateX(-60%) translateY(220px); opacity: 0; }
         }
 
         @keyframes arcLeft3 {
-            0%, 100% { transform: translateX(-100%); opacity: 0; }
-            10% { opacity: 0.5; }
-            50% { transform: translateX(100px) translateY(-160px); opacity: 0.55; }
-            90% { opacity: 0.5; }
+            0% { transform: translateX(-100%) translateY(60px); opacity: 0; }
+            15% { opacity: 0.5; }
+            50% { transform: translateX(110px) translateY(-90px); opacity: 0.55; }
+            85% { opacity: 0.5; }
+            100% { transform: translateX(-90%) translateY(-200px); opacity: 0; }
         }
 
-        /* Right arcs - big sweeping arcs */
+        /* Right arcs - continuous trajectory, exit different than entry */
         @keyframes arcRight1 {
-            0%, 100% { transform: translateX(100%); opacity: 0; }
-            10% { opacity: 0.6; }
-            50% { transform: translateX(-130px) translateY(-200px); opacity: 0.5; }
-            90% { opacity: 0.6; }
+            0% { transform: translateX(100%) translateY(-80px); opacity: 0; }
+            15% { opacity: 0.6; }
+            50% { transform: translateX(-140px) translateY(100px); opacity: 0.5; }
+            85% { opacity: 0.6; }
+            100% { transform: translateX(70%) translateY(260px); opacity: 0; }
         }
 
         @keyframes arcRight2 {
-            0%, 100% { transform: translateX(100%); opacity: 0; }
-            10% { opacity: 0.55; }
-            50% { transform: translateX(-150px) translateY(-240px); opacity: 0.5; }
-            90% { opacity: 0.55; }
+            0% { transform: translateX(100%) translateY(120px); opacity: 0; }
+            15% { opacity: 0.55; }
+            50% { transform: translateX(-160px) translateY(-60px); opacity: 0.5; }
+            85% { opacity: 0.55; }
+            100% { transform: translateX(80%) translateY(-240px); opacity: 0; }
         }
 
         @keyframes arcRight3 {
-            0%, 100% { transform: translateX(100%); opacity: 0; }
-            10% { opacity: 0.5; }
-            50% { transform: translateX(-110px) translateY(-170px); opacity: 0.55; }
-            90% { opacity: 0.5; }
+            0% { transform: translateX(100%) translateY(40px); opacity: 0; }
+            15% { opacity: 0.5; }
+            50% { transform: translateX(-120px) translateY(140px); opacity: 0.55; }
+            85% { opacity: 0.5; }
+            100% { transform: translateX(60%) translateY(300px); opacity: 0; }
         }
 
         .how-it-works-content {
