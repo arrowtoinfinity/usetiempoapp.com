@@ -917,80 +917,141 @@
             line-height: 1.7;
         }
 
-        /* How it works */
+        /* How it works - Timeline style */
         .how-it-works {
             padding: 6rem 2rem;
-            background: var(--color-background);
+            background: var(--color-white);
             position: relative;
         }
 
         .how-it-works-content {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-lg);
+        .timeline {
             margin-top: 4rem;
+            position: relative;
         }
 
-        .step {
-            text-align: center;
-            padding: var(--space-2xl);
-            background: var(--color-white);
-            border-radius: var(--radius-xl);
-            border: none;
-            box-shadow: var(--shadow-card);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        .timeline-step {
+            display: flex;
+            gap: var(--space-xl);
+            padding: var(--space-xl) 0;
+            position: relative;
         }
 
-        .step:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+        /* Connecting line */
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 26px;
+            top: 76px;
+            width: 2px;
+            height: calc(100% - 32px);
+            background: var(--color-gray-200);
         }
 
-        .step-number {
+        /* Event circle - matches app's event bubble style */
+        .timeline-circle {
             width: 52px;
             height: 52px;
+            min-width: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto var(--space-lg);
-            font-family: var(--font-display);
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: white;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .step:nth-child(1) .step-number {
-            background: #f9ed32;
-            color: var(--text-primary);
+        .timeline-step:hover .timeline-circle {
+            transform: scale(1.1);
         }
 
-        .step:nth-child(2) .step-number {
-            background: #f26522;
+        /* Pending style (outlined) */
+        .timeline-circle.pending {
+            background: var(--color-background);
+            border: 2.5px solid var(--circle-color);
         }
 
-        .step:nth-child(3) .step-number {
-            background: #1c75bc;
+        .timeline-circle.pending::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--circle-color);
+            opacity: 0.2;
+            z-index: -1;
         }
 
-        .step h3 {
+        /* Completed style (solid) */
+        .timeline-circle.completed {
+            background: var(--circle-color);
+            border: none;
+        }
+
+        .timeline-step:nth-child(1) .timeline-circle { --circle-color: var(--color-primary); }
+        .timeline-step:nth-child(2) .timeline-circle { --circle-color: var(--color-purple); }
+        .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: var(--space-xs);
+        }
+
+        .timeline-content h3 {
             font-family: var(--font-display);
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: var(--space-sm);
+            color: var(--text-primary);
         }
 
-        .step p {
+        .timeline-content p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.6;
+            max-width: 400px;
         }
+
+        /* Mini app preview cards */
+        .timeline-preview {
+            margin-top: var(--space-lg);
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .preview-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--color-background);
+            border-radius: var(--radius-full);
+            font-size: var(--text-caption);
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .preview-chip .chip-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        .preview-chip .chip-icon.blue { background: rgba(0,122,255,0.15); }
+        .preview-chip .chip-icon.green { background: rgba(52,199,89,0.15); }
+        .preview-chip .chip-icon.orange { background: rgba(255,149,0,0.15); }
+        .preview-chip .chip-icon.purple { background: rgba(175,82,222,0.15); }
 
         /* CTA Section */
         .cta-section {
@@ -1162,6 +1223,43 @@
 
             .features {
                 padding: 4rem 1.5rem;
+            }
+
+            .how-it-works {
+                padding: 4rem 1.5rem;
+            }
+
+            .timeline-step {
+                gap: var(--space-lg);
+            }
+
+            .timeline-circle {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                font-size: 1.25rem;
+            }
+
+            .timeline-step:not(:last-child)::after {
+                left: 22px;
+                top: 64px;
+            }
+
+            .timeline-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .timeline-content p {
+                font-size: 0.9rem;
+            }
+
+            .timeline-preview {
+                gap: var(--space-xs);
+            }
+
+            .preview-chip {
+                font-size: 0.65rem;
+                padding: 6px 10px;
             }
 
             .cta-card {
@@ -1354,24 +1452,44 @@
             <div class="how-it-works-content">
                 <div class="section-header">
                     <p class="section-label">How It Works</p>
-                    <h2 class="section-title">Start growing in three simple steps</h2>
+                    <h2 class="section-title">Your journey starts here</h2>
                 </div>
-                
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>Connect Your Life</h3>
-                        <p>Sync your calendars and set up your habits and health goals in minutes.</p>
+
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <div class="timeline-circle pending">📅</div>
+                        <div class="timeline-content">
+                            <h3>Connect Your Life</h3>
+                            <p>Sync your calendars, wearables, and health apps. Nickel brings everything together in one place.</p>
+                            <div class="timeline-preview">
+                                <span class="preview-chip"><span class="chip-icon blue">📆</span> Apple Calendar</span>
+                                <span class="preview-chip"><span class="chip-icon green">⌚</span> Apple Health</span>
+                                <span class="preview-chip"><span class="chip-icon orange">⌚</span> Garmin</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>Plan with AI</h3>
-                        <p>Let Nickel's AI optimize your schedule and suggest the best times for everything.</p>
+                    <div class="timeline-step">
+                        <div class="timeline-circle completed">✨</div>
+                        <div class="timeline-content">
+                            <h3>Plan with AI</h3>
+                            <p>Tell Nickel what you want to do. Our AI finds the perfect time and builds your ideal day.</p>
+                            <div class="timeline-preview">
+                                <span class="preview-chip"><span class="chip-icon purple">💬</span> Natural language</span>
+                                <span class="preview-chip"><span class="chip-icon blue">🎯</span> Smart scheduling</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>Watch Yourself Grow</h3>
-                        <p>Track your progress, celebrate streaks, and see how small daily wins add up.</p>
+                    <div class="timeline-step">
+                        <div class="timeline-circle completed">🌱</div>
+                        <div class="timeline-content">
+                            <h3>Watch Yourself Grow</h3>
+                            <p>Check off events, build streaks, and see your progress. Small daily wins become big transformations.</p>
+                            <div class="timeline-preview">
+                                <span class="preview-chip"><span class="chip-icon green">🔥</span> Streaks</span>
+                                <span class="preview-chip"><span class="chip-icon orange">📊</span> Insights</span>
+                                <span class="preview-chip"><span class="chip-icon purple">🏆</span> Achievements</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
