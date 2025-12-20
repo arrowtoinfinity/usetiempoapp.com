@@ -1088,16 +1088,16 @@
 
         /* Parent-Child Group Container */
         .feature-card.parent-container {
-            background: rgba(236, 0, 140, 0.15);
-            border: 2px dashed rgba(236, 0, 140, 0.4);
+            background: #ec008c;
+            border: 2px solid #ec008c;
             display: flex;
             flex-direction: column;
             padding: var(--space-lg);
         }
 
         .feature-card.parent-container:hover {
-            background: rgba(236, 0, 140, 0.25);
-            border: 2px solid rgba(236, 0, 140, 0.8);
+            background: rgba(236, 0, 140, 0.15);
+            border: 2px dashed rgba(236, 0, 140, 0.4);
         }
 
         .feature-card.parent-container::before,
@@ -1128,14 +1128,24 @@
             font-family: var(--font-display);
             font-size: 1.1rem;
             font-weight: 600;
-            color: #ec008c;
+            color: var(--color-white);
             margin-bottom: 0.15rem;
+            transition: color 0.2s ease;
+        }
+
+        .feature-card.parent-container:hover .parent-info h3 {
+            color: #ec008c;
         }
 
         .parent-time {
             font-size: 0.8rem;
-            color: rgba(236, 0, 140, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .feature-card.parent-container:hover .parent-time {
+            color: rgba(236, 0, 140, 0.7);
         }
 
         .child-events {
@@ -1151,15 +1161,15 @@
             align-items: center;
             gap: var(--space-sm);
             padding: var(--space-sm) var(--space-md);
-            background: var(--child-color);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1.5px solid rgba(236, 0, 140, 0.2);
         }
 
         .child-emoji {
             width: 30px;
             height: 30px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(236, 0, 140, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1171,7 +1181,7 @@
         .child-title {
             font-size: 0.8rem;
             font-weight: 500;
-            color: var(--color-white);
+            color: var(--text-primary);
         }
 
         /* How it works - Timeline style */
@@ -1912,27 +1922,27 @@
                         </div>
                     </div>
                     <div class="child-events">
-                        <div class="child-event" style="--child-color: #007AFF;">
+                        <div class="child-event">
                             <span class="child-emoji">💬</span>
                             <span class="child-title">AI Chat Assistant</span>
                         </div>
-                        <div class="child-event" style="--child-color: #FF9500;">
+                        <div class="child-event">
                             <span class="child-emoji">☀️</span>
                             <span class="child-title">Morning & Evening Briefings</span>
                         </div>
-                        <div class="child-event" style="--child-color: #34C759;">
+                        <div class="child-event">
                             <span class="child-emoji">📸</span>
                             <span class="child-title">AI Food Scanner</span>
                         </div>
-                        <div class="child-event" style="--child-color: #f26522;">
+                        <div class="child-event">
                             <span class="child-emoji">💪</span>
                             <span class="child-title">Workout Coach</span>
                         </div>
-                        <div class="child-event" style="--child-color: #AF52DE;">
+                        <div class="child-event">
                             <span class="child-emoji">🥗</span>
                             <span class="child-title">Nutrition Coach</span>
                         </div>
-                        <div class="child-event" style="--child-color: #ec008c;">
+                        <div class="child-event">
                             <span class="child-emoji">📋</span>
                             <span class="child-title">Smart Sub-Tasks</span>
                         </div>
