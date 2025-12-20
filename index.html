@@ -1088,16 +1088,16 @@
 
         /* Parent-Child Group Container */
         .feature-card.parent-container {
-            background: #ec008c;
-            border: 2px solid #ec008c;
+            background: rgba(236, 0, 140, 0.15);
+            border: 2px dashed rgba(236, 0, 140, 0.4);
             display: flex;
             flex-direction: column;
             padding: var(--space-lg);
         }
 
         .feature-card.parent-container:hover {
-            background: rgba(236, 0, 140, 0.15);
-            border: 2px dashed rgba(236, 0, 140, 0.4);
+            background: rgba(236, 0, 140, 0.25);
+            border: 2px solid rgba(236, 0, 140, 0.8);
         }
 
         .feature-card.parent-container::before,
@@ -1128,48 +1128,44 @@
             font-family: var(--font-display);
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--color-white);
+            color: #ec008c;
             margin-bottom: 0.15rem;
-            transition: color 0.2s ease;
         }
 
-        .feature-card.parent-container:hover .parent-info h3 {
-            color: #ec008c;
+        .parent-desc {
+            font-size: 0.85rem;
+            color: rgba(236, 0, 140, 0.8);
+            line-height: 1.4;
+            margin-top: 0.25rem;
         }
 
         .parent-time {
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .feature-card.parent-container:hover .parent-time {
             color: rgba(236, 0, 140, 0.7);
+            font-weight: 500;
         }
 
         .child-events {
             display: flex;
             flex-direction: column;
-            gap: var(--space-sm);
+            gap: var(--space-md);
             margin-left: auto;
             width: 85%;
         }
 
         .child-event {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: var(--space-sm);
-            padding: var(--space-sm) var(--space-md);
-            background: rgba(255, 255, 255, 0.95);
+            padding: var(--space-md);
+            background: #ec008c;
             border-radius: 8px;
-            border: 1.5px solid rgba(236, 0, 140, 0.2);
         }
 
         .child-emoji {
             width: 30px;
             height: 30px;
-            background: rgba(236, 0, 140, 0.15);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1178,10 +1174,22 @@
             flex-shrink: 0;
         }
 
+        .child-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
         .child-title {
             font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-weight: 600;
+            color: var(--color-white);
+        }
+
+        .child-desc {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.3;
         }
 
         /* How it works - Timeline style */
@@ -1918,33 +1926,52 @@
                         <span class="parent-emoji">✨</span>
                         <div class="parent-info">
                             <h3>AI Productivity</h3>
+                            <p class="parent-desc">Powered by Google Gemini, Nickel's AI features help you plan smarter and stay on track.</p>
                             <span class="parent-time">6 Smart Features</span>
                         </div>
                     </div>
                     <div class="child-events">
                         <div class="child-event">
                             <span class="child-emoji">💬</span>
-                            <span class="child-title">AI Chat Assistant</span>
+                            <div class="child-content">
+                                <span class="child-title">AI Chat Assistant</span>
+                                <span class="child-desc">Schedule with words, not taps</span>
+                            </div>
                         </div>
                         <div class="child-event">
                             <span class="child-emoji">☀️</span>
-                            <span class="child-title">Morning & Evening Briefings</span>
+                            <div class="child-content">
+                                <span class="child-title">Morning & Evening Briefings</span>
+                                <span class="child-desc">AI-generated daily schedule summaries</span>
+                            </div>
                         </div>
                         <div class="child-event">
                             <span class="child-emoji">📸</span>
-                            <span class="child-title">AI Food Scanner</span>
+                            <div class="child-content">
+                                <span class="child-title">AI Food Scanner</span>
+                                <span class="child-desc">Photo to nutrition in seconds</span>
+                            </div>
                         </div>
                         <div class="child-event">
                             <span class="child-emoji">💪</span>
-                            <span class="child-title">Workout Coach</span>
+                            <div class="child-content">
+                                <span class="child-title">Workout Coach</span>
+                                <span class="child-desc">Your pocket fitness analyst</span>
+                            </div>
                         </div>
                         <div class="child-event">
                             <span class="child-emoji">🥗</span>
-                            <span class="child-title">Nutrition Coach</span>
+                            <div class="child-content">
+                                <span class="child-title">Nutrition Coach</span>
+                                <span class="child-desc">Meal patterns, decoded</span>
+                            </div>
                         </div>
                         <div class="child-event">
                             <span class="child-emoji">📋</span>
-                            <span class="child-title">Smart Sub-Tasks</span>
+                            <div class="child-content">
+                                <span class="child-title">Smart Sub-Tasks</span>
+                                <span class="child-desc">Events auto-broken into steps</span>
+                            </div>
                         </div>
                     </div>
                 </div>
