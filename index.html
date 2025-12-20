@@ -33,7 +33,7 @@
             --text-tertiary: #C7C7CC;
 
             /* Gradient */
-            --gradient-sunrise: linear-gradient(135deg, var(--color-yellow) 0%, var(--color-orange) 35%, var(--color-magenta) 70%, var(--color-sunrise-blue) 100%);
+            --gradient-sunrise: linear-gradient(315deg, var(--color-yellow) 0%, var(--color-orange) 35%, var(--color-magenta) 70%, var(--color-sunrise-blue) 100%);
 
             /* Typography - SF Pro system fonts */
             --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
@@ -478,8 +478,8 @@
         }
 
         .app-store-btn svg {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
         }
 
         .app-store-btn span {
@@ -488,12 +488,12 @@
         }
 
         .app-store-btn .small {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
 
         .app-store-btn .large {
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: 600;
         }
 
@@ -529,25 +529,13 @@
             flex-direction: column;
         }
 
-        .phone-notch {
-            width: 126px;
-            height: 34px;
+        .phone-dynamic-island {
+            width: 100px;
+            height: 32px;
             background: var(--text-primary);
-            border-radius: 0 0 24px 24px;
-            margin: 0 auto;
+            border-radius: 20px;
+            margin: 12px auto 0;
             position: relative;
-        }
-
-        .phone-notch::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
         }
 
         .phone-content {
@@ -832,7 +820,8 @@
             overflow: visible;
         }
 
-        .feature-card:hover {
+        .feature-card:hover,
+        .feature-card.centered {
             background: var(--color-white);
         }
 
@@ -864,7 +853,9 @@
         }
 
         .feature-card:hover::before,
-        .feature-card:hover::after {
+        .feature-card:hover::after,
+        .feature-card.centered::before,
+        .feature-card.centered::after {
             opacity: 1;
         }
 
@@ -900,7 +891,8 @@
             color: var(--color-white);
         }
 
-        .feature-card:hover h3 {
+        .feature-card:hover h3,
+        .feature-card.centered h3 {
             color: var(--text-primary);
         }
 
@@ -910,7 +902,8 @@
             line-height: 1.6;
         }
 
-        .feature-card:hover p {
+        .feature-card:hover p,
+        .feature-card.centered p {
             color: var(--text-secondary);
         }
 
@@ -1375,7 +1368,7 @@
                 
                 <div class="phone-mockup">
                     <div class="phone-screen">
-                        <div class="phone-notch"></div>
+                        <div class="phone-dynamic-island"></div>
                         <div class="phone-content">
                             <div class="phone-header">
                                 <div class="phone-date">Today</div>
@@ -1550,6 +1543,7 @@
         // Timeline center-focused scaling
         document.addEventListener('DOMContentLoaded', function() {
             const timelineSteps = document.querySelectorAll('.timeline-step');
+            const featureCards = document.querySelectorAll('.feature-card');
             let ticking = false;
 
             function updateCenteredStep() {
@@ -1578,18 +1572,57 @@
                 });
             }
 
+            function updateCenteredCard() {
+                // Only apply on mobile/tablet (768px and below)
+                if (window.innerWidth > 768) {
+                    featureCards.forEach(card => card.classList.remove('centered'));
+                    return;
+                }
+
+                const viewportCenter = window.innerHeight / 2;
+                let closestCard = null;
+                let closestDistance = Infinity;
+
+                featureCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(cardCenter - viewportCenter);
+
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestCard = card;
+                    }
+                });
+
+                // Apply centered class if the card is reasonably close to center
+                featureCards.forEach(card => {
+                    if (card === closestCard && closestDistance < window.innerHeight * 0.35) {
+                        card.classList.add('centered');
+                    } else {
+                        card.classList.remove('centered');
+                    }
+                });
+            }
+
             window.addEventListener('scroll', () => {
                 if (!ticking) {
                     window.requestAnimationFrame(() => {
                         updateCenteredStep();
+                        updateCenteredCard();
                         ticking = false;
                     });
                     ticking = true;
                 }
             });
 
+            // Also update on resize in case viewport changes
+            window.addEventListener('resize', () => {
+                updateCenteredCard();
+            });
+
             // Initial update
             updateCenteredStep();
+            updateCenteredCard();
         });
     </script>
 </body>
