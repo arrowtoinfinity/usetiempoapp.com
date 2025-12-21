@@ -681,6 +681,33 @@
             color: var(--text-primary);
         }
 
+        /* Carousel Title */
+        .carousel-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .carousel-main-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .carousel-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Phone Carousel with Previews */
         .phone-carousel {
             display: flex;
@@ -2211,6 +2238,10 @@
             </div>
 
             <div class="hero-visual">
+                <div class="carousel-title">
+                    <h3 class="carousel-main-title">Timeline Blocks</h3>
+                    <p class="carousel-subtitle">Day, Week, & Month Cards</p>
+                </div>
                 <div class="phone-carousel">
                     <!-- Left Preview -->
                     <div class="phone-preview" data-screen="prev">
@@ -3065,6 +3096,18 @@
                 'screenshots/10_Group Edit.png'
             ];
 
+            // Titles for each screen (main title / subtitle)
+            const carouselTitles = [
+                { main: 'Powerful Controls', sub: 'Precise & Elegant' },
+                { main: 'Timeline Blocks', sub: 'Day, Week, & Month Cards' },
+                { main: 'Efficient To-Do\'s', sub: 'Checklist View' },
+                { main: 'Deep Focus', sub: 'Tune & Flow' },
+                { main: 'AI Chat Assistant', sub: 'Plan with Conversation' },
+                { main: 'Nutrition Analytics', sub: 'Scan, Save, Go' },
+                { main: 'Workout Sync', sub: 'Goals, Progress, and Auto-Events' },
+                { main: 'Group Planning', sub: 'Family & Friends in Sync' }
+            ];
+
             function updatePreviews() {
                 const prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
                 const nextIndex = (currentScreenIndex + 1) % totalScreens;
@@ -3135,6 +3178,26 @@
                 });
             }
 
+            function updateTitle() {
+                const titleData = carouselTitles[currentScreenIndex];
+                const mainTitleEl = document.querySelector('.carousel-main-title');
+                const subtitleEl = document.querySelector('.carousel-subtitle');
+
+                if (mainTitleEl && subtitleEl && titleData) {
+                    // Trigger fade animation
+                    const titleContainer = document.querySelector('.carousel-title');
+                    if (titleContainer) {
+                        titleContainer.style.animation = 'none';
+                        setTimeout(() => {
+                            titleContainer.style.animation = 'fadeIn 0.5s ease';
+                        }, 10);
+                    }
+
+                    mainTitleEl.textContent = titleData.main;
+                    subtitleEl.textContent = titleData.sub;
+                }
+            }
+
             function goToScreen(index) {
                 const prevScreen = document.querySelector('.phone-content.active');
                 const nextScreen = phoneScreens[index];
@@ -3153,6 +3216,7 @@
                 currentScreenIndex = index;
                 updatePreviews();
                 updateDots();
+                updateTitle();
 
                 setTimeout(() => {
                     prevScreen.classList.remove('exit-left');
@@ -3288,6 +3352,7 @@
             // Initial preview and dots update
             updatePreviews();
             updateDots();
+            updateTitle();
             scheduleNextSlide();
 
             // Integrations Carousel - Infinite Scroll
