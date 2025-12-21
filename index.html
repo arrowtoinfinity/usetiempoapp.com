@@ -715,15 +715,16 @@
             background: var(--color-background);
             overflow: hidden;
             position: relative;
-            padding-top: 30px;
         }
 
         .phone-preview-content img {
             width: 100%;
-            height: calc(100% + 30px);
-            object-fit: contain;
-            object-position: top;
-            margin-top: -30px;
+            height: 130%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: -15%;
+            left: 0;
         }
 
         .phone-mockup {
