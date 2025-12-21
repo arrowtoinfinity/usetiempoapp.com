@@ -1717,6 +1717,150 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        /* Pricing Section */
+        .pricing-section {
+            padding: 6rem 2rem;
+            background: var(--color-background);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 2px solid var(--color-gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--color-purple);
+            transform: scale(1.05);
+            box-shadow: 0 8px 40px rgba(175, 82, 222, 0.2);
+        }
+
+        .pricing-card-badge {
+            display: inline-block;
+            background: var(--color-purple);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 1rem 0;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 2rem;
+        }
+
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
         /* Footer */
         footer {
             padding: 3rem 2rem;
@@ -1909,6 +2053,8 @@
         <nav>
             <a href="#features">Features</a>
             <a href="#how-it-works">How it Works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
             <a href="#" class="btn">Download</a>
         </nav>
     </header>
@@ -2362,6 +2508,88 @@
             </div>
         </section>
 
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section">
+            <div class="section-header">
+                <p class="section-label">Pricing</p>
+                <h2 class="section-title">Simple, transparent pricing</h2>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="pricing-price">$0<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Basic calendar sync</li>
+                        <li>Up to 5 habits</li>
+                        <li>Daily planning</li>
+                        <li>Basic insights</li>
+                    </ul>
+                    <a href="#" class="btn">Get Started</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <span class="pricing-card-badge">Most Popular</span>
+                    <h3>Pro</h3>
+                    <div class="pricing-price">$4.99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited calendar sync</li>
+                        <li>Unlimited habits</li>
+                        <li>AI-powered planning</li>
+                        <li>Advanced insights</li>
+                        <li>Health integrations</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="btn">Start Free Trial</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section">
+            <div class="section-header">
+                <p class="section-label">FAQ</p>
+                <h2 class="section-title">Frequently asked questions</h2>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">Is Nickel available on Android?</button>
+                    <div class="faq-answer">
+                        <p>Currently, Nickel is only available on iOS. We're working on an Android version and will announce it when it's ready.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Can I sync with my existing calendar?</button>
+                    <div class="faq-answer">
+                        <p>Yes! Nickel syncs seamlessly with Apple Calendar, Google Calendar, and Outlook. Your events appear automatically in your daily plan.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">How does the AI planning work?</button>
+                    <div class="faq-answer">
+                        <p>Our AI learns your habits, preferences, and schedule to suggest optimal times for tasks and activities. Simply tell it what you want to do, and it finds the perfect slot.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Is my data private and secure?</button>
+                    <div class="faq-answer">
+                        <p>Absolutely. Your data is encrypted and stored securely. We never sell your personal information. You can read more in our Privacy Policy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Can I cancel my subscription anytime?</button>
+                    <div class="faq-answer">
+                        <p>Yes, you can cancel your Pro subscription at any time through the App Store. You'll continue to have access until the end of your billing period.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="cta-section">
             <!-- Floating Review Cards Background -->
             <div class="review-cards">
@@ -2424,6 +2652,8 @@
                 <span class="logo-text">Nickel</span>
             </a>
             <div class="footer-links">
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
                 <a href="/privacy">Privacy</a>
                 <a href="#">Terms</a>
                 <a href="#">Contact</a>
@@ -2884,6 +3114,22 @@
             if (ctaContent) {
                 ctaObserver.observe(ctaContent);
             }
+
+            // FAQ Accordion
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', () => {
+                    const item = button.parentElement;
+                    const isOpen = item.classList.contains('open');
+
+                    // Close all items
+                    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+                    // Open clicked item if it wasn't open
+                    if (!isOpen) {
+                        item.classList.add('open');
+                    }
+                });
+            });
         });
     </script>
 </body>
