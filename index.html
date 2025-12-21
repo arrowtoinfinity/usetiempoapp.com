@@ -1429,15 +1429,15 @@
             z-index: -1;
         }
 
-        /* Completed style (solid) */
+        /* Completed style (solid with gradient - light top, dark bottom) */
         .timeline-circle.completed {
-            background: var(--circle-color);
+            background: linear-gradient(to bottom, var(--circle-color-light) 0%, var(--circle-color) 100%);
             border: none;
         }
 
-        .timeline-step:nth-child(1) .timeline-circle { --circle-color: var(--color-primary); }
-        .timeline-step:nth-child(2) .timeline-circle { --circle-color: var(--color-purple); }
-        .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); }
+        .timeline-step:nth-child(1) .timeline-circle { --circle-color: var(--color-primary); --circle-color-light: #4da3ff; }
+        .timeline-step:nth-child(2) .timeline-circle { --circle-color: var(--color-purple); --circle-color-light: #c98aeb; }
+        .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); --circle-color-light: #6fdb8a; }
 
         /* Radar pulse effect for centered/active timeline circle */
         .timeline-step.centered .timeline-circle {
@@ -2090,7 +2090,7 @@
                     <div class="timeline-step">
                         <div class="timeline-circle completed">✨</div>
                         <div class="timeline-content">
-                            <h3>AI Productivity</h3>
+                            <h3>Plan with AI</h3>
                             <p>Tell Nickel what you want to do. Our AI finds the perfect time and builds your ideal day.</p>
                             <div class="timeline-preview">
                                 <span class="preview-chip"><span class="chip-icon purple">💬</span> Natural language</span>
