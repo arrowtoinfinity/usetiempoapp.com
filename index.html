@@ -775,6 +775,41 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .phone-content img.loaded,
+        .phone-content video.loaded {
+            opacity: 1;
+        }
+
+        .phone-content .loading-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-white);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .phone-content .loading-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .phone-content .loading-placeholder img {
+            width: 60px;
+            height: 60px;
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
         }
 
         .phone-content.active {
@@ -2157,27 +2192,51 @@
                         <div class="phone-screen">
                             <div class="phone-screens">
                                 <div class="phone-content" data-screen="0">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content active" data-screen="1">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <video src="videos/2_Timeline.mp4" alt="Timeline" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="2">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <video src="videos/3_Checklist.mp4" alt="Checklist" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="3">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <video src="videos/4_Focus.mp4" alt="Focus" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="4">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <video src="videos/5_Chat.mp4" alt="Chat" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="5">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <img src="screenshots/8_Nutrition Stats.png" alt="Nutrition Stats">
                                 </div>
                                 <div class="phone-content" data-screen="6">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <img src="screenshots/9_Workout Stats.png" alt="Workout Stats">
                                 </div>
                                 <div class="phone-content" data-screen="7">
+                                    <div class="loading-placeholder">
+                                        <img src="logo.png" alt="Loading">
+                                    </div>
                                     <img src="screenshots/10_Group Edit.png" alt="Group Edit">
                                 </div>
                             </div>
@@ -3070,6 +3129,37 @@
                     }, 8000);
                 }
             }
+
+            // Handle media loading - hide placeholder when loaded
+            phoneScreens.forEach(screen => {
+                const video = screen.querySelector('video');
+                const img = screen.querySelector('img:not(.loading-placeholder img)');
+                const placeholder = screen.querySelector('.loading-placeholder');
+
+                if (video) {
+                    video.addEventListener('loadeddata', () => {
+                        video.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    });
+                    // If video is already loaded (cached)
+                    if (video.readyState >= 2) {
+                        video.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    }
+                }
+
+                if (img) {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    });
+                    // If image is already loaded (cached)
+                    if (img.complete) {
+                        img.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    }
+                }
+            });
 
             // Initial preview and dots update
             updatePreviews();
