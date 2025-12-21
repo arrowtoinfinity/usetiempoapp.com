@@ -1634,6 +1634,13 @@
         .preview-chip .chip-icon.red { background: rgba(255,59,48,0.15); }
         .preview-chip .chip-icon.teal { background: rgba(90,200,250,0.15); }
 
+        .preview-chip .chip-icon img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            border-radius: 3px;
+        }
+
         /* Expandable preview */
         .timeline-preview-expandable {
             position: relative;
@@ -2497,7 +2504,7 @@
 
                 <div class="timeline">
                     <div class="timeline-step">
-                        <div class="timeline-circle completed"><img src="logos/google-calendar.svg" alt="Calendar"></div>
+                        <div class="timeline-circle completed">📅</div>
                         <div class="timeline-content">
                             <h3>Connect Your Life</h3>
                             <p>Sync your calendars, wearables, and health apps. Nickel brings everything together in one place.</p>
