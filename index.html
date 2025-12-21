@@ -1626,6 +1626,31 @@
             background: #2C2C2E;
         }
 
+        /* CTA Active State */
+        .cta-content {
+            transform: scale(0.95);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .cta-content.active {
+            transform: scale(1.05);
+        }
+
+        .cta-icon .cta-emoji {
+            display: inline-block;
+            transition: transform 0.15s ease;
+        }
+
+        .cta-icon .cta-emoji.pop {
+            animation: emoji-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes emoji-pop {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         /* Footer */
         footer {
             padding: 3rem 2rem;
@@ -2229,7 +2254,7 @@
             </div>
 
             <div class="cta-content">
-                <div class="cta-icon">🎯</div>
+                <div class="cta-icon"><span class="cta-emoji">🎯</span></div>
                 <h2>Ready to plan?</h2>
                 <p>Start transforming your daily routine today.</p>
                 <a href="#" class="app-store-btn">
@@ -2606,6 +2631,44 @@
                     }, 350);
                 });
             });
+
+            // CTA Section Animation - scale up and emoji cycling
+            const ctaContent = document.querySelector('.cta-content');
+            const ctaEmoji = document.querySelector('.cta-emoji');
+            const ctaEmojis = ['🎯', '📅', '✨', '🚀', '✅', '💪', '🌟', '📊'];
+            let ctaEmojiIndex = 0;
+            let ctaEmojiInterval = null;
+
+            function cycleCtaEmoji() {
+                ctaEmojiIndex = (ctaEmojiIndex + 1) % ctaEmojis.length;
+                ctaEmoji.classList.add('pop');
+                ctaEmoji.textContent = ctaEmojis[ctaEmojiIndex];
+                setTimeout(() => ctaEmoji.classList.remove('pop'), 400);
+            }
+
+            const ctaObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        ctaContent.classList.add('active');
+                        // Start emoji cycling
+                        if (!ctaEmojiInterval) {
+                            cycleCtaEmoji();
+                            ctaEmojiInterval = setInterval(cycleCtaEmoji, 1200);
+                        }
+                    } else {
+                        ctaContent.classList.remove('active');
+                        // Stop emoji cycling
+                        if (ctaEmojiInterval) {
+                            clearInterval(ctaEmojiInterval);
+                            ctaEmojiInterval = null;
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            if (ctaContent) {
+                ctaObserver.observe(ctaContent);
+            }
         });
     </script>
 </body>
