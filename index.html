@@ -2688,11 +2688,10 @@
                 }
 
                 const viewportCenter = window.innerHeight / 2;
+                let closestElement = null;
+                let closestDistance = Infinity;
 
-                // 1. Handle regular feature cards (excluding parent-container)
-                let closestCard = null;
-                let closestCardDistance = Infinity;
-
+                // Check all feature cards (excluding parent-container)
                 featureCards.forEach(card => {
                     if (card.classList.contains('parent-container')) return;
 
@@ -2700,48 +2699,32 @@
                     const elementCenter = rect.top + rect.height / 2;
                     const distance = Math.abs(elementCenter - viewportCenter);
 
-                    if (distance < closestCardDistance) {
-                        closestCardDistance = distance;
-                        closestCard = card;
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestElement = card;
                     }
                 });
 
-                // Apply to feature cards
-                featureCards.forEach(card => {
-                    if (card.classList.contains('parent-container')) {
-                        card.classList.remove('centered');
-                        return;
-                    }
-                    if (card === closestCard && closestCardDistance < window.innerHeight * 0.35) {
-                        card.classList.add('centered');
-                    } else {
-                        card.classList.remove('centered');
-                    }
-                });
-
-                // 2. Handle child events SEPARATELY (not competing with feature cards)
-                let closestChild = null;
-                let closestChildDistance = Infinity;
-
+                // Check all child events - they compete with feature cards
                 childEvents.forEach(child => {
                     const rect = child.getBoundingClientRect();
                     const elementCenter = rect.top + rect.height / 2;
                     const distance = Math.abs(elementCenter - viewportCenter);
 
-                    if (distance < closestChildDistance) {
-                        closestChildDistance = distance;
-                        closestChild = child;
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestElement = child;
                     }
                 });
 
-                // Apply to child events with same threshold
-                childEvents.forEach(child => {
-                    if (child === closestChild && closestChildDistance < window.innerHeight * 0.35) {
-                        child.classList.add('centered');
-                    } else {
-                        child.classList.remove('centered');
-                    }
-                });
+                // Remove centered from ALL elements first
+                featureCards.forEach(card => card.classList.remove('centered'));
+                childEvents.forEach(child => child.classList.remove('centered'));
+
+                // Apply centered to only the single closest element
+                if (closestElement && closestDistance < window.innerHeight * 0.35) {
+                    closestElement.classList.add('centered');
+                }
             }
 
             window.addEventListener('scroll', () => {
