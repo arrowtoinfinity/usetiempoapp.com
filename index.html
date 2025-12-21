@@ -714,6 +714,20 @@
             height: 100%;
             background: var(--color-background);
             overflow: hidden;
+            position: relative;
+        }
+
+        .phone-preview-content::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 15px;
+            background: #1C1C1E;
+            border-radius: 10px;
+            z-index: 10;
         }
 
         .phone-preview-content img {
