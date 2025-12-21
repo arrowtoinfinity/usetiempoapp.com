@@ -1547,17 +1547,22 @@
             margin-top: 0.5rem;
             display: inline-block;
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease, opacity 0.2s ease;
         }
 
         .preview-more:hover {
             color: rgba(0,0,0,0.5);
         }
 
-        .preview-more:hover + .timeline-preview-hidden,
-        .timeline-preview-hidden:hover {
+        /* Expanded state (added via JS on hover) */
+        .timeline-preview-expandable.expanded .timeline-preview-hidden {
             max-height: 200px;
             opacity: 1;
+        }
+
+        .timeline-preview-expandable.expanded .preview-more {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* CTA Section */
@@ -2113,15 +2118,20 @@
                         <div class="timeline-content">
                             <h3>Connect Your Life</h3>
                             <p>Sync your calendars, wearables, and health apps. Nickel brings everything together in one place.</p>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon blue">🍎</span> Apple Calendar</span>
-                                <span class="preview-chip"><span class="chip-icon red">📅</span> Google Calendar</span>
-                                <span class="preview-chip"><span class="chip-icon blue">📧</span> Outlook</span>
-                            </div>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon green">❤️</span> Apple Health</span>
-                                <span class="preview-chip"><span class="chip-icon orange">⌚</span> Garmin</span>
-                                <span class="preview-chip"><span class="chip-icon teal">💪</span> Fitbit</span>
+                            <div class="timeline-preview-expandable">
+                                <div class="timeline-preview">
+                                    <span class="preview-chip"><span class="chip-icon blue">🍎</span> Apple Calendar</span>
+                                    <span class="preview-chip"><span class="chip-icon red">📅</span> Google Calendar</span>
+                                    <span class="preview-chip"><span class="chip-icon blue">📧</span> Outlook</span>
+                                </div>
+                                <span class="preview-more">+3 more</span>
+                                <div class="timeline-preview-hidden">
+                                    <div class="timeline-preview">
+                                        <span class="preview-chip"><span class="chip-icon green">❤️</span> Apple Health</span>
+                                        <span class="preview-chip"><span class="chip-icon orange">⌚</span> Garmin</span>
+                                        <span class="preview-chip"><span class="chip-icon teal">💪</span> Fitbit</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2130,15 +2140,20 @@
                         <div class="timeline-content">
                             <h3>Plan with AI</h3>
                             <p>Tell Nickel what you want to do. Our AI finds the perfect time and builds your ideal day.</p>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon purple">💬</span> AI Chat</span>
-                                <span class="preview-chip"><span class="chip-icon orange">☀️</span> AI Briefings</span>
-                                <span class="preview-chip"><span class="chip-icon green">📸</span> AI Scanner</span>
-                            </div>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon red">💪</span> AI Workout Coach</span>
-                                <span class="preview-chip"><span class="chip-icon purple">🥗</span> AI Nutrition Coach</span>
-                                <span class="preview-chip"><span class="chip-icon blue">📋</span> AI Sub-Tasks</span>
+                            <div class="timeline-preview-expandable">
+                                <div class="timeline-preview">
+                                    <span class="preview-chip"><span class="chip-icon purple">💬</span> AI Chat</span>
+                                    <span class="preview-chip"><span class="chip-icon orange">☀️</span> AI Briefings</span>
+                                    <span class="preview-chip"><span class="chip-icon green">📸</span> AI Scanner</span>
+                                </div>
+                                <span class="preview-more">+3 more</span>
+                                <div class="timeline-preview-hidden">
+                                    <div class="timeline-preview">
+                                        <span class="preview-chip"><span class="chip-icon red">💪</span> AI Workout Coach</span>
+                                        <span class="preview-chip"><span class="chip-icon purple">🥗</span> AI Nutrition Coach</span>
+                                        <span class="preview-chip"><span class="chip-icon blue">📋</span> AI Sub-Tasks</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2558,6 +2573,13 @@
                 // Start cycling after page load animation
                 setTimeout(() => setInterval(cycleWord, DISPLAY_DURATION), 1500);
             })();
+
+            // Expandable preview - stays open once hovered
+            document.querySelectorAll('.preview-more').forEach(more => {
+                more.addEventListener('mouseenter', function() {
+                    this.closest('.timeline-preview-expandable').classList.add('expanded');
+                });
+            });
         });
     </script>
 </body>
