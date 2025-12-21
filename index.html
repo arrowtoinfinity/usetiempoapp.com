@@ -625,7 +625,8 @@
         .integrations-track {
             display: flex;
             gap: 1rem;
-            animation: scroll-integrations 25s linear infinite;
+            animation: scroll-integrations 30s linear infinite;
+            will-change: transform;
         }
 
         .integrations-track:hover {
@@ -634,7 +635,7 @@
 
         @keyframes scroll-integrations {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(calc(-50% - 0.5rem)); }
         }
 
         .integration-capsule {
