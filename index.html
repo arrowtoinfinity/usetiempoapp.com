@@ -2360,6 +2360,7 @@
 
             // Also update on resize in case viewport changes
             window.addEventListener('resize', () => {
+                updateCenteredStep();
                 updateCenteredCard();
             });
 
@@ -2581,6 +2582,8 @@
             document.querySelectorAll('.preview-more').forEach(more => {
                 more.addEventListener('mouseenter', function() {
                     this.closest('.timeline-preview-expandable').classList.add('expanded');
+                    // Update time line position after expansion animation
+                    setTimeout(updateCenteredStep, 350);
                 });
             });
         });
