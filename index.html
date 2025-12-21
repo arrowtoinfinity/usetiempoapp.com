@@ -3204,6 +3204,19 @@
 
                 if (prevScreen === nextScreen) return;
 
+                // Reset video in next screen before transition
+                const nextVideo = nextScreen.querySelector('video');
+                if (nextVideo) {
+                    nextVideo.currentTime = 0;
+                    nextVideo.pause();
+                }
+
+                // Pause video in previous screen
+                const prevVideo = prevScreen.querySelector('video');
+                if (prevVideo) {
+                    prevVideo.pause();
+                }
+
                 // Determine direction
                 const goingForward = index > currentScreenIndex || (currentScreenIndex === totalScreens - 1 && index === 0);
 
@@ -3212,6 +3225,11 @@
 
                 nextScreen.classList.remove('exit-left');
                 nextScreen.classList.add('active');
+
+                // Play the video in the new active screen
+                if (nextVideo) {
+                    nextVideo.play().catch(() => {}); // Ignore autoplay errors
+                }
 
                 currentScreenIndex = index;
                 updatePreviews();
@@ -3271,9 +3289,10 @@
                     };
                     video.addEventListener('ended', currentVideoEndListener, { once: true });
 
-                    // Restart video to ensure it plays
-                    video.currentTime = 0;
-                    video.play().catch(() => {}); // Ignore autoplay errors
+                    // Video is already playing from goToScreen(), just ensure it's playing
+                    if (video.paused) {
+                        video.play().catch(() => {}); // Ignore autoplay errors
+                    }
                 } else {
                     // For images, auto-advance after 8 seconds
                     autoAdvanceTimeout = setTimeout(() => {
@@ -3353,6 +3372,15 @@
             updatePreviews();
             updateDots();
             updateTitle();
+
+            // Reset and play initial video if exists
+            const initialScreen = phoneScreens[currentScreenIndex];
+            const initialVideo = initialScreen?.querySelector('video');
+            if (initialVideo) {
+                initialVideo.currentTime = 0;
+                initialVideo.play().catch(() => {}); // Ignore autoplay errors
+            }
+
             scheduleNextSlide();
 
             // Integrations Carousel - Infinite Scroll
