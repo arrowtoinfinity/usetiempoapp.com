@@ -89,7 +89,7 @@
         .logo-text {
             font-family: var(--font-display);
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
         }
 
@@ -109,6 +109,37 @@
 
         nav a:hover {
             color: var(--text-primary);
+        }
+
+        nav .btn {
+            border-radius: var(--radius-full);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
         }
 
         main {
@@ -235,6 +266,42 @@
             .policy-content h3 {
                 font-size: 1.1rem;
             }
+        }
+
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
         }
     </style>
 </head>
@@ -530,5 +597,21 @@
             Website: <a href="https://usenickelapp.com">https://usenickelapp.com</a></p>
         </div>
     </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="/" class="logo">
+                <img src="../logo.png" alt="Nickel Logo" style="height: 32px;">
+                <span class="logo-text">Nickel</span>
+            </a>
+            <div class="footer-links">
+                <a href="/faq">FAQ</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+            <p class="footer-copy">© 2025 Nickel. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
