@@ -625,17 +625,11 @@
         .integrations-track {
             display: flex;
             gap: 1rem;
-            animation: scroll-integrations 30s linear infinite;
             will-change: transform;
         }
 
         .integrations-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll-integrations {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 0.5rem)); }
+            /* Pausing handled by JavaScript */
         }
 
         .integration-capsule {
@@ -2631,8 +2625,8 @@
                         <span class="integration-name">Apple Health</span>
                     </div>
                     <div class="integration-capsule">
-                        <span class="integration-logo"><img src="logos/routines.png" alt="Routines"></span>
-                        <span class="integration-name">Routines</span>
+                        <span class="integration-logo"><img src="logos/routines.png" alt="Reminders"></span>
+                        <span class="integration-name">Reminders</span>
                     </div>
                     <div class="integration-capsule">
                         <span class="integration-logo"><img src="logos/apple-watch.png" alt="Apple Watch"></span>
@@ -2672,8 +2666,49 @@
                         <span class="integration-name">Apple Health</span>
                     </div>
                     <div class="integration-capsule">
-                        <span class="integration-logo"><img src="logos/routines.png" alt="Routines"></span>
-                        <span class="integration-name">Routines</span>
+                        <span class="integration-logo"><img src="logos/routines.png" alt="Reminders"></span>
+                        <span class="integration-name">Reminders</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/apple-watch.png" alt="Apple Watch"></span>
+                        <span class="integration-name">Apple Watch</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/outlook.png" alt="Outlook"></span>
+                        <span class="integration-name">Outlook</span>
+                    </div>
+                    <!-- Third duplicate for seamless loop -->
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/apple-calendar.png" alt="Apple Calendar"></span>
+                        <span class="integration-name">Apple Calendar</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/garmin.png" alt="Garmin"></span>
+                        <span class="integration-name">Garmin</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/google-gemini.png" alt="Google Gemini"></span>
+                        <span class="integration-name">Google Gemini</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/fitbit.png" alt="Fitbit"></span>
+                        <span class="integration-name">Fitbit</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/apple-maps.png" alt="Apple Maps"></span>
+                        <span class="integration-name">Apple Maps</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/google-calendar.svg" alt="Google Calendar"></span>
+                        <span class="integration-name">Google Calendar</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/apple-health.png" alt="Apple Health"></span>
+                        <span class="integration-name">Apple Health</span>
+                    </div>
+                    <div class="integration-capsule">
+                        <span class="integration-logo"><img src="logos/routines.png" alt="Reminders"></span>
+                        <span class="integration-name">Reminders</span>
                     </div>
                     <div class="integration-capsule">
                         <span class="integration-logo"><img src="logos/apple-watch.png" alt="Apple Watch"></span>
@@ -3476,6 +3511,49 @@
             // Initial preview and dots update
             updatePreviews();
             updateDots();
+
+            // Integrations Carousel - Infinite Scroll
+            const integrationsTrack = document.querySelector('.integrations-track');
+            let scrollPosition = 0;
+            let isPaused = false;
+            let animationId = null;
+
+            function scrollIntegrations() {
+                if (!isPaused && integrationsTrack) {
+                    scrollPosition -= 0.5; // Scroll speed (pixels per frame)
+
+                    // Get the width of one set of items (first 10 items)
+                    const firstItem = integrationsTrack.querySelector('.integration-capsule');
+                    if (firstItem) {
+                        const itemWidth = firstItem.offsetWidth;
+                        const gap = 16; // 1rem gap
+                        const oneSetWidth = (itemWidth + gap) * 10; // 10 items in original set
+
+                        // Reset when we've scrolled through one complete set
+                        if (Math.abs(scrollPosition) >= oneSetWidth) {
+                            scrollPosition = 0;
+                        }
+
+                        integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
+                    }
+                }
+
+                animationId = requestAnimationFrame(scrollIntegrations);
+            }
+
+            // Pause on hover
+            if (integrationsTrack) {
+                integrationsTrack.addEventListener('mouseenter', () => {
+                    isPaused = true;
+                });
+
+                integrationsTrack.addEventListener('mouseleave', () => {
+                    isPaused = false;
+                });
+
+                // Start the animation
+                scrollIntegrations();
+            }
 
             // CTA Section Animation - scale up and emoji cycling
             const ctaContent = document.querySelector('.cta-content');
