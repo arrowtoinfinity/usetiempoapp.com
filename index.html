@@ -720,7 +720,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
+            object-position: center;
         }
 
         .phone-mockup {
@@ -747,15 +747,6 @@
             flex-direction: column;
         }
 
-        .phone-dynamic-island {
-            width: 100px;
-            height: 32px;
-            background: var(--text-primary);
-            border-radius: 20px;
-            margin: 12px auto 0;
-            position: relative;
-        }
-
         .phone-screens {
             flex: 1;
             position: relative;
@@ -778,7 +769,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
+            object-position: center;
         }
 
         .phone-content.active {
@@ -2542,7 +2533,6 @@
 
                     <div class="phone-mockup">
                         <div class="phone-screen">
-                            <div class="phone-dynamic-island"></div>
                             <div class="phone-screens">
                                 <div class="phone-content active" data-screen="0">
                                     <img src="screenshots/1_1DTLCP.png" alt="Daily Timeline">
@@ -3423,10 +3413,10 @@
                 });
             });
 
-            // Auto-cycle every 5 seconds
+            // Auto-cycle every 8 seconds
             setInterval(() => {
                 goToScreen((currentScreenIndex + 1) % totalScreens);
-            }, 5000);
+            }, 8000);
 
             // Initial preview update
             updatePreviews();
