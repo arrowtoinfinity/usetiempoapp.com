@@ -719,6 +719,7 @@
             height: 100%;
             background: var(--color-background);
             overflow: hidden;
+            position: relative;
         }
 
         .phone-preview-content img,
@@ -727,6 +728,36 @@
             height: 100%;
             object-fit: cover;
             object-position: bottom;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .phone-preview-content img.loaded,
+        .phone-preview-content video.loaded {
+            opacity: 1;
+        }
+
+        .phone-preview-content .loading-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-white);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .phone-preview-content .loading-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .phone-preview-content .loading-placeholder img {
+            width: 50px;
+            height: 50px;
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .phone-mockup {
@@ -2184,6 +2215,9 @@
                     <!-- Left Preview -->
                     <div class="phone-preview" data-screen="prev">
                         <div class="phone-preview-content">
+                            <div class="loading-placeholder">
+                                <img src="logo.png" alt="Loading">
+                            </div>
                             <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-img" autoplay muted playsinline></video>
                         </div>
                     </div>
@@ -2246,6 +2280,9 @@
                     <!-- Right Preview -->
                     <div class="phone-preview" data-screen="next">
                         <div class="phone-preview-content">
+                            <div class="loading-placeholder">
+                                <img src="logo.png" alt="Loading">
+                            </div>
                             <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-img" autoplay muted playsinline></video>
                         </div>
                     </div>
@@ -3033,8 +3070,39 @@
                 const prevPreviewImg = document.getElementById('prev-preview-img');
                 const nextPreviewImg = document.getElementById('next-preview-img');
 
-                if (prevPreviewImg) prevPreviewImg.src = screenshotImages[prevIndex];
-                if (nextPreviewImg) nextPreviewImg.src = screenshotImages[nextIndex];
+                // Helper function to handle loading for a preview element
+                function handlePreviewLoading(element, newSrc) {
+                    if (!element) return;
+
+                    const container = element.parentElement;
+                    const placeholder = container?.querySelector('.loading-placeholder');
+
+                    // Show placeholder and hide media
+                    element.classList.remove('loaded');
+                    if (placeholder) placeholder.classList.remove('hidden');
+
+                    // Update source
+                    element.src = newSrc;
+
+                    // Handle loading completion
+                    const onLoaded = () => {
+                        element.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    };
+
+                    if (element.tagName === 'VIDEO') {
+                        element.addEventListener('loadeddata', onLoaded, { once: true });
+                        // Check if already loaded
+                        if (element.readyState >= 2) onLoaded();
+                    } else {
+                        element.addEventListener('load', onLoaded, { once: true });
+                        // Check if already loaded
+                        if (element.complete) onLoaded();
+                    }
+                }
+
+                handlePreviewLoading(prevPreviewImg, screenshotImages[prevIndex]);
+                handlePreviewLoading(nextPreviewImg, screenshotImages[nextIndex]);
             }
 
             function updateDots() {
@@ -3156,6 +3224,37 @@
                     // If image is already loaded (cached)
                     if (img.complete) {
                         img.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Handle preview media loading
+            const prevPreviewImg = document.getElementById('prev-preview-img');
+            const nextPreviewImg = document.getElementById('next-preview-img');
+
+            [prevPreviewImg, nextPreviewImg].forEach(previewElement => {
+                if (!previewElement) return;
+
+                const container = previewElement.parentElement;
+                const placeholder = container?.querySelector('.loading-placeholder');
+
+                if (previewElement.tagName === 'VIDEO') {
+                    previewElement.addEventListener('loadeddata', () => {
+                        previewElement.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    });
+                    if (previewElement.readyState >= 2) {
+                        previewElement.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    }
+                } else {
+                    previewElement.addEventListener('load', () => {
+                        previewElement.classList.add('loaded');
+                        if (placeholder) placeholder.classList.add('hidden');
+                    });
+                    if (previewElement.complete) {
+                        previewElement.classList.add('loaded');
                         if (placeholder) placeholder.classList.add('hidden');
                     }
                 }
