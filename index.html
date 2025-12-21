@@ -894,7 +894,7 @@
             border-radius: 50%;
             background: var(--color-gray-400);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease, border-radius 0.3s ease;
         }
 
         .carousel-dot:hover {
@@ -906,6 +906,7 @@
             background: var(--color-primary);
             width: 24px;
             border-radius: 4px;
+            transition: background 0.3s ease, transform 0.3s ease, border-radius 0.3s ease, width 0.1s linear;
         }
 
         .phone-header {
@@ -2337,6 +2338,7 @@
                     <span class="carousel-dot" data-index="5"></span>
                     <span class="carousel-dot" data-index="6"></span>
                     <span class="carousel-dot" data-index="7"></span>
+                    <span class="carousel-dot" data-index="8"></span>
                 </div>
             </div>
 
@@ -3191,8 +3193,10 @@
                 carouselDots.forEach((dot, index) => {
                     if (index === currentScreenIndex) {
                         dot.classList.add('active');
+                        dot.style.width = '24px'; // Reset to full width
                     } else {
                         dot.classList.remove('active');
+                        dot.style.width = '8px'; // Reset to default width
                     }
                 });
             }
@@ -3222,6 +3226,9 @@
                 const nextScreen = phoneScreens[index];
 
                 if (prevScreen === nextScreen) return;
+
+                // Stop dot progress animation
+                stopDotProgress();
 
                 // Pause video in previous screen
                 const prevVideo = prevScreen.querySelector('video');
@@ -3316,6 +3323,8 @@
             // Auto-advance logic: wait for videos to finish, or timeout for images
             let autoAdvanceTimeout = null;
             let currentVideoEndListener = null;
+            let progressAnimationId = null;
+            let imageStartTime = null;
 
             function scheduleNextSlide() {
                 // Clear any existing timeout or video listener
@@ -3346,9 +3355,65 @@
                     }
                 } else {
                     // For images, auto-advance after 8 seconds
+                    imageStartTime = Date.now();
                     autoAdvanceTimeout = setTimeout(() => {
                         goToScreen((currentScreenIndex + 1) % totalScreens);
                     }, 8000);
+                }
+
+                // Start progress animation for the dot
+                startDotProgress();
+            }
+
+            function startDotProgress() {
+                // Cancel any existing progress animation
+                if (progressAnimationId) {
+                    cancelAnimationFrame(progressAnimationId);
+                }
+
+                function updateDotProgress() {
+                    const activeDot = document.querySelector('.carousel-dot.active');
+                    const activeScreen = document.querySelector('.phone-content.active');
+                    const video = activeScreen?.querySelector('video');
+
+                    if (!activeDot) {
+                        progressAnimationId = requestAnimationFrame(updateDotProgress);
+                        return;
+                    }
+
+                    let progress = 0; // 0 = just started, 1 = finished
+
+                    if (video) {
+                        // For videos: use currentTime / duration
+                        if (video.duration && video.duration > 0) {
+                            progress = video.currentTime / video.duration;
+                        }
+                    } else {
+                        // For images: use elapsed time / 8000ms
+                        if (imageStartTime) {
+                            const elapsed = Date.now() - imageStartTime;
+                            progress = Math.min(elapsed / 8000, 1);
+                        }
+                    }
+
+                    // Map progress to width: start at 24px (0% progress), end at 8px (100% progress)
+                    const minWidth = 8;
+                    const maxWidth = 24;
+                    const currentWidth = maxWidth - (progress * (maxWidth - minWidth));
+
+                    activeDot.style.width = `${currentWidth}px`;
+
+                    // Continue animation
+                    progressAnimationId = requestAnimationFrame(updateDotProgress);
+                }
+
+                progressAnimationId = requestAnimationFrame(updateDotProgress);
+            }
+
+            function stopDotProgress() {
+                if (progressAnimationId) {
+                    cancelAnimationFrame(progressAnimationId);
+                    progressAnimationId = null;
                 }
             }
 
