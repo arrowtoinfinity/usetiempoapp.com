@@ -1161,9 +1161,11 @@
             display: flex;
             flex-direction: column;
             padding: var(--space-lg);
+            overflow: visible;
         }
 
-        .feature-card.parent-container:hover {
+        .feature-card.parent-container:hover,
+        .feature-card.parent-container.centered {
             background: rgba(175, 82, 222, 0.25);
             border: 2px solid rgba(175, 82, 222, 0.8);
         }
@@ -1200,7 +1202,8 @@
             margin-bottom: 0.15rem;
         }
 
-        .feature-card.parent-container:hover .parent-info h3 {
+        .feature-card.parent-container:hover .parent-info h3,
+        .feature-card.parent-container.centered .parent-info h3 {
             color: #AF52DE;
         }
 
@@ -1223,6 +1226,7 @@
             gap: var(--space-md);
             margin-left: auto;
             width: 85%;
+            overflow: visible;
         }
 
         .child-event {
@@ -1235,29 +1239,41 @@
             border-radius: 8px;
             border: 2.5px solid transparent;
             position: relative;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
             pointer-events: auto;
         }
 
-        .child-event:hover {
+        .child-events .child-event:hover {
             background: color-mix(in srgb, #c98aeb 20%, white);
             border: 2.5px solid #AF52DE;
+            transform: scale(1.02);
         }
 
-        .child-event:hover .child-title {
+        .child-events .child-event.centered {
+            background: color-mix(in srgb, #c98aeb 20%, white);
+            border: 2.5px solid #AF52DE;
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px red;
+        }
+
+        .child-events .child-event:hover .child-title,
+        .child-events .child-event.centered .child-title {
             color: var(--text-primary);
         }
 
-        .child-event:hover .child-desc {
+        .child-events .child-event:hover .child-desc,
+        .child-events .child-event.centered .child-desc {
             color: var(--text-secondary);
         }
 
-        .child-event:hover .child-tag {
+        .child-events .child-event:hover .child-tag,
+        .child-events .child-event.centered .child-tag {
             background: rgba(175, 82, 222, 0.15);
             color: #AF52DE;
         }
 
-        .child-event:hover .child-emoji {
+        .child-events .child-event:hover .child-emoji,
+        .child-events .child-event.centered .child-emoji {
             background: rgba(175, 82, 222, 0.15);
         }
 
@@ -1286,8 +1302,10 @@
             right: 10px;
         }
 
-        .child-event:hover::before,
-        .child-event:hover::after {
+        .child-events .child-event:hover::before,
+        .child-events .child-event:hover::after,
+        .child-events .child-event.centered::before,
+        .child-events .child-event.centered::after {
             opacity: 1;
         }
 
@@ -2600,6 +2618,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const timelineSteps = document.querySelectorAll('.timeline-step');
             const featureCards = document.querySelectorAll('.feature-card');
+            const childEvents = document.querySelectorAll('.child-event');
             const currentTimeLine = document.querySelector('.current-time-line');
             const howItWorksSection = document.querySelector('.how-it-works');
             const timeline = document.querySelector('.timeline');
@@ -2665,30 +2684,63 @@
                 // Only apply on mobile/tablet (768px and below)
                 if (window.innerWidth > 768) {
                     featureCards.forEach(card => card.classList.remove('centered'));
+                    childEvents.forEach(e => e.classList.remove('centered'));
                     return;
                 }
 
                 const viewportCenter = window.innerHeight / 2;
+
+                // 1. Handle regular feature cards (excluding parent-container)
                 let closestCard = null;
-                let closestDistance = Infinity;
+                let closestCardDistance = Infinity;
 
                 featureCards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    const cardCenter = rect.top + rect.height / 2;
-                    const distance = Math.abs(cardCenter - viewportCenter);
+                    if (card.classList.contains('parent-container')) return;
 
-                    if (distance < closestDistance) {
-                        closestDistance = distance;
+                    const rect = card.getBoundingClientRect();
+                    const elementCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(elementCenter - viewportCenter);
+
+                    if (distance < closestCardDistance) {
+                        closestCardDistance = distance;
                         closestCard = card;
                     }
                 });
 
-                // Apply centered class if the card is reasonably close to center
+                // Apply to feature cards
                 featureCards.forEach(card => {
-                    if (card === closestCard && closestDistance < window.innerHeight * 0.35) {
+                    if (card.classList.contains('parent-container')) {
+                        card.classList.remove('centered');
+                        return;
+                    }
+                    if (card === closestCard && closestCardDistance < window.innerHeight * 0.35) {
                         card.classList.add('centered');
                     } else {
                         card.classList.remove('centered');
+                    }
+                });
+
+                // 2. Handle child events SEPARATELY (not competing with feature cards)
+                let closestChild = null;
+                let closestChildDistance = Infinity;
+
+                childEvents.forEach(child => {
+                    const rect = child.getBoundingClientRect();
+                    const elementCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(elementCenter - viewportCenter);
+
+                    if (distance < closestChildDistance) {
+                        closestChildDistance = distance;
+                        closestChild = child;
+                    }
+                });
+
+                // Apply to child events with same threshold
+                childEvents.forEach(child => {
+                    if (child === closestChild && closestChildDistance < window.innerHeight * 0.35) {
+                        child.classList.add('centered');
+                    } else {
+                        child.classList.remove('centered');
                     }
                 });
             }
