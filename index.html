@@ -658,6 +658,50 @@
             color: var(--text-primary);
         }
 
+        /* Phone Carousel with Previews */
+        .phone-carousel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .phone-preview {
+            width: 140px;
+            height: 290px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .phone-preview:hover {
+            opacity: 0.85;
+            transform: scale(1.03);
+        }
+
+        .phone-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .phone-preview-content {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--color-white) 0%, var(--color-background) 100%);
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transform: scale(0.9);
+            transform-origin: top center;
+        }
+
         .phone-mockup {
             width: 300px;
             height: 620px;
@@ -669,6 +713,7 @@
                 0 30px 60px -30px rgba(0,0,0,0.25),
                 inset 0 0 0 2px rgba(255,255,255,0.1);
             position: relative;
+            flex-shrink: 0;
         }
 
         .phone-screen {
@@ -690,13 +735,34 @@
             position: relative;
         }
 
-        .phone-content {
+        .phone-screens {
             flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-content {
+            position: absolute;
+            inset: 0;
             padding: 1.25rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
             background: linear-gradient(180deg, var(--color-white) 0%, var(--color-background) 100%);
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .phone-content.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .phone-content.exit-left {
+            transform: translateX(-100%);
         }
 
         .phone-header {
@@ -1774,6 +1840,10 @@
                 display: none;
             }
 
+            .phone-preview {
+                display: none;
+            }
+
             .features {
                 padding: 4rem 1.5rem;
             }
@@ -1899,54 +1969,131 @@
                     <span class="floating-icon orange">🔥</span>
                     Goals on track
                 </div>
-                
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="phone-dynamic-island"></div>
-                        <div class="phone-content">
-                            <div class="phone-header">
-                                <div class="phone-date">Today</div>
-                                <div class="phone-avatar">
-                                    <img src="logo.png" alt="">
+
+                <div class="phone-carousel">
+                    <!-- Left Preview -->
+                    <div class="phone-preview" data-screen="prev">
+                        <div class="phone-preview-content">
+                            <div style="font-size: 0.6rem; font-weight: 600; color: var(--text-secondary);">AI CHAT</div>
+                            <div style="background: var(--color-purple); color: white; padding: 0.4rem; border-radius: 8px; font-size: 0.5rem;">What should I focus on today?</div>
+                            <div style="background: var(--color-background); padding: 0.4rem; border-radius: 8px; font-size: 0.5rem;">Based on your goals, I recommend...</div>
+                        </div>
+                    </div>
+
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="phone-dynamic-island"></div>
+                            <div class="phone-screens">
+                                <!-- Screen 1: Daily Progress -->
+                                <div class="phone-content active" data-screen="0">
+                                    <div class="phone-header">
+                                        <div class="phone-date">Today</div>
+                                        <div class="phone-avatar">
+                                            <img src="logo.png" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div class="phone-card">
+                                        <div class="phone-card-header">
+                                            <span class="phone-card-label">Daily Progress</span>
+                                            <span class="phone-card-badge">+12% vs last week</span>
+                                        </div>
+                                        <div class="progress-ring">
+                                            <div class="progress-circle">
+                                                <svg width="60" height="60">
+                                                    <circle class="progress-circle-bg" cx="30" cy="30" r="25"/>
+                                                    <circle class="progress-circle-fill" cx="30" cy="30" r="25"/>
+                                                </svg>
+                                                <span class="progress-value">78%</span>
+                                            </div>
+                                            <div class="progress-details">
+                                                <div class="progress-stat"><strong>5/6</strong> habits completed</div>
+                                                <div class="progress-stat"><strong>3</strong> events remaining</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="phone-timeline">
+                                        <div class="timeline-item">
+                                            <span class="timeline-icon workout">💪</span>
+                                            Morning workout
+                                            <span class="timeline-time">7:00 AM</span>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-icon meeting">👥</span>
+                                            Team standup
+                                            <span class="timeline-time">9:30 AM</span>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-icon wellness">🧘</span>
+                                            Meditation
+                                            <span class="timeline-time">12:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Screen 2: AI Chat -->
+                                <div class="phone-content" data-screen="1">
+                                    <div class="phone-header">
+                                        <div class="phone-date">AI Chat</div>
+                                        <div class="phone-avatar">
+                                            <img src="logo.png" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; gap: 0.75rem; flex: 1;">
+                                        <div style="align-self: flex-end; background: var(--color-purple); color: white; padding: 0.75rem 1rem; border-radius: 16px 16px 4px 16px; max-width: 85%; font-size: 0.85rem;">
+                                            What should I focus on today?
+                                        </div>
+                                        <div style="align-self: flex-start; background: var(--color-background); padding: 0.75rem 1rem; border-radius: 16px 16px 16px 4px; max-width: 85%; font-size: 0.85rem;">
+                                            Based on your goals, I recommend prioritizing your workout and the team standup. You have 3 hours of focus time available this afternoon.
+                                        </div>
+                                        <div style="align-self: flex-end; background: var(--color-purple); color: white; padding: 0.75rem 1rem; border-radius: 16px 16px 4px 16px; max-width: 85%; font-size: 0.85rem;">
+                                            Schedule a deep work block
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Screen 3: Habits -->
+                                <div class="phone-content" data-screen="2">
+                                    <div class="phone-header">
+                                        <div class="phone-date">Habits</div>
+                                        <div class="phone-avatar">
+                                            <img src="logo.png" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                        <div style="background: var(--color-white); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                                            <span style="font-size: 1.5rem;">💧</span>
+                                            <div style="flex: 1;"><div style="font-weight: 600; font-size: 0.9rem;">Drink water</div><div style="font-size: 0.7rem; color: var(--text-secondary);">6/8 glasses</div></div>
+                                            <span style="color: var(--color-primary);">●●●●●●○○</span>
+                                        </div>
+                                        <div style="background: var(--color-white); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                                            <span style="font-size: 1.5rem;">📚</span>
+                                            <div style="flex: 1;"><div style="font-weight: 600; font-size: 0.9rem;">Read 30 mins</div><div style="font-size: 0.7rem; color: var(--text-secondary);">12 day streak 🔥</div></div>
+                                            <span style="color: var(--color-success);">✓</span>
+                                        </div>
+                                        <div style="background: var(--color-white); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                                            <span style="font-size: 1.5rem;">🧘</span>
+                                            <div style="flex: 1;"><div style="font-weight: 600; font-size: 0.9rem;">Meditate</div><div style="font-size: 0.7rem; color: var(--text-secondary);">10 min session</div></div>
+                                            <span style="color: var(--color-success);">✓</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="phone-card">
-                                <div class="phone-card-header">
-                                    <span class="phone-card-label">Daily Progress</span>
-                                    <span class="phone-card-badge">+12% vs last week</span>
-                                </div>
-                                <div class="progress-ring">
-                                    <div class="progress-circle">
-                                        <svg width="60" height="60">
-                                            <circle class="progress-circle-bg" cx="30" cy="30" r="25"/>
-                                            <circle class="progress-circle-fill" cx="30" cy="30" r="25"/>
-                                        </svg>
-                                        <span class="progress-value">78%</span>
-                                    </div>
-                                    <div class="progress-details">
-                                        <div class="progress-stat"><strong>5/6</strong> habits completed</div>
-                                        <div class="progress-stat"><strong>3</strong> events remaining</div>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Preview -->
+                    <div class="phone-preview" data-screen="next">
+                        <div class="phone-preview-content">
+                            <div style="font-size: 0.6rem; font-weight: 600; color: var(--text-secondary);">HABITS</div>
+                            <div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <span>💧</span> Drink water
                             </div>
-                            
-                            <div class="phone-timeline">
-                                <div class="timeline-item">
-                                    <span class="timeline-icon workout">💪</span>
-                                    Morning workout
-                                    <span class="timeline-time">7:00 AM</span>
-                                </div>
-                                <div class="timeline-item">
-                                    <span class="timeline-icon meeting">👥</span>
-                                    Team standup
-                                    <span class="timeline-time">9:30 AM</span>
-                                </div>
-                                <div class="timeline-item">
-                                    <span class="timeline-icon wellness">🧘</span>
-                                    Meditation
-                                    <span class="timeline-time">12:00 PM</span>
-                                </div>
+                            <div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <span>📚</span> Read 30 mins
                             </div>
                         </div>
                     </div>
@@ -2631,6 +2778,74 @@
                     }, 350);
                 });
             });
+
+            // Phone Carousel
+            const phoneScreens = document.querySelectorAll('.phone-screens .phone-content');
+            const phonePreviews = document.querySelectorAll('.phone-preview');
+            let currentScreenIndex = 0;
+            const totalScreens = phoneScreens.length;
+
+            // Preview content for each screen
+            const previewContents = [
+                { title: 'TODAY', content: '<div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">Daily Progress 78%</div><div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; margin-top: 0.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">💪 Morning workout</div>' },
+                { title: 'AI CHAT', content: '<div style="background: var(--color-purple); color: white; padding: 0.4rem; border-radius: 8px; font-size: 0.5rem;">What should I focus on?</div><div style="background: var(--color-background); padding: 0.4rem; border-radius: 8px; font-size: 0.5rem; margin-top: 0.25rem;">Based on your goals...</div>' },
+                { title: 'HABITS', content: '<div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><span>💧</span> Drink water</div><div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; margin-top: 0.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><span>📚</span> Read 30 mins</div>' }
+            ];
+
+            function updatePreviews() {
+                const prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
+                const nextIndex = (currentScreenIndex + 1) % totalScreens;
+
+                phonePreviews.forEach(preview => {
+                    const screenType = preview.dataset.screen;
+                    const index = screenType === 'prev' ? prevIndex : nextIndex;
+                    const content = previewContents[index];
+                    preview.querySelector('.phone-preview-content').innerHTML =
+                        `<div style="font-size: 0.6rem; font-weight: 600; color: var(--text-secondary);">${content.title}</div>${content.content}`;
+                });
+            }
+
+            function goToScreen(index) {
+                const prevScreen = document.querySelector('.phone-content.active');
+                const nextScreen = phoneScreens[index];
+
+                if (prevScreen === nextScreen) return;
+
+                // Determine direction
+                const goingForward = index > currentScreenIndex || (currentScreenIndex === totalScreens - 1 && index === 0);
+
+                prevScreen.classList.add('exit-left');
+                prevScreen.classList.remove('active');
+
+                nextScreen.classList.remove('exit-left');
+                nextScreen.classList.add('active');
+
+                currentScreenIndex = index;
+                updatePreviews();
+
+                setTimeout(() => {
+                    prevScreen.classList.remove('exit-left');
+                }, 400);
+            }
+
+            phonePreviews.forEach(preview => {
+                preview.addEventListener('click', () => {
+                    const screenType = preview.dataset.screen;
+                    if (screenType === 'prev') {
+                        goToScreen((currentScreenIndex - 1 + totalScreens) % totalScreens);
+                    } else {
+                        goToScreen((currentScreenIndex + 1) % totalScreens);
+                    }
+                });
+            });
+
+            // Auto-cycle every 5 seconds
+            setInterval(() => {
+                goToScreen((currentScreenIndex + 1) % totalScreens);
+            }, 5000);
+
+            // Initial preview update
+            updatePreviews();
 
             // CTA Section Animation - scale up and emoji cycling
             const ctaContent = document.querySelector('.cta-content');
