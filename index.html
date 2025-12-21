@@ -1533,6 +1533,13 @@
             border: none;
         }
 
+        .timeline-circle img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
         .timeline-step:nth-child(1) .timeline-circle { --circle-color: var(--color-primary); --circle-color-light: #4da3ff; }
         .timeline-step:nth-child(2) .timeline-circle { --circle-color: var(--color-purple); --circle-color-light: #c98aeb; }
         .timeline-step:nth-child(3) .timeline-circle { --circle-color: var(--color-success); --circle-color-light: #6fdb8a; }
@@ -2490,7 +2497,7 @@
 
                 <div class="timeline">
                     <div class="timeline-step">
-                        <div class="timeline-circle completed">📅</div>
+                        <div class="timeline-circle completed"><img src="logos/google-calendar.svg" alt="Calendar"></div>
                         <div class="timeline-content">
                             <h3>Connect Your Life</h3>
                             <p>Sync your calendars, wearables, and health apps. Nickel brings everything together in one place.</p>
@@ -2512,7 +2519,7 @@
                         </div>
                     </div>
                     <div class="timeline-step">
-                        <div class="timeline-circle completed">✨</div>
+                        <div class="timeline-circle completed"><img src="logos/google-gemini.png" alt="AI"></div>
                         <div class="timeline-content">
                             <h3>Plan with AI</h3>
                             <p>Tell Nickel what you want to do. Our AI finds the perfect time and builds your ideal day.</p>
@@ -2534,7 +2541,7 @@
                         </div>
                     </div>
                     <div class="timeline-step">
-                        <div class="timeline-circle completed">🌱</div>
+                        <div class="timeline-circle completed"><img src="logos/routines.png" alt="Progress"></div>
                         <div class="timeline-content">
                             <h3>Track Your Progress</h3>
                             <p>Check off events, build streaks, and see your progress. Small daily wins become big transformations.</p>
