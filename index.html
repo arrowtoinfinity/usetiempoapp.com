@@ -780,6 +780,35 @@
             opacity: 0;
         }
 
+        /* Carousel Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-gray-400);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot:hover {
+            background: var(--color-gray-200);
+            transform: scale(1.2);
+        }
+
+        .carousel-dot.active {
+            background: var(--color-primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
         .phone-header {
             display: flex;
             justify-content: space-between;
@@ -2558,6 +2587,15 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Carousel Dots -->
+                <div class="carousel-dots">
+                    <span class="carousel-dot" data-index="0"></span>
+                    <span class="carousel-dot active" data-index="1"></span>
+                    <span class="carousel-dot" data-index="2"></span>
+                    <span class="carousel-dot" data-index="3"></span>
+                    <span class="carousel-dot" data-index="4"></span>
+                </div>
             </div>
 
             <!-- Integrations Carousel -->
@@ -3354,6 +3392,7 @@
             // Phone Carousel
             const phoneScreens = document.querySelectorAll('.phone-screens .phone-content');
             const phonePreviews = document.querySelectorAll('.phone-preview');
+            const carouselDots = document.querySelectorAll('.carousel-dot');
             let currentScreenIndex = 1;
             const totalScreens = phoneScreens.length;
 
@@ -3377,6 +3416,16 @@
                 if (nextPreviewImg) nextPreviewImg.src = screenshotImages[nextIndex];
             }
 
+            function updateDots() {
+                carouselDots.forEach((dot, index) => {
+                    if (index === currentScreenIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
             function goToScreen(index) {
                 const prevScreen = document.querySelector('.phone-content.active');
                 const nextScreen = phoneScreens[index];
@@ -3394,6 +3443,7 @@
 
                 currentScreenIndex = index;
                 updatePreviews();
+                updateDots();
 
                 setTimeout(() => {
                     prevScreen.classList.remove('exit-left');
@@ -3411,13 +3461,21 @@
                 });
             });
 
+            carouselDots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const index = parseInt(dot.dataset.index);
+                    goToScreen(index);
+                });
+            });
+
             // Auto-cycle every 8 seconds
             setInterval(() => {
                 goToScreen((currentScreenIndex + 1) % totalScreens);
             }, 8000);
 
-            // Initial preview update
+            // Initial preview and dots update
             updatePreviews();
+            updateDots();
 
             // CTA Section Animation - scale up and emoji cycling
             const ctaContent = document.querySelector('.cta-content');
