@@ -2218,7 +2218,8 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-img" autoplay muted playsinline></video>
+                            <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-video" autoplay muted playsinline></video>
+                            <img src="" alt="App Screenshot" id="prev-preview-img" style="display: none;">
                         </div>
                     </div>
 
@@ -2283,7 +2284,8 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-img" autoplay muted playsinline></video>
+                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-video" autoplay muted playsinline></video>
+                            <img src="" alt="App Screenshot" id="next-preview-img" style="display: none;">
                         </div>
                     </div>
                 </div>
@@ -3067,42 +3069,60 @@
                 const prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
                 const nextIndex = (currentScreenIndex + 1) % totalScreens;
 
-                const prevPreviewImg = document.getElementById('prev-preview-img');
-                const nextPreviewImg = document.getElementById('next-preview-img');
-
-                // Helper function to handle loading for a preview element
-                function handlePreviewLoading(element, newSrc) {
-                    if (!element) return;
-
-                    const container = element.parentElement;
+                // Helper function to update a preview (handles both video and image)
+                function updatePreview(previewType, srcPath) {
+                    const videoEl = document.getElementById(`${previewType}-preview-video`);
+                    const imgEl = document.getElementById(`${previewType}-preview-img`);
+                    const container = videoEl?.parentElement;
                     const placeholder = container?.querySelector('.loading-placeholder');
 
-                    // Show placeholder and hide media
-                    element.classList.remove('loaded');
+                    if (!videoEl || !imgEl) return;
+
+                    // Determine if source is video or image
+                    const isVideo = srcPath.endsWith('.mp4') || srcPath.endsWith('.mov');
+
+                    // Show placeholder
                     if (placeholder) placeholder.classList.remove('hidden');
 
-                    // Update source
-                    element.src = newSrc;
+                    if (isVideo) {
+                        // Hide image, show video
+                        imgEl.style.display = 'none';
+                        imgEl.classList.remove('loaded');
+                        videoEl.style.display = 'block';
+                        videoEl.classList.remove('loaded');
 
-                    // Handle loading completion
-                    const onLoaded = () => {
-                        element.classList.add('loaded');
-                        if (placeholder) placeholder.classList.add('hidden');
-                    };
+                        // Update video source
+                        videoEl.src = srcPath;
 
-                    if (element.tagName === 'VIDEO') {
-                        element.addEventListener('loadeddata', onLoaded, { once: true });
-                        // Check if already loaded
-                        if (element.readyState >= 2) onLoaded();
+                        // Handle video loading
+                        const onVideoLoaded = () => {
+                            videoEl.classList.add('loaded');
+                            if (placeholder) placeholder.classList.add('hidden');
+                        };
+                        videoEl.addEventListener('loadeddata', onVideoLoaded, { once: true });
+                        if (videoEl.readyState >= 2) onVideoLoaded();
                     } else {
-                        element.addEventListener('load', onLoaded, { once: true });
-                        // Check if already loaded
-                        if (element.complete) onLoaded();
+                        // Hide video, show image
+                        videoEl.style.display = 'none';
+                        videoEl.classList.remove('loaded');
+                        imgEl.style.display = 'block';
+                        imgEl.classList.remove('loaded');
+
+                        // Update image source
+                        imgEl.src = srcPath;
+
+                        // Handle image loading
+                        const onImageLoaded = () => {
+                            imgEl.classList.add('loaded');
+                            if (placeholder) placeholder.classList.add('hidden');
+                        };
+                        imgEl.addEventListener('load', onImageLoaded, { once: true });
+                        if (imgEl.complete && imgEl.src === srcPath) onImageLoaded();
                     }
                 }
 
-                handlePreviewLoading(prevPreviewImg, screenshotImages[prevIndex]);
-                handlePreviewLoading(nextPreviewImg, screenshotImages[nextIndex]);
+                updatePreview('prev', screenshotImages[prevIndex]);
+                updatePreview('next', screenshotImages[nextIndex]);
             }
 
             function updateDots() {
@@ -3229,32 +3249,37 @@
                 }
             });
 
-            // Handle preview media loading
-            const prevPreviewImg = document.getElementById('prev-preview-img');
-            const nextPreviewImg = document.getElementById('next-preview-img');
-
-            [prevPreviewImg, nextPreviewImg].forEach(previewElement => {
-                if (!previewElement) return;
-
-                const container = previewElement.parentElement;
+            // Handle preview media loading for both video and image elements
+            ['prev', 'next'].forEach(previewType => {
+                const videoEl = document.getElementById(`${previewType}-preview-video`);
+                const imgEl = document.getElementById(`${previewType}-preview-img`);
+                const container = videoEl?.parentElement;
                 const placeholder = container?.querySelector('.loading-placeholder');
 
-                if (previewElement.tagName === 'VIDEO') {
-                    previewElement.addEventListener('loadeddata', () => {
-                        previewElement.classList.add('loaded');
-                        if (placeholder) placeholder.classList.add('hidden');
+                // Setup video element loading
+                if (videoEl) {
+                    videoEl.addEventListener('loadeddata', () => {
+                        videoEl.classList.add('loaded');
+                        if (placeholder && videoEl.style.display !== 'none') {
+                            placeholder.classList.add('hidden');
+                        }
                     });
-                    if (previewElement.readyState >= 2) {
-                        previewElement.classList.add('loaded');
+                    if (videoEl.readyState >= 2 && videoEl.style.display !== 'none') {
+                        videoEl.classList.add('loaded');
                         if (placeholder) placeholder.classList.add('hidden');
                     }
-                } else {
-                    previewElement.addEventListener('load', () => {
-                        previewElement.classList.add('loaded');
-                        if (placeholder) placeholder.classList.add('hidden');
+                }
+
+                // Setup image element loading
+                if (imgEl) {
+                    imgEl.addEventListener('load', () => {
+                        imgEl.classList.add('loaded');
+                        if (placeholder && imgEl.style.display !== 'none') {
+                            placeholder.classList.add('hidden');
+                        }
                     });
-                    if (previewElement.complete) {
-                        previewElement.classList.add('loaded');
+                    if (imgEl.complete && imgEl.src && imgEl.style.display !== 'none') {
+                        imgEl.classList.add('loaded');
                         if (placeholder) placeholder.classList.add('hidden');
                     }
                 }
