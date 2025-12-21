@@ -707,7 +707,8 @@
             transform: scale(1.03);
         }
 
-        .phone-preview img {
+        .phone-preview img,
+        .phone-preview video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -720,7 +721,8 @@
             overflow: hidden;
         }
 
-        .phone-preview-content img {
+        .phone-preview-content img,
+        .phone-preview-content video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -767,7 +769,8 @@
             pointer-events: none;
         }
 
-        .phone-content img {
+        .phone-content img,
+        .phone-content video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -2146,7 +2149,7 @@
                     <!-- Left Preview -->
                     <div class="phone-preview" data-screen="prev">
                         <div class="phone-preview-content">
-                            <img src="screenshots/1_Bottom Control Panel.png" alt="App Screenshot" id="prev-preview-img">
+                            <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-img" autoplay loop muted playsinline></video>
                         </div>
                     </div>
 
@@ -2154,36 +2157,27 @@
                         <div class="phone-screen">
                             <div class="phone-screens">
                                 <div class="phone-content" data-screen="0">
-                                    <img src="screenshots/1_Bottom Control Panel.png" alt="Bottom Control Panel">
+                                    <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" autoplay loop muted playsinline></video>
                                 </div>
                                 <div class="phone-content active" data-screen="1">
-                                    <img src="screenshots/2_Timeline Day View.png" alt="Timeline Day View">
+                                    <video src="videos/2_Timeline.mp4" alt="Timeline" autoplay loop muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="2">
-                                    <img src="screenshots/2_Week View.png" alt="Week View">
+                                    <video src="videos/3_Checklist.mp4" alt="Checklist" autoplay loop muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="3">
-                                    <img src="screenshots/3_Month View.png" alt="Month View">
+                                    <video src="videos/4_Focus.mp4" alt="Focus" autoplay loop muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="4">
-                                    <img src="screenshots/4_Checklist Day View.png" alt="Checklist Day View">
+                                    <video src="videos/5_Chat.mp4" alt="Chat" autoplay loop muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="5">
-                                    <img src="screenshots/5_Focus View.png" alt="Focus View">
-                                </div>
-                                <div class="phone-content" data-screen="6">
-                                    <img src="screenshots/6_Chat View.png" alt="Chat View">
-                                </div>
-                                <div class="phone-content" data-screen="7">
-                                    <img src="screenshots/7_Analytics View.png" alt="Analytics View">
-                                </div>
-                                <div class="phone-content" data-screen="8">
                                     <img src="screenshots/8_Nutrition Stats.png" alt="Nutrition Stats">
                                 </div>
-                                <div class="phone-content" data-screen="9">
+                                <div class="phone-content" data-screen="6">
                                     <img src="screenshots/9_Workout Stats.png" alt="Workout Stats">
                                 </div>
-                                <div class="phone-content" data-screen="10">
+                                <div class="phone-content" data-screen="7">
                                     <img src="screenshots/10_Group Edit.png" alt="Group Edit">
                                 </div>
                             </div>
@@ -2193,7 +2187,7 @@
                     <!-- Right Preview -->
                     <div class="phone-preview" data-screen="next">
                         <div class="phone-preview-content">
-                            <img src="screenshots/2_Week View.png" alt="App Screenshot" id="next-preview-img">
+                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-img" autoplay loop muted playsinline></video>
                         </div>
                     </div>
                 </div>
@@ -2208,9 +2202,6 @@
                     <span class="carousel-dot" data-index="5"></span>
                     <span class="carousel-dot" data-index="6"></span>
                     <span class="carousel-dot" data-index="7"></span>
-                    <span class="carousel-dot" data-index="8"></span>
-                    <span class="carousel-dot" data-index="9"></span>
-                    <span class="carousel-dot" data-index="10"></span>
                 </div>
             </div>
 
@@ -2964,16 +2955,13 @@
             let currentScreenIndex = 1;
             const totalScreens = phoneScreens.length;
 
-            // Screenshot images for each screen
+            // Media files for each screen (videos and images)
             const screenshotImages = [
-                'screenshots/1_Bottom Control Panel.png',
-                'screenshots/2_Timeline Day View.png',
-                'screenshots/2_Week View.png',
-                'screenshots/3_Month View.png',
-                'screenshots/4_Checklist Day View.png',
-                'screenshots/5_Focus View.png',
-                'screenshots/6_Chat View.png',
-                'screenshots/7_Analytics View.png',
+                'videos/1_Bottom Control Panel.mp4',
+                'videos/2_Timeline.mp4',
+                'videos/3_Checklist.mp4',
+                'videos/4_Focus.mp4',
+                'videos/5_Chat.mp4',
                 'screenshots/8_Nutrition Stats.png',
                 'screenshots/9_Workout Stats.png',
                 'screenshots/10_Group Edit.png'
