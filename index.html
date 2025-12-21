@@ -2481,13 +2481,13 @@
                         <div class="timeline-content">
                             <h3>Track Your Progress</h3>
                             <p>Check off events, build streaks, and see your progress. Small daily wins become big transformations.</p>
-                            <div class="timeline-preview-expandable">
+                            <div class="timeline-preview-expandable click-to-expand">
                                 <div class="timeline-preview">
                                     <span class="preview-chip"><span class="chip-icon orange">🔥</span> Streaks</span>
                                     <span class="preview-chip"><span class="chip-icon blue">📊</span> Insights</span>
                                     <span class="preview-chip"><span class="chip-icon purple">🏆</span> Achievements</span>
                                 </div>
-                                <span class="preview-more">+5 more</span>
+                                <span class="preview-more">more</span>
                                 <div class="timeline-preview-hidden">
                                     <div class="timeline-preview">
                                         <span class="preview-chip"><span class="chip-icon green">🎯</span> Goals</span>
@@ -2911,10 +2911,13 @@
                 setTimeout(() => setInterval(cycleWord, DISPLAY_DURATION), 1500);
             })();
 
-            // Expandable preview - stays open once hovered
+            // Expandable preview - hover for regular, click for .click-to-expand
             document.querySelectorAll('.preview-more').forEach(more => {
-                more.addEventListener('mouseenter', function() {
-                    this.closest('.timeline-preview-expandable').classList.add('expanded');
+                const expandable = more.closest('.timeline-preview-expandable');
+                const isClickOnly = expandable.classList.contains('click-to-expand');
+
+                more.addEventListener(isClickOnly ? 'click' : 'mouseenter', function() {
+                    expandable.classList.add('expanded');
                     // Update line positions after expansion animation
                     setTimeout(() => {
                         updateCenteredStep();
