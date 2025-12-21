@@ -1068,7 +1068,7 @@
 
         .feature-card:hover,
         .feature-card.centered {
-            background: var(--color-white);
+            background: color-mix(in srgb, var(--card-color-light) 20%, white);
             border: 3px solid var(--card-color);
         }
 
@@ -1240,7 +1240,7 @@
         }
 
         .child-event:hover {
-            background: var(--color-white);
+            background: color-mix(in srgb, #c98aeb 20%, white);
             border: 2.5px solid #AF52DE;
         }
 
@@ -1288,6 +1288,41 @@
 
         .child-event:hover::before,
         .child-event:hover::after {
+            opacity: 1;
+        }
+
+        /* Child events get tinted fill when parent is centered (mobile) */
+        .feature-card.parent-container.centered .child-event,
+        .feature-card.parent-container:hover .child-event {
+            background: color-mix(in srgb, #c98aeb 20%, white);
+            border: 2.5px solid #AF52DE;
+        }
+
+        .feature-card.parent-container.centered .child-event .child-title,
+        .feature-card.parent-container:hover .child-event .child-title {
+            color: var(--text-primary);
+        }
+
+        .feature-card.parent-container.centered .child-event .child-desc,
+        .feature-card.parent-container:hover .child-event .child-desc {
+            color: var(--text-secondary);
+        }
+
+        .feature-card.parent-container.centered .child-event .child-tag,
+        .feature-card.parent-container:hover .child-event .child-tag {
+            background: rgba(175, 82, 222, 0.15);
+            color: #AF52DE;
+        }
+
+        .feature-card.parent-container.centered .child-event .child-emoji,
+        .feature-card.parent-container:hover .child-event .child-emoji {
+            background: rgba(175, 82, 222, 0.15);
+        }
+
+        .feature-card.parent-container.centered .child-event::before,
+        .feature-card.parent-container.centered .child-event::after,
+        .feature-card.parent-container:hover .child-event::before,
+        .feature-card.parent-container:hover .child-event::after {
             opacity: 1;
         }
 
