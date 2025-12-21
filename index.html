@@ -903,10 +903,9 @@
         }
 
         .carousel-dot.active {
-            background: var(--color-primary);
             width: 24px;
             border-radius: 4px;
-            transition: background 0.3s ease, transform 0.3s ease, border-radius 0.3s ease, width 0.1s linear;
+            transition: transform 0.3s ease, border-radius 0.3s ease, width 0.1s linear;
         }
 
         .phone-header {
@@ -3194,9 +3193,11 @@
                     if (index === currentScreenIndex) {
                         dot.classList.add('active');
                         dot.style.width = '24px'; // Reset to full width
+                        dot.style.background = 'rgb(28, 117, 188)'; // Reset to sunrise blue (start of sunset)
                     } else {
                         dot.classList.remove('active');
                         dot.style.width = '8px'; // Reset to default width
+                        dot.style.background = ''; // Reset to CSS default (gray)
                     }
                 });
             }
@@ -3365,6 +3366,37 @@
                 startDotProgress();
             }
 
+            // Interpolate between two RGB colors
+            function interpolateColor(color1, color2, factor) {
+                const r = Math.round(color1.r + (color2.r - color1.r) * factor);
+                const g = Math.round(color1.g + (color2.g - color1.g) * factor);
+                const b = Math.round(color1.b + (color2.b - color1.b) * factor);
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+
+            // Get color for progress through sunset scheme: Blue → Magenta → Orange → Yellow
+            function getSunsetColor(progress) {
+                // Define sunset colors (matching brand's sunset gradient)
+                const sunriseBlue = { r: 28, g: 117, b: 188 };   // #1c75bc
+                const magenta = { r: 236, g: 0, b: 140 };        // #ec008c
+                const orange = { r: 242, g: 101, b: 34 };        // #f26522
+                const yellow = { r: 249, g: 237, b: 50 };        // #f9ed32
+
+                if (progress < 0.25) {
+                    // Blue to Magenta (0% to 25%)
+                    const factor = progress / 0.25;
+                    return interpolateColor(sunriseBlue, magenta, factor);
+                } else if (progress < 0.65) {
+                    // Magenta to Orange (25% to 65%)
+                    const factor = (progress - 0.25) / 0.4;
+                    return interpolateColor(magenta, orange, factor);
+                } else {
+                    // Orange to Yellow (65% to 100%)
+                    const factor = (progress - 0.65) / 0.35;
+                    return interpolateColor(orange, yellow, factor);
+                }
+            }
+
             function startDotProgress() {
                 // Cancel any existing progress animation
                 if (progressAnimationId) {
@@ -3402,6 +3434,9 @@
                     const currentWidth = maxWidth - (progress * (maxWidth - minWidth));
 
                     activeDot.style.width = `${currentWidth}px`;
+
+                    // Animate through sunset colors: Blue → Magenta → Orange → Yellow
+                    activeDot.style.background = getSunsetColor(progress);
 
                     // Continue animation
                     progressAnimationId = requestAnimationFrame(updateDotProgress);
