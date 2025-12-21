@@ -1529,6 +1529,37 @@
         .preview-chip .chip-icon.red { background: rgba(255,59,48,0.15); }
         .preview-chip .chip-icon.teal { background: rgba(90,200,250,0.15); }
 
+        /* Expandable preview */
+        .timeline-preview-expandable {
+            position: relative;
+        }
+
+        .timeline-preview-hidden {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        .preview-more {
+            font-size: 0.75rem;
+            color: rgba(0,0,0,0.35);
+            margin-top: 0.5rem;
+            display: inline-block;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .preview-more:hover {
+            color: rgba(0,0,0,0.5);
+        }
+
+        .preview-more:hover + .timeline-preview-hidden,
+        .timeline-preview-hidden:hover {
+            max-height: 200px;
+            opacity: 1;
+        }
+
         /* CTA Section */
         .cta-section {
             padding: 6rem 2rem;
@@ -2116,19 +2147,24 @@
                         <div class="timeline-content">
                             <h3>Track Your Progress</h3>
                             <p>Check off events, build streaks, and see your progress. Small daily wins become big transformations.</p>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon orange">🔥</span> Streaks</span>
-                                <span class="preview-chip"><span class="chip-icon blue">📊</span> Insights</span>
-                                <span class="preview-chip"><span class="chip-icon purple">🏆</span> Achievements</span>
-                            </div>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon green">🎯</span> Goals</span>
-                                <span class="preview-chip"><span class="chip-icon teal">🔄</span> Habits</span>
-                                <span class="preview-chip"><span class="chip-icon red">🌙</span> Cycle Tracking</span>
-                            </div>
-                            <div class="timeline-preview">
-                                <span class="preview-chip"><span class="chip-icon orange">💪</span> Workouts</span>
-                                <span class="preview-chip"><span class="chip-icon green">🥗</span> Nutrition</span>
+                            <div class="timeline-preview-expandable">
+                                <div class="timeline-preview">
+                                    <span class="preview-chip"><span class="chip-icon orange">🔥</span> Streaks</span>
+                                    <span class="preview-chip"><span class="chip-icon blue">📊</span> Insights</span>
+                                    <span class="preview-chip"><span class="chip-icon purple">🏆</span> Achievements</span>
+                                </div>
+                                <span class="preview-more">+5 more</span>
+                                <div class="timeline-preview-hidden">
+                                    <div class="timeline-preview">
+                                        <span class="preview-chip"><span class="chip-icon green">🎯</span> Goals</span>
+                                        <span class="preview-chip"><span class="chip-icon teal">🔄</span> Habits</span>
+                                        <span class="preview-chip"><span class="chip-icon red">🌙</span> Cycle Tracking</span>
+                                    </div>
+                                    <div class="timeline-preview">
+                                        <span class="preview-chip"><span class="chip-icon orange">💪</span> Workouts</span>
+                                        <span class="preview-chip"><span class="chip-icon green">🥗</span> Nutrition</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
