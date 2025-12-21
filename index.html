@@ -1366,11 +1366,11 @@
             position: absolute;
             left: 50%;
             top: 46px;
-            bottom: 280px;
             width: 2px;
             background: var(--color-gray-200);
             transform: translateX(-50%);
             z-index: 0;
+            height: var(--timeline-line-height, 400px);
         }
 
         .timeline-step {
@@ -2271,7 +2271,22 @@
             const featureCards = document.querySelectorAll('.feature-card');
             const currentTimeLine = document.querySelector('.current-time-line');
             const howItWorksSection = document.querySelector('.how-it-works');
+            const timeline = document.querySelector('.timeline');
             let ticking = false;
+
+            // Update gray timeline line to always reach the last circle
+            function updateTimelineLineHeight() {
+                if (!timeline || timelineSteps.length < 2) return;
+                const firstCircle = timelineSteps[0].querySelector('.timeline-circle');
+                const lastCircle = timelineSteps[timelineSteps.length - 1].querySelector('.timeline-circle');
+                if (firstCircle && lastCircle) {
+                    const timelineRect = timeline.getBoundingClientRect();
+                    const firstRect = firstCircle.getBoundingClientRect();
+                    const lastRect = lastCircle.getBoundingClientRect();
+                    const lineHeight = (lastRect.top + lastRect.height / 2) - (firstRect.top + firstRect.height / 2);
+                    timeline.style.setProperty('--timeline-line-height', lineHeight + 'px');
+                }
+            }
 
             function updateCenteredStep() {
                 const viewportCenter = window.innerHeight / 2;
@@ -2362,11 +2377,13 @@
             window.addEventListener('resize', () => {
                 updateCenteredStep();
                 updateCenteredCard();
+                updateTimelineLineHeight();
             });
 
             // Initial update
             updateCenteredStep();
             updateCenteredCard();
+            updateTimelineLineHeight();
 
             // GSAP Review Card Animations - Natural toss with inverted exit angle
             gsap.registerPlugin(MotionPathPlugin);
@@ -2582,8 +2599,11 @@
             document.querySelectorAll('.preview-more').forEach(more => {
                 more.addEventListener('mouseenter', function() {
                     this.closest('.timeline-preview-expandable').classList.add('expanded');
-                    // Update time line position after expansion animation
-                    setTimeout(updateCenteredStep, 350);
+                    // Update line positions after expansion animation
+                    setTimeout(() => {
+                        updateCenteredStep();
+                        updateTimelineLineHeight();
+                    }, 350);
                 });
             });
         });
