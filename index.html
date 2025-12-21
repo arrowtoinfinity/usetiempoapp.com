@@ -2249,7 +2249,7 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/2_Timeline.mp4" alt="App Screenshot" id="prev-preview-video" autoplay muted playsinline></video>
+                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="prev-preview-video" autoplay muted playsinline></video>
                             <img src="" alt="App Screenshot" id="prev-preview-img" style="display: none;">
                         </div>
                     </div>
@@ -2315,7 +2315,7 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-video" autoplay muted playsinline></video>
+                            <video src="videos/2_Timeline.mp4" alt="App Screenshot" id="next-preview-video" autoplay muted playsinline></video>
                             <img src="" alt="App Screenshot" id="next-preview-img" style="display: none;">
                         </div>
                     </div>
@@ -3114,9 +3114,9 @@
 
                 // Special behavior for first carousel loop on slide 0
                 if (isFirstCarouselLoop && currentScreenIndex === 0) {
-                    // Show video 2 on left, video 3 on right to draw attention forward
-                    prevIndex = 1; // Video 2 (Timeline Blocks)
-                    nextIndex = 2; // Video 3 (Checklist)
+                    // Show video 3 on left, video 2 on right for natural left-to-right flow
+                    prevIndex = 2; // Video 3 (Checklist) on left
+                    nextIndex = 1; // Video 2 (Timeline) on right - natural next step
                 } else {
                     // Normal behavior: previous and next slides
                     prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
