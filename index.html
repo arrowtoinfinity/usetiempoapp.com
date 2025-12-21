@@ -1547,7 +1547,7 @@
             margin-top: 0.5rem;
             display: inline-block;
             cursor: pointer;
-            transition: color 0.2s ease, opacity 0.2s ease;
+            transition: color 0.2s ease, opacity 0.2s ease, height 0.2s ease, margin 0.2s ease;
         }
 
         .preview-more:hover {
@@ -1563,6 +1563,9 @@
         .timeline-preview-expandable.expanded .preview-more {
             opacity: 0;
             pointer-events: none;
+            height: 0;
+            margin: 0;
+            display: none;
         }
 
         /* CTA Section */
