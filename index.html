@@ -2149,7 +2149,7 @@
                     <!-- Left Preview -->
                     <div class="phone-preview" data-screen="prev">
                         <div class="phone-preview-content">
-                            <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-img" autoplay loop muted playsinline></video>
+                            <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-img" autoplay muted playsinline></video>
                         </div>
                     </div>
 
@@ -2157,19 +2157,19 @@
                         <div class="phone-screen">
                             <div class="phone-screens">
                                 <div class="phone-content" data-screen="0">
-                                    <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" autoplay loop muted playsinline></video>
+                                    <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content active" data-screen="1">
-                                    <video src="videos/2_Timeline.mp4" alt="Timeline" autoplay loop muted playsinline></video>
+                                    <video src="videos/2_Timeline.mp4" alt="Timeline" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="2">
-                                    <video src="videos/3_Checklist.mp4" alt="Checklist" autoplay loop muted playsinline></video>
+                                    <video src="videos/3_Checklist.mp4" alt="Checklist" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="3">
-                                    <video src="videos/4_Focus.mp4" alt="Focus" autoplay loop muted playsinline></video>
+                                    <video src="videos/4_Focus.mp4" alt="Focus" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="4">
-                                    <video src="videos/5_Chat.mp4" alt="Chat" autoplay loop muted playsinline></video>
+                                    <video src="videos/5_Chat.mp4" alt="Chat" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="5">
                                     <img src="screenshots/8_Nutrition Stats.png" alt="Nutrition Stats">
@@ -2187,7 +2187,7 @@
                     <!-- Right Preview -->
                     <div class="phone-preview" data-screen="next">
                         <div class="phone-preview-content">
-                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-img" autoplay loop muted playsinline></video>
+                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="next-preview-img" autoplay muted playsinline></video>
                         </div>
                     </div>
                 </div>
@@ -3010,6 +3010,9 @@
                 setTimeout(() => {
                     prevScreen.classList.remove('exit-left');
                 }, 400);
+
+                // Schedule next slide after transition
+                scheduleNextSlide();
             }
 
             phonePreviews.forEach(preview => {
@@ -3030,14 +3033,48 @@
                 });
             });
 
-            // Auto-cycle every 8 seconds
-            setInterval(() => {
-                goToScreen((currentScreenIndex + 1) % totalScreens);
-            }, 8000);
+            // Auto-advance logic: wait for videos to finish, or timeout for images
+            let autoAdvanceTimeout = null;
+            let currentVideoEndListener = null;
+
+            function scheduleNextSlide() {
+                // Clear any existing timeout or video listener
+                if (autoAdvanceTimeout) {
+                    clearTimeout(autoAdvanceTimeout);
+                    autoAdvanceTimeout = null;
+                }
+
+                const activeScreen = document.querySelector('.phone-content.active');
+                const video = activeScreen?.querySelector('video');
+
+                if (video) {
+                    // Remove previous video listener if exists
+                    if (currentVideoEndListener) {
+                        const allVideos = document.querySelectorAll('.phone-content video');
+                        allVideos.forEach(v => v.removeEventListener('ended', currentVideoEndListener));
+                    }
+
+                    // Wait for video to end before advancing
+                    currentVideoEndListener = () => {
+                        goToScreen((currentScreenIndex + 1) % totalScreens);
+                    };
+                    video.addEventListener('ended', currentVideoEndListener, { once: true });
+
+                    // Restart video to ensure it plays
+                    video.currentTime = 0;
+                    video.play().catch(() => {}); // Ignore autoplay errors
+                } else {
+                    // For images, auto-advance after 8 seconds
+                    autoAdvanceTimeout = setTimeout(() => {
+                        goToScreen((currentScreenIndex + 1) % totalScreens);
+                    }, 8000);
+                }
+            }
 
             // Initial preview and dots update
             updatePreviews();
             updateDots();
+            scheduleNextSlide();
 
             // Integrations Carousel - Infinite Scroll
             const integrationsTrack = document.querySelector('.integrations-track');
