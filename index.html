@@ -760,8 +760,9 @@
             flex-direction: column;
             background: var(--color-background);
             opacity: 0;
-            transform: translateX(100%);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.9);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
         }
 
@@ -774,12 +775,13 @@
 
         .phone-content.active {
             opacity: 1;
-            transform: translateX(0);
+            transform: scale(1);
             pointer-events: auto;
         }
 
         .phone-content.exit-left {
-            transform: translateX(-100%);
+            opacity: 0;
+            transform: scale(0.9);
         }
 
         .phone-header {
