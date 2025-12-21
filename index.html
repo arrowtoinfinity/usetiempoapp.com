@@ -1850,7 +1850,7 @@
             <p class="hero-tagline">AI-Powered Daily Planning</p>
 
             <p class="hero-subtitle">
-                The productivity supertool that learns your schedule, builds your habits, and helps you achieve more.
+                Your AI assistant that learns your schedule, optimizes your habits, and helps you achieve more every day.
             </p>
             
             <div class="hero-cta">
@@ -2141,7 +2141,7 @@
                     <div class="timeline-step">
                         <div class="timeline-circle completed">✨</div>
                         <div class="timeline-content">
-                            <h3>Plan with AI</h3>
+                            <h3>AI Productivity</h3>
                             <p>Tell Nickel what you want to do. Our AI finds the perfect time and builds your ideal day.</p>
                             <div class="timeline-preview-expandable">
                                 <div class="timeline-preview">
@@ -2581,6 +2581,8 @@
             document.querySelectorAll('.preview-more').forEach(more => {
                 more.addEventListener('mouseenter', function() {
                     this.closest('.timeline-preview-expandable').classList.add('expanded');
+                    // Update time line position after expansion animation
+                    setTimeout(updateCenteredStep, 350);
                 });
             });
         });
