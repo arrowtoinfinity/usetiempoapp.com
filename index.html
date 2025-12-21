@@ -1386,8 +1386,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            overflow: hidden;
+            overflow: visible;
             pointer-events: none;
+            z-index: 0;
         }
 
         .review-card {
@@ -1650,6 +1651,13 @@
             padding: 3rem 2rem;
             position: relative;
             z-index: 1;
+            overflow: visible;
+        }
+
+        @media (max-width: 768px) {
+            .cta-content {
+                overflow: hidden;
+            }
         }
 
         .cta-icon {
@@ -1663,6 +1671,8 @@
             justify-content: center;
             font-size: 2rem;
             box-shadow: 0 8px 24px rgba(242,101,34,0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .cta-content h2 {
@@ -1672,6 +1682,8 @@
             color: var(--text-primary);
             margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
+            position: relative;
+            z-index: 2;
         }
 
         .cta-content p {
@@ -1681,11 +1693,15 @@
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
+            position: relative;
+            z-index: 2;
         }
 
         .cta-content .app-store-btn {
             background: var(--text-primary);
             color: var(--color-white);
+            position: relative;
+            z-index: 2;
         }
 
         .cta-content .app-store-btn:hover {
@@ -2507,44 +2523,43 @@
         </section>
 
         <section class="cta-section">
-            <!-- Floating Review Cards Background -->
-            <div class="review-cards">
-                <div class="review-card">"I need this!"</div>
-                <div class="review-card">"A lifesaver!"</div>
-                <div class="review-card">"Finally, an app that gets it."</div>
-                <div class="review-card">"Love this app!"</div>
-                <div class="review-card">"So intuitive."</div>
-                <div class="review-card">"Game changer!"</div>
-                <div class="review-card">"Best planner ever."</div>
-                <div class="review-card">"5 stars!"</div>
-                <div class="review-card">"Changed my routine!"</div>
-                <div class="review-card">"So simple yet powerful."</div>
-                <div class="review-card">"My productivity soared."</div>
-                <div class="review-card">"Can't live without it."</div>
-                <div class="review-card">"Beautifully designed."</div>
-                <div class="review-card">"Finally organized!"</div>
-                <div class="review-card">"Worth every penny."</div>
-                <div class="review-card">"Obsessed with this app."</div>
-                <div class="review-card">"Life changing!"</div>
-                <div class="review-card">"So easy to use."</div>
-                <div class="review-card">"My new favorite app."</div>
-                <div class="review-card">"Highly recommend!"</div>
-                <div class="review-card">"Perfect for busy people."</div>
-                <div class="review-card">"Keeps me on track."</div>
-                <div class="review-card">"Amazing features!"</div>
-                <div class="review-card">"Such a clean UI."</div>
-                <div class="review-card">"Love the AI planning."</div>
-                <div class="review-card">"Exactly what I needed."</div>
-                <div class="review-card">"Goodbye chaos!"</div>
-                <div class="review-card">"10/10 would recommend."</div>
-                <div class="review-card">"My daily essential."</div>
-                <div class="review-card">"Best decision ever."</div>
-                <div class="review-card">"So glad I found this."</div>
-                <div class="review-card">"Pure genius!"</div>
-                <div class="review-card">"Absolutely love it."</div>
-            </div>
-
             <div class="cta-content">
+                <!-- Floating Review Cards Background -->
+                <div class="review-cards">
+                    <div class="review-card">"I need this!"</div>
+                    <div class="review-card">"A lifesaver!"</div>
+                    <div class="review-card">"Finally, an app that gets it."</div>
+                    <div class="review-card">"Love this app!"</div>
+                    <div class="review-card">"So intuitive."</div>
+                    <div class="review-card">"Game changer!"</div>
+                    <div class="review-card">"Best planner ever."</div>
+                    <div class="review-card">"5 stars!"</div>
+                    <div class="review-card">"Changed my routine!"</div>
+                    <div class="review-card">"So simple yet powerful."</div>
+                    <div class="review-card">"My productivity soared."</div>
+                    <div class="review-card">"Can't live without it."</div>
+                    <div class="review-card">"Beautifully designed."</div>
+                    <div class="review-card">"Finally organized!"</div>
+                    <div class="review-card">"Worth every penny."</div>
+                    <div class="review-card">"Obsessed with this app."</div>
+                    <div class="review-card">"Life changing!"</div>
+                    <div class="review-card">"So easy to use."</div>
+                    <div class="review-card">"My new favorite app."</div>
+                    <div class="review-card">"Highly recommend!"</div>
+                    <div class="review-card">"Perfect for busy people."</div>
+                    <div class="review-card">"Keeps me on track."</div>
+                    <div class="review-card">"Amazing features!"</div>
+                    <div class="review-card">"Such a clean UI."</div>
+                    <div class="review-card">"Love the AI planning."</div>
+                    <div class="review-card">"Exactly what I needed."</div>
+                    <div class="review-card">"Goodbye chaos!"</div>
+                    <div class="review-card">"10/10 would recommend."</div>
+                    <div class="review-card">"My daily essential."</div>
+                    <div class="review-card">"Best decision ever."</div>
+                    <div class="review-card">"So glad I found this."</div>
+                    <div class="review-card">"Pure genius!"</div>
+                    <div class="review-card">"Absolutely love it."</div>
+                </div>
                 <div class="cta-icon"><span class="cta-emoji">🎯</span></div>
                 <h2>Ready to plan?</h2>
                 <p>Start transforming your daily routine today.</p>
