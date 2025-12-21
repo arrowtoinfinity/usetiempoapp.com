@@ -2788,7 +2788,8 @@
 
                 const startX = isLeftSide ? -200 : 200;
                 const startY = baseY + (entryFromTop ? -80 : 80);
-                const peakX = isLeftSide ? gsap.utils.random(60, 140) : gsap.utils.random(-140, -60);
+                // Cards stop at border - half showing at most
+                const peakX = isLeftSide ? gsap.utils.random(-60, 0) : gsap.utils.random(0, 60);
                 const peakY = baseY;
                 const endX = isLeftSide ? -200 : 200;
                 const endY = baseY + (entryFromTop ? 80 : -80);
