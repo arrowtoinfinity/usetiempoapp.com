@@ -3264,10 +3264,23 @@
             phonePreviews.forEach(preview => {
                 preview.addEventListener('click', () => {
                     const screenType = preview.dataset.screen;
-                    if (screenType === 'prev') {
-                        goToScreen((currentScreenIndex - 1 + totalScreens) % totalScreens);
+
+                    // Special handling for first carousel loop on slide 0
+                    if (isFirstCarouselLoop && currentScreenIndex === 0) {
+                        if (screenType === 'prev') {
+                            // Left preview shows Checklist (slide 2)
+                            goToScreen(2);
+                        } else {
+                            // Right preview shows Timeline (slide 1)
+                            goToScreen(1);
+                        }
                     } else {
-                        goToScreen((currentScreenIndex + 1) % totalScreens);
+                        // Normal behavior: navigate to adjacent slides
+                        if (screenType === 'prev') {
+                            goToScreen((currentScreenIndex - 1 + totalScreens) % totalScreens);
+                        } else {
+                            goToScreen((currentScreenIndex + 1) % totalScreens);
+                        }
                     }
                 });
             });
