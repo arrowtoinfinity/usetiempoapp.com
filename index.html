@@ -2249,7 +2249,7 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/1_Bottom Control Panel.mp4" alt="App Screenshot" id="prev-preview-video" autoplay muted playsinline></video>
+                            <video src="videos/2_Timeline.mp4" alt="App Screenshot" id="prev-preview-video" autoplay muted playsinline></video>
                             <img src="" alt="App Screenshot" id="prev-preview-img" style="display: none;">
                         </div>
                     </div>
@@ -3083,6 +3083,7 @@
             const carouselDots = document.querySelectorAll('.carousel-dot');
             let currentScreenIndex = 0;
             const totalScreens = phoneScreens.length;
+            let isFirstCarouselLoop = true; // Special behavior for initial load
 
             // Media files for each screen (videos and images)
             const screenshotImages = [
@@ -3109,8 +3110,18 @@
             ];
 
             function updatePreviews() {
-                const prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
-                const nextIndex = (currentScreenIndex + 1) % totalScreens;
+                let prevIndex, nextIndex;
+
+                // Special behavior for first carousel loop on slide 0
+                if (isFirstCarouselLoop && currentScreenIndex === 0) {
+                    // Show video 2 on left, video 3 on right to draw attention forward
+                    prevIndex = 1; // Video 2 (Timeline Blocks)
+                    nextIndex = 2; // Video 3 (Checklist)
+                } else {
+                    // Normal behavior: previous and next slides
+                    prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
+                    nextIndex = (currentScreenIndex + 1) % totalScreens;
+                }
 
                 // Helper function to update a preview (handles both video and image)
                 function updatePreview(previewType, srcPath) {
@@ -3232,6 +3243,12 @@
                 }
 
                 currentScreenIndex = index;
+
+                // Exit first carousel loop mode when navigating away from slide 0
+                if (isFirstCarouselLoop && index !== 0) {
+                    isFirstCarouselLoop = false;
+                }
+
                 updatePreviews();
                 updateDots();
                 updateTitle();
