@@ -2249,7 +2249,7 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="prev-preview-video" autoplay muted playsinline></video>
+                            <video src="videos/3_Checklist.mp4" alt="App Screenshot" id="prev-preview-video" preload="metadata" autoplay muted playsinline></video>
                             <img src="" alt="App Screenshot" id="prev-preview-img" style="display: none;">
                         </div>
                     </div>
@@ -2261,31 +2261,31 @@
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
-                                    <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" autoplay muted playsinline></video>
+                                    <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" preload="metadata" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="1">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
-                                    <video src="videos/2_Timeline.mp4" alt="Timeline" autoplay muted playsinline></video>
+                                    <video src="videos/2_Timeline.mp4" alt="Timeline" preload="metadata" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="2">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
-                                    <video src="videos/3_Checklist.mp4" alt="Checklist" autoplay muted playsinline></video>
+                                    <video src="videos/3_Checklist.mp4" alt="Checklist" preload="metadata" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="3">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
-                                    <video src="videos/4_Focus.mp4" alt="Focus" autoplay muted playsinline></video>
+                                    <video src="videos/4_Focus.mp4" alt="Focus" preload="metadata" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="4">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
-                                    <video src="videos/5_Chat.mp4" alt="Chat" autoplay muted playsinline></video>
+                                    <video src="videos/5_Chat.mp4" alt="Chat" preload="metadata" autoplay muted playsinline></video>
                                 </div>
                                 <div class="phone-content" data-screen="5">
                                     <div class="loading-placeholder">
@@ -2315,7 +2315,7 @@
                             <div class="loading-placeholder">
                                 <img src="logo.png" alt="Loading">
                             </div>
-                            <video src="videos/2_Timeline.mp4" alt="App Screenshot" id="next-preview-video" autoplay muted playsinline></video>
+                            <video src="videos/2_Timeline.mp4" alt="App Screenshot" id="next-preview-video" preload="metadata" autoplay muted playsinline></video>
                             <img src="" alt="App Screenshot" id="next-preview-img" style="display: none;">
                         </div>
                     </div>
@@ -3215,50 +3215,63 @@
 
                 if (prevScreen === nextScreen) return;
 
-                // Reset video in next screen before transition
-                const nextVideo = nextScreen.querySelector('video');
-                if (nextVideo) {
-                    nextVideo.currentTime = 0;
-                    nextVideo.pause();
-                }
-
                 // Pause video in previous screen
                 const prevVideo = prevScreen.querySelector('video');
                 if (prevVideo) {
                     prevVideo.pause();
                 }
 
-                // Determine direction
-                const goingForward = index > currentScreenIndex || (currentScreenIndex === totalScreens - 1 && index === 0);
-
-                prevScreen.classList.add('exit-left');
-                prevScreen.classList.remove('active');
-
-                nextScreen.classList.remove('exit-left');
-                nextScreen.classList.add('active');
-
-                // Play the video in the new active screen
+                // Reset video in next screen and wait for it to be ready at frame 0
+                const nextVideo = nextScreen.querySelector('video');
                 if (nextVideo) {
-                    nextVideo.play().catch(() => {}); // Ignore autoplay errors
+                    // Reset to beginning and pause (shows first frame, no flash)
+                    nextVideo.currentTime = 0;
+                    nextVideo.pause();
+
+                    // Force the video to load the first frame
+                    // Use seeked event to ensure we're at frame 0 before transition
+                    const handleSeeked = () => {
+                        nextVideo.removeEventListener('seeked', handleSeeked);
+                    };
+                    nextVideo.addEventListener('seeked', handleSeeked, { once: true });
                 }
 
-                currentScreenIndex = index;
+                // Small delay to ensure video is at frame 0 before transition
+                requestAnimationFrame(() => {
+                    // Determine direction
+                    const goingForward = index > currentScreenIndex || (currentScreenIndex === totalScreens - 1 && index === 0);
 
-                // Exit first carousel loop mode when navigating away from slide 0
-                if (isFirstCarouselLoop && index !== 0) {
-                    isFirstCarouselLoop = false;
-                }
+                    prevScreen.classList.add('exit-left');
+                    prevScreen.classList.remove('active');
 
-                updatePreviews();
-                updateDots();
-                updateTitle();
+                    nextScreen.classList.remove('exit-left');
+                    nextScreen.classList.add('active');
 
-                setTimeout(() => {
-                    prevScreen.classList.remove('exit-left');
-                }, 400);
+                    // Play the video after it becomes visible (small delay for smooth transition)
+                    if (nextVideo) {
+                        setTimeout(() => {
+                            nextVideo.play().catch(() => {}); // Ignore autoplay errors
+                        }, 50);
+                    }
 
-                // Schedule next slide after transition
-                scheduleNextSlide();
+                    currentScreenIndex = index;
+
+                    // Exit first carousel loop mode when navigating away from slide 0
+                    if (isFirstCarouselLoop && index !== 0) {
+                        isFirstCarouselLoop = false;
+                    }
+
+                    updatePreviews();
+                    updateDots();
+                    updateTitle();
+
+                    setTimeout(() => {
+                        prevScreen.classList.remove('exit-left');
+                    }, 400);
+
+                    // Schedule next slide after transition
+                    scheduleNextSlide();
+                });
             }
 
             phonePreviews.forEach(preview => {
