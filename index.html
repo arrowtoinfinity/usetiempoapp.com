@@ -990,8 +990,9 @@
 
         /* Event Bubble Card style for features */
         .feature-card {
-            background: linear-gradient(to bottom, var(--card-color-light) 0%, var(--card-color) 100%);
-            border: 3px solid var(--card-color);
+            background: linear-gradient(to bottom, var(--card-color-light) 0%, var(--card-color) 100%) padding-box,
+                        linear-gradient(to bottom, var(--card-color-light) 0%, var(--card-color) 100%) border-box;
+            border: 3px solid transparent;
             border-radius: var(--radius-md);
             padding: var(--space-lg) var(--space-xl);
             transition: background 0.2s ease-out;
@@ -1002,6 +1003,7 @@
         .feature-card:hover,
         .feature-card.centered {
             background: var(--color-white);
+            border: 3px solid var(--card-color);
         }
 
         /* Resize handles - visible on hover, positioned on edges */
@@ -1162,9 +1164,10 @@
             align-items: flex-start;
             gap: var(--space-sm);
             padding: var(--space-md);
-            background: linear-gradient(to bottom, #f54db0 0%, #ec008c 100%);
+            background: linear-gradient(to bottom, #f54db0 0%, #ec008c 100%) padding-box,
+                        linear-gradient(to bottom, #f54db0 0%, #ec008c 100%) border-box;
             border-radius: 8px;
-            border: 2.5px solid #ec008c;
+            border: 2.5px solid transparent;
             position: relative;
             transition: background 0.2s ease, border-color 0.2s ease;
             pointer-events: auto;
@@ -1172,7 +1175,7 @@
 
         .child-event:hover {
             background: var(--color-white);
-            border-color: #ec008c;
+            border: 2.5px solid #ec008c;
         }
 
         .child-event:hover .child-title {
