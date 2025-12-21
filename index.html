@@ -712,13 +712,15 @@
         .phone-preview-content {
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, var(--color-white) 0%, var(--color-background) 100%);
-            padding: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            transform: scale(0.9);
-            transform-origin: top center;
+            background: var(--color-background);
+            overflow: hidden;
+        }
+
+        .phone-preview-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
         }
 
         .phone-mockup {
@@ -763,15 +765,20 @@
         .phone-content {
             position: absolute;
             inset: 0;
-            padding: 1.25rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            background: linear-gradient(180deg, var(--color-white) 0%, var(--color-background) 100%);
+            background: var(--color-background);
             opacity: 0;
             transform: translateX(100%);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
+        }
+
+        .phone-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
         }
 
         .phone-content.active {
@@ -1681,6 +1688,346 @@
         }
 
         /* CTA Section */
+        /* Pricing Section */
+        .pricing-section {
+            padding: 6rem 2rem;
+            position: relative;
+            background: linear-gradient(180deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%);
+            overflow: hidden;
+        }
+
+        .pricing-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0,122,255,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(175,82,222,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255,149,0,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .pricing-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-header p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Billing Toggle */
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .billing-toggle span {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .billing-toggle span.active {
+            color: var(--color-white);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.annual {
+            background: var(--color-primary);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background: var(--color-white);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.annual::after {
+            transform: translateX(24px);
+        }
+
+        .savings-badge {
+            background: rgba(52,199,89,0.2);
+            color: #34C759;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Pricing Cards Grid */
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            align-items: stretch;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .pricing-card.featured {
+            background: rgba(255,255,255,0.12);
+            border-color: var(--color-purple);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--color-purple) 0%, #9945FF 100%);
+            color: var(--color-white);
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(175,82,222,0.4);
+        }
+
+        .pricing-card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .pricing-tier-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .pricing-card.tier-plus .pricing-tier-icon {
+            background: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
+        }
+
+        .pricing-card.tier-pro .pricing-tier-icon {
+            background: linear-gradient(135deg, #AF52DE 0%, #9945FF 100%);
+        }
+
+        .pricing-card.tier-premium .pricing-tier-icon {
+            background: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%);
+        }
+
+        .pricing-tier-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .pricing-currency {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-white);
+        }
+
+        .pricing-period {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .pricing-annual-note {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .billing-annual .pricing-annual-note {
+            display: block;
+        }
+
+        /* Feature List */
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .pricing-card.tier-plus .pricing-features li::before {
+            background: rgba(0,122,255,0.2);
+            color: #5AC8FA;
+        }
+
+        .pricing-card.tier-pro .pricing-features li::before {
+            background: rgba(175,82,222,0.2);
+            color: #BF7AF7;
+        }
+
+        .pricing-card.tier-premium .pricing-features li::before {
+            background: rgba(255,149,0,0.2);
+            color: #FFB340;
+        }
+
+        .pricing-features li.disabled {
+            color: rgba(255,255,255,0.35);
+        }
+
+        .pricing-features li.disabled::before {
+            content: '—';
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* CTA Button */
+        .pricing-cta {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+        }
+
+        .pricing-cta:hover {
+            transform: scale(1.03);
+        }
+
+        .pricing-card.tier-plus .pricing-cta {
+            background: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
+            color: var(--color-white);
+            box-shadow: 0 4px 15px rgba(0,122,255,0.3);
+        }
+
+        .pricing-card.tier-pro .pricing-cta {
+            background: linear-gradient(135deg, #AF52DE 0%, #9945FF 100%);
+            color: var(--color-white);
+            box-shadow: 0 4px 15px rgba(175,82,222,0.4);
+        }
+
+        .pricing-card.tier-premium .pricing-cta {
+            background: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%);
+            color: var(--color-white);
+            box-shadow: 0 4px 15px rgba(255,149,0,0.3);
+        }
+
+        /* Pricing Responsive */
+        @media (max-width: 900px) {
+            .pricing-cards {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+                order: -1;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-8px);
+            }
+        }
+
         .cta-section {
             padding: 6rem 2rem;
             position: relative;
@@ -2123,6 +2470,7 @@
         <nav>
             <a href="#features">Features</a>
             <a href="#how-it-works">How it Works</a>
+            <a href="#pricing">Pricing</a>
             <a href="#" class="btn">Download</a>
         </nav>
     </header>
@@ -2188,9 +2536,7 @@
                     <!-- Left Preview -->
                     <div class="phone-preview" data-screen="prev">
                         <div class="phone-preview-content">
-                            <div style="font-size: 0.6rem; font-weight: 600; color: var(--text-secondary);">AI CHAT</div>
-                            <div style="background: var(--color-purple); color: white; padding: 0.4rem; border-radius: 8px; font-size: 0.5rem;">What should I focus on today?</div>
-                            <div style="background: var(--color-background); padding: 0.4rem; border-radius: 8px; font-size: 0.5rem;">Based on your goals, I recommend...</div>
+                            <img src="screenshots/5_6CV.png" alt="App Screenshot" id="prev-preview-img">
                         </div>
                     </div>
 
@@ -2198,102 +2544,20 @@
                         <div class="phone-screen">
                             <div class="phone-dynamic-island"></div>
                             <div class="phone-screens">
-                                <!-- Screen 1: Daily Progress -->
                                 <div class="phone-content active" data-screen="0">
-                                    <div class="phone-header">
-                                        <div class="phone-date">Today</div>
-                                        <div class="phone-avatar">
-                                            <img src="logo.png" alt="">
-                                        </div>
-                                    </div>
-
-                                    <div class="phone-card">
-                                        <div class="phone-card-header">
-                                            <span class="phone-card-label">Daily Progress</span>
-                                            <span class="phone-card-badge">+12% vs last week</span>
-                                        </div>
-                                        <div class="progress-ring">
-                                            <div class="progress-circle">
-                                                <svg width="60" height="60">
-                                                    <circle class="progress-circle-bg" cx="30" cy="30" r="25"/>
-                                                    <circle class="progress-circle-fill" cx="30" cy="30" r="25"/>
-                                                </svg>
-                                                <span class="progress-value">78%</span>
-                                            </div>
-                                            <div class="progress-details">
-                                                <div class="progress-stat"><strong>5/6</strong> habits completed</div>
-                                                <div class="progress-stat"><strong>3</strong> events remaining</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="phone-timeline">
-                                        <div class="timeline-item">
-                                            <span class="timeline-icon workout">💪</span>
-                                            Morning workout
-                                            <span class="timeline-time">7:00 AM</span>
-                                        </div>
-                                        <div class="timeline-item">
-                                            <span class="timeline-icon meeting">👥</span>
-                                            Team standup
-                                            <span class="timeline-time">9:30 AM</span>
-                                        </div>
-                                        <div class="timeline-item">
-                                            <span class="timeline-icon wellness">🧘</span>
-                                            Meditation
-                                            <span class="timeline-time">12:00 PM</span>
-                                        </div>
-                                    </div>
+                                    <img src="screenshots/1_1DTLCP.png" alt="Daily Timeline">
                                 </div>
-
-                                <!-- Screen 2: AI Chat -->
                                 <div class="phone-content" data-screen="1">
-                                    <div class="phone-header">
-                                        <div class="phone-date">AI Chat</div>
-                                        <div class="phone-avatar">
-                                            <img src="logo.png" alt="">
-                                        </div>
-                                    </div>
-
-                                    <div style="display: flex; flex-direction: column; gap: 0.75rem; flex: 1;">
-                                        <div style="align-self: flex-end; background: var(--color-purple); color: white; padding: 0.75rem 1rem; border-radius: 16px 16px 4px 16px; max-width: 85%; font-size: 0.85rem;">
-                                            What should I focus on today?
-                                        </div>
-                                        <div style="align-self: flex-start; background: var(--color-background); padding: 0.75rem 1rem; border-radius: 16px 16px 16px 4px; max-width: 85%; font-size: 0.85rem;">
-                                            Based on your goals, I recommend prioritizing your workout and the team standup. You have 3 hours of focus time available this afternoon.
-                                        </div>
-                                        <div style="align-self: flex-end; background: var(--color-purple); color: white; padding: 0.75rem 1rem; border-radius: 16px 16px 4px 16px; max-width: 85%; font-size: 0.85rem;">
-                                            Schedule a deep work block
-                                        </div>
-                                    </div>
+                                    <img src="screenshots/2_CD.png" alt="Calendar">
                                 </div>
-
-                                <!-- Screen 3: Habits -->
                                 <div class="phone-content" data-screen="2">
-                                    <div class="phone-header">
-                                        <div class="phone-date">Habits</div>
-                                        <div class="phone-avatar">
-                                            <img src="logo.png" alt="">
-                                        </div>
-                                    </div>
-
-                                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                        <div style="background: var(--color-white); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                                            <span style="font-size: 1.5rem;">💧</span>
-                                            <div style="flex: 1;"><div style="font-weight: 600; font-size: 0.9rem;">Drink water</div><div style="font-size: 0.7rem; color: var(--text-secondary);">6/8 glasses</div></div>
-                                            <span style="color: var(--color-primary);">●●●●●●○○</span>
-                                        </div>
-                                        <div style="background: var(--color-white); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                                            <span style="font-size: 1.5rem;">📚</span>
-                                            <div style="flex: 1;"><div style="font-weight: 600; font-size: 0.9rem;">Read 30 mins</div><div style="font-size: 0.7rem; color: var(--text-secondary);">12 day streak 🔥</div></div>
-                                            <span style="color: var(--color-success);">✓</span>
-                                        </div>
-                                        <div style="background: var(--color-white); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                                            <span style="font-size: 1.5rem;">🧘</span>
-                                            <div style="flex: 1;"><div style="font-weight: 600; font-size: 0.9rem;">Meditate</div><div style="font-size: 0.7rem; color: var(--text-secondary);">10 min session</div></div>
-                                            <span style="color: var(--color-success);">✓</span>
-                                        </div>
-                                    </div>
+                                    <img src="screenshots/3_5CLGC.png" alt="Chat">
+                                </div>
+                                <div class="phone-content" data-screen="3">
+                                    <img src="screenshots/4_4FVS.png" alt="Features">
+                                </div>
+                                <div class="phone-content" data-screen="4">
+                                    <img src="screenshots/5_6CV.png" alt="Calendar View">
                                 </div>
                             </div>
                         </div>
@@ -2302,13 +2566,7 @@
                     <!-- Right Preview -->
                     <div class="phone-preview" data-screen="next">
                         <div class="phone-preview-content">
-                            <div style="font-size: 0.6rem; font-weight: 600; color: var(--text-secondary);">HABITS</div>
-                            <div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                <span>💧</span> Drink water
-                            </div>
-                            <div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                <span>📚</span> Read 30 mins
-                            </div>
+                            <img src="screenshots/2_CD.png" alt="App Screenshot" id="next-preview-img">
                         </div>
                     </div>
                 </div>
@@ -2572,6 +2830,97 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing-section">
+            <div class="pricing-content">
+                <div class="pricing-header">
+                    <h2>Choose Your Plan</h2>
+                    <p>Unlock the full potential of your daily routine with AI-powered planning.</p>
+                </div>
+
+                <div class="billing-toggle">
+                    <span class="monthly-label active">Monthly</span>
+                    <div class="toggle-switch" id="billingToggle"></div>
+                    <span class="annual-label">Annual</span>
+                    <span class="savings-badge">Save 16%</span>
+                </div>
+
+                <div class="pricing-cards">
+                    <!-- Nickel+ -->
+                    <div class="pricing-card tier-plus">
+                        <div class="pricing-card-header">
+                            <div class="pricing-tier-icon">+</div>
+                            <div class="pricing-tier-name">Nickel+</div>
+                            <div class="pricing-price">
+                                <span class="pricing-currency">$</span>
+                                <span class="pricing-amount" data-monthly="1.99" data-annual="1.67">1.99</span>
+                                <span class="pricing-period">/mo</span>
+                            </div>
+                            <div class="pricing-annual-note">Billed annually at $19.99</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Calendar sync (1 calendar)</li>
+                            <li>Basic habit tracking</li>
+                            <li>Daily reminders</li>
+                            <li>Weekly progress summary</li>
+                            <li class="disabled">AI planning assistance</li>
+                            <li class="disabled">Nutrition scanning</li>
+                            <li class="disabled">Health insights</li>
+                        </ul>
+                        <button class="pricing-cta">Get Started</button>
+                    </div>
+
+                    <!-- Nickel Pro -->
+                    <div class="pricing-card tier-pro featured">
+                        <div class="popular-badge">Most Popular</div>
+                        <div class="pricing-card-header">
+                            <div class="pricing-tier-icon">Pro</div>
+                            <div class="pricing-tier-name">Nickel Pro</div>
+                            <div class="pricing-price">
+                                <span class="pricing-currency">$</span>
+                                <span class="pricing-amount" data-monthly="4.99" data-annual="4.19">4.99</span>
+                                <span class="pricing-period">/mo</span>
+                            </div>
+                            <div class="pricing-annual-note">Billed annually at $49.99</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Unlimited calendar sync</li>
+                            <li>Advanced habit tracking</li>
+                            <li>Smart reminders</li>
+                            <li>AI planning assistant</li>
+                            <li>AI nutrition scanning</li>
+                            <li>Detailed insights & analytics</li>
+                            <li class="disabled">Priority support</li>
+                        </ul>
+                        <button class="pricing-cta">Get Pro</button>
+                    </div>
+
+                    <!-- Nickel Premium -->
+                    <div class="pricing-card tier-premium">
+                        <div class="pricing-card-header">
+                            <div class="pricing-tier-icon">Max</div>
+                            <div class="pricing-tier-name">Nickel Premium</div>
+                            <div class="pricing-price">
+                                <span class="pricing-currency">$</span>
+                                <span class="pricing-amount" data-monthly="7.99" data-annual="6.69">7.99</span>
+                                <span class="pricing-period">/mo</span>
+                            </div>
+                            <div class="pricing-annual-note">Billed annually at $79.99</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Everything in Pro</li>
+                            <li>Unlimited AI requests</li>
+                            <li>Advanced health tracking</li>
+                            <li>Cycle & wellness insights</li>
+                            <li>Custom workout plans</li>
+                            <li>Family sharing (up to 5)</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <button class="pricing-cta">Go Premium</button>
                     </div>
                 </div>
             </div>
@@ -3020,24 +3369,24 @@
             let currentScreenIndex = 0;
             const totalScreens = phoneScreens.length;
 
-            // Preview content for each screen
-            const previewContents = [
-                { title: 'TODAY', content: '<div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">Daily Progress 78%</div><div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; margin-top: 0.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">💪 Morning workout</div>' },
-                { title: 'AI CHAT', content: '<div style="background: var(--color-purple); color: white; padding: 0.4rem; border-radius: 8px; font-size: 0.5rem;">What should I focus on?</div><div style="background: var(--color-background); padding: 0.4rem; border-radius: 8px; font-size: 0.5rem; margin-top: 0.25rem;">Based on your goals...</div>' },
-                { title: 'HABITS', content: '<div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><span>💧</span> Drink water</div><div style="background: var(--color-white); padding: 0.3rem; border-radius: 6px; font-size: 0.45rem; display: flex; align-items: center; gap: 0.3rem; margin-top: 0.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><span>📚</span> Read 30 mins</div>' }
+            // Screenshot images for each screen
+            const screenshotImages = [
+                'screenshots/1_1DTLCP.png',
+                'screenshots/2_CD.png',
+                'screenshots/3_5CLGC.png',
+                'screenshots/4_4FVS.png',
+                'screenshots/5_6CV.png'
             ];
 
             function updatePreviews() {
                 const prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
                 const nextIndex = (currentScreenIndex + 1) % totalScreens;
 
-                phonePreviews.forEach(preview => {
-                    const screenType = preview.dataset.screen;
-                    const index = screenType === 'prev' ? prevIndex : nextIndex;
-                    const content = previewContents[index];
-                    preview.querySelector('.phone-preview-content').innerHTML =
-                        `<div style="font-size: 0.6rem; font-weight: 600; color: var(--text-secondary);">${content.title}</div>${content.content}`;
-                });
+                const prevPreviewImg = document.getElementById('prev-preview-img');
+                const nextPreviewImg = document.getElementById('next-preview-img');
+
+                if (prevPreviewImg) prevPreviewImg.src = screenshotImages[prevIndex];
+                if (nextPreviewImg) nextPreviewImg.src = screenshotImages[nextIndex];
             }
 
             function goToScreen(index) {
@@ -3136,6 +3485,29 @@
                 });
             });
         });
+
+        // Billing Toggle
+        const billingToggle = document.getElementById('billingToggle');
+        const pricingSection = document.querySelector('.pricing-section');
+        const monthlyLabel = document.querySelector('.monthly-label');
+        const annualLabel = document.querySelector('.annual-label');
+        const priceAmounts = document.querySelectorAll('.pricing-amount');
+
+        if (billingToggle) {
+            billingToggle.addEventListener('click', function() {
+                const isAnnual = this.classList.toggle('annual');
+                pricingSection.classList.toggle('billing-annual', isAnnual);
+
+                monthlyLabel.classList.toggle('active', !isAnnual);
+                annualLabel.classList.toggle('active', isAnnual);
+
+                priceAmounts.forEach(amount => {
+                    const monthly = amount.dataset.monthly;
+                    const annual = amount.dataset.annual;
+                    amount.textContent = isAnnual ? annual : monthly;
+                });
+            });
+        }
     </script>
 </body>
 </html>
