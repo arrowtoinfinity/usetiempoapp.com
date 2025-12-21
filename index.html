@@ -2239,8 +2239,8 @@
 
             <div class="hero-visual">
                 <div class="carousel-title">
-                    <h3 class="carousel-main-title">Timeline Blocks</h3>
-                    <p class="carousel-subtitle">Day, Week, & Month Cards</p>
+                    <h3 class="carousel-main-title">Powerful Controls</h3>
+                    <p class="carousel-subtitle">Precise & Elegant</p>
                 </div>
                 <div class="phone-carousel">
                     <!-- Left Preview -->
@@ -2257,13 +2257,13 @@
                     <div class="phone-mockup">
                         <div class="phone-screen">
                             <div class="phone-screens">
-                                <div class="phone-content" data-screen="0">
+                                <div class="phone-content active" data-screen="0">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
                                     <video src="videos/1_Bottom Control Panel.mp4" alt="Bottom Control Panel" autoplay muted playsinline></video>
                                 </div>
-                                <div class="phone-content active" data-screen="1">
+                                <div class="phone-content" data-screen="1">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
@@ -2323,8 +2323,8 @@
 
                 <!-- Carousel Dots -->
                 <div class="carousel-dots">
-                    <span class="carousel-dot" data-index="0"></span>
-                    <span class="carousel-dot active" data-index="1"></span>
+                    <span class="carousel-dot active" data-index="0"></span>
+                    <span class="carousel-dot" data-index="1"></span>
                     <span class="carousel-dot" data-index="2"></span>
                     <span class="carousel-dot" data-index="3"></span>
                     <span class="carousel-dot" data-index="4"></span>
@@ -3081,7 +3081,7 @@
             const phoneScreens = document.querySelectorAll('.phone-screens .phone-content');
             const phonePreviews = document.querySelectorAll('.phone-preview');
             const carouselDots = document.querySelectorAll('.carousel-dot');
-            let currentScreenIndex = 1;
+            let currentScreenIndex = 0;
             const totalScreens = phoneScreens.length;
 
             // Media files for each screen (videos and images)
