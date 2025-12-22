@@ -945,6 +945,7 @@
         .carousel-dot.active {
             width: 36px;
             border-radius: 4px;
+            transform-origin: left center;
             transition: transform 0.3s ease, border-radius 0.3s ease;
         }
 
@@ -3513,14 +3514,14 @@
                         }
                     }
 
-                    // Map progress to width: start at 36px (0% progress), end at 8px (100% progress)
-                    // Apply easing for smooth deceleration
+                    // Map progress to width: start at 8px (0% progress), grow to 36px (100% progress)
+                    // Apply easing for smooth acceleration
                     const easeOutQuad = (t) => t * (2 - t); // Smooth easing function
                     const easedProgress = easeOutQuad(progress);
 
                     const minWidth = 8;
                     const maxWidth = 36;
-                    const currentWidth = maxWidth - (easedProgress * (maxWidth - minWidth));
+                    const currentWidth = minWidth + (easedProgress * (maxWidth - minWidth));
 
                     activeDot.style.width = `${currentWidth}px`;
 
