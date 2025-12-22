@@ -3681,16 +3681,32 @@
                 function applyMomentum() {
                     if (!isCoasting) return;
 
+                    // Apple-like momentum with velocity-dependent deceleration
+                    // Higher velocities get more momentum, slower ones decay faster
+                    const absVelocity = Math.abs(velocity);
+
+                    // Dynamic friction based on velocity (faster = less friction initially)
+                    let friction;
+                    if (absVelocity > 10) {
+                        friction = 0.96; // Very light friction for high velocity
+                    } else if (absVelocity > 5) {
+                        friction = 0.94; // Light friction for medium velocity
+                    } else if (absVelocity > 2) {
+                        friction = 0.90; // Medium friction
+                    } else {
+                        friction = 0.85; // Heavier friction for low velocity (quick stop)
+                    }
+
                     // Apply velocity to scroll position
                     scrollPosition += velocity;
                     normalizeScrollPosition();
                     integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
 
-                    // Apply friction (reduce velocity) - lighter friction for longer coast
-                    velocity *= 0.92;
+                    // Apply velocity-dependent friction
+                    velocity *= friction;
 
                     // Stop coasting when velocity is very small
-                    if (Math.abs(velocity) < 0.05) {
+                    if (Math.abs(velocity) < 0.08) {
                         isCoasting = false;
                         velocity = 0;
                         cancelAnimationFrame(coastingAnimationId);
@@ -3722,9 +3738,9 @@
                     const deltaX = x - lastX;
                     const deltaTime = currentTime - lastTime;
 
-                    // Calculate velocity with stronger multiplier for more noticeable momentum
+                    // Calculate velocity - Apple uses high sensitivity for responsive feel
                     if (deltaTime > 0) {
-                        velocity = deltaX / deltaTime * 25; // Increased from 16 for stronger effect
+                        velocity = deltaX / deltaTime * 20; // Balanced for Apple-like feel
                     }
 
                     lastX = x;
@@ -3745,8 +3761,8 @@
                     isDragging = false;
                     integrationsTrack.classList.remove('dragging');
 
-                    // Start momentum/coasting (removed threshold for always-on momentum)
-                    if (Math.abs(velocity) > 0.1) {
+                    // Start momentum/coasting if there's any velocity
+                    if (Math.abs(velocity) > 0.2) {
                         isCoasting = true;
                         applyMomentum();
                     }
@@ -3786,9 +3802,9 @@
                     const deltaX = x - lastX;
                     const deltaTime = currentTime - lastTime;
 
-                    // Calculate velocity with stronger multiplier for more noticeable momentum
+                    // Calculate velocity - Apple uses high sensitivity for responsive feel
                     if (deltaTime > 0) {
-                        velocity = deltaX / deltaTime * 25; // Increased from 16 for stronger effect
+                        velocity = deltaX / deltaTime * 20; // Balanced for Apple-like feel
                     }
 
                     lastX = x;
@@ -3808,8 +3824,8 @@
                 integrationsTrack.addEventListener('touchend', () => {
                     isDragging = false;
 
-                    // Start momentum/coasting (removed threshold for always-on momentum)
-                    if (Math.abs(velocity) > 0.1) {
+                    // Start momentum/coasting if there's any velocity
+                    if (Math.abs(velocity) > 0.2) {
                         isCoasting = true;
                         applyMomentum();
                     }
