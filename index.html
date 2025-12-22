@@ -670,6 +670,12 @@
             display: flex;
             gap: 1rem;
             will-change: transform;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .integrations-track.dragging {
+            cursor: grabbing;
         }
 
         .integrations-track:hover {
@@ -3654,6 +3660,56 @@
 
                 integrationsTrack.addEventListener('mouseleave', () => {
                     scrollSpeed = 0.3; // Normal speed
+                });
+
+                // Drag to scroll functionality
+                let isDragging = false;
+                let startX = 0;
+                let dragStartScrollPos = 0;
+
+                integrationsTrack.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    startX = e.pageX;
+                    dragStartScrollPos = scrollPosition;
+                    integrationsTrack.classList.add('dragging');
+                });
+
+                integrationsTrack.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const x = e.pageX;
+                    const walk = (x - startX);
+                    scrollPosition = dragStartScrollPos + walk;
+                });
+
+                integrationsTrack.addEventListener('mouseup', () => {
+                    isDragging = false;
+                    integrationsTrack.classList.remove('dragging');
+                });
+
+                integrationsTrack.addEventListener('mouseleave', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        integrationsTrack.classList.remove('dragging');
+                    }
+                });
+
+                // Touch drag for mobile
+                integrationsTrack.addEventListener('touchstart', (e) => {
+                    isDragging = true;
+                    startX = e.touches[0].pageX;
+                    dragStartScrollPos = scrollPosition;
+                });
+
+                integrationsTrack.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    const x = e.touches[0].pageX;
+                    const walk = (x - startX);
+                    scrollPosition = dragStartScrollPos + walk;
+                });
+
+                integrationsTrack.addEventListener('touchend', () => {
+                    isDragging = false;
                 });
 
                 // Start the animation
