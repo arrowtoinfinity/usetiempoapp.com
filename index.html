@@ -3637,11 +3637,13 @@
                     const gap = 16; // 1rem gap
                     const oneSetWidth = (itemWidth + gap) * 11; // 11 items in original set
 
-                    // Handle infinite loop in both directions
-                    if (scrollPosition <= -oneSetWidth) {
-                        scrollPosition = 0;
-                    } else if (scrollPosition > 0) {
-                        scrollPosition = -oneSetWidth + scrollPosition;
+                    // Handle infinite loop in both directions using modulo
+                    // Keep scrollPosition in range [0, -oneSetWidth]
+                    while (scrollPosition <= -oneSetWidth) {
+                        scrollPosition += oneSetWidth;
+                    }
+                    while (scrollPosition > 0) {
+                        scrollPosition -= oneSetWidth;
                     }
                 }
             }
