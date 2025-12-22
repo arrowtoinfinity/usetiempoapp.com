@@ -670,6 +670,12 @@
             display: flex;
             gap: 1rem;
             will-change: transform;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .integrations-track:active {
+            cursor: grabbing;
         }
 
         .integrations-track:hover {
@@ -3622,9 +3628,14 @@
             let scrollPosition = 0;
             let scrollSpeed = 0.3; // Normal scroll speed (pixels per frame)
             let animationId = null;
+            let isUserInteracting = false;
+            let isDragging = false;
+            let startX = 0;
+            let scrollLeft = 0;
+            let userInteractionTimeout = null;
 
             function scrollIntegrations() {
-                if (integrationsTrack) {
+                if (integrationsTrack && !isUserInteracting) {
                     scrollPosition -= scrollSpeed;
 
                     // Get the width of one set of items (first 11 items)
@@ -3646,8 +3657,77 @@
                 animationId = requestAnimationFrame(scrollIntegrations);
             }
 
-            // Slow down on hover instead of pause
+            // Drag to scroll functionality
             if (integrationsTrack) {
+                // Mouse drag
+                integrationsTrack.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    isUserInteracting = true;
+                    startX = e.pageX;
+                    scrollLeft = scrollPosition;
+                    clearTimeout(userInteractionTimeout);
+                });
+
+                integrationsTrack.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const x = e.pageX;
+                    const walk = (x - startX) * 2; // Multiply by 2 for faster scroll
+                    scrollPosition = scrollLeft + walk;
+                });
+
+                integrationsTrack.addEventListener('mouseup', () => {
+                    isDragging = false;
+                    // Resume auto-scroll after 2 seconds of no interaction
+                    userInteractionTimeout = setTimeout(() => {
+                        isUserInteracting = false;
+                    }, 2000);
+                });
+
+                integrationsTrack.addEventListener('mouseleave', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        userInteractionTimeout = setTimeout(() => {
+                            isUserInteracting = false;
+                        }, 2000);
+                    }
+                });
+
+                // Touch drag for mobile
+                integrationsTrack.addEventListener('touchstart', (e) => {
+                    isDragging = true;
+                    isUserInteracting = true;
+                    startX = e.touches[0].pageX;
+                    scrollLeft = scrollPosition;
+                    clearTimeout(userInteractionTimeout);
+                });
+
+                integrationsTrack.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    const x = e.touches[0].pageX;
+                    const walk = (x - startX) * 2;
+                    scrollPosition = scrollLeft + walk;
+                });
+
+                integrationsTrack.addEventListener('touchend', () => {
+                    isDragging = false;
+                    userInteractionTimeout = setTimeout(() => {
+                        isUserInteracting = false;
+                    }, 2000);
+                });
+
+                // Wheel scroll
+                integrationsTrack.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    isUserInteracting = true;
+                    scrollPosition += e.deltaY * 0.5;
+                    clearTimeout(userInteractionTimeout);
+                    userInteractionTimeout = setTimeout(() => {
+                        isUserInteracting = false;
+                    }, 2000);
+                }, { passive: false });
+
+                // Slow down on hover
                 integrationsTrack.addEventListener('mouseenter', () => {
                     scrollSpeed = 0.08; // Slower speed on hover
                 });
