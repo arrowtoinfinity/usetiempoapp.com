@@ -3686,11 +3686,11 @@
                     normalizeScrollPosition();
                     integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
 
-                    // Apply friction (reduce velocity)
-                    velocity *= 0.95;
+                    // Apply friction (reduce velocity) - lighter friction for longer coast
+                    velocity *= 0.92;
 
                     // Stop coasting when velocity is very small
-                    if (Math.abs(velocity) < 0.1) {
+                    if (Math.abs(velocity) < 0.05) {
                         isCoasting = false;
                         velocity = 0;
                         cancelAnimationFrame(coastingAnimationId);
@@ -3722,9 +3722,9 @@
                     const deltaX = x - lastX;
                     const deltaTime = currentTime - lastTime;
 
-                    // Calculate velocity
+                    // Calculate velocity with stronger multiplier for more noticeable momentum
                     if (deltaTime > 0) {
-                        velocity = deltaX / deltaTime * 16; // Scale to ~60fps
+                        velocity = deltaX / deltaTime * 25; // Increased from 16 for stronger effect
                     }
 
                     lastX = x;
@@ -3745,8 +3745,8 @@
                     isDragging = false;
                     integrationsTrack.classList.remove('dragging');
 
-                    // Start momentum/coasting
-                    if (Math.abs(velocity) > 0.5) {
+                    // Start momentum/coasting (removed threshold for always-on momentum)
+                    if (Math.abs(velocity) > 0.1) {
                         isCoasting = true;
                         applyMomentum();
                     }
@@ -3786,9 +3786,9 @@
                     const deltaX = x - lastX;
                     const deltaTime = currentTime - lastTime;
 
-                    // Calculate velocity
+                    // Calculate velocity with stronger multiplier for more noticeable momentum
                     if (deltaTime > 0) {
-                        velocity = deltaX / deltaTime * 16; // Scale to ~60fps
+                        velocity = deltaX / deltaTime * 25; // Increased from 16 for stronger effect
                     }
 
                     lastX = x;
@@ -3808,8 +3808,8 @@
                 integrationsTrack.addEventListener('touchend', () => {
                     isDragging = false;
 
-                    // Start momentum/coasting
-                    if (Math.abs(velocity) > 0.5) {
+                    // Start momentum/coasting (removed threshold for always-on momentum)
+                    if (Math.abs(velocity) > 0.1) {
                         isCoasting = true;
                         applyMomentum();
                     }
