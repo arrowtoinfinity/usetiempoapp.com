@@ -3666,14 +3666,48 @@
                     scrollSpeed = 0.3; // Normal speed
                 });
 
-                // Drag to scroll functionality
+                // Drag to scroll functionality with momentum
                 let isDragging = false;
                 let startX = 0;
                 let dragStartScrollPos = 0;
+                let velocity = 0;
+                let lastX = 0;
+                let lastTime = 0;
+                let isCoasting = false;
+                let coastingAnimationId = null;
+
+                function applyMomentum() {
+                    if (!isCoasting) return;
+
+                    // Apply velocity to scroll position
+                    scrollPosition += velocity;
+                    normalizeScrollPosition();
+                    integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
+
+                    // Apply friction (reduce velocity)
+                    velocity *= 0.95;
+
+                    // Stop coasting when velocity is very small
+                    if (Math.abs(velocity) < 0.1) {
+                        isCoasting = false;
+                        velocity = 0;
+                        cancelAnimationFrame(coastingAnimationId);
+                        return;
+                    }
+
+                    coastingAnimationId = requestAnimationFrame(applyMomentum);
+                }
 
                 integrationsTrack.addEventListener('mousedown', (e) => {
                     isDragging = true;
+                    isCoasting = false;
+                    velocity = 0;
+                    if (coastingAnimationId) {
+                        cancelAnimationFrame(coastingAnimationId);
+                    }
                     startX = e.pageX;
+                    lastX = e.pageX;
+                    lastTime = Date.now();
                     dragStartScrollPos = scrollPosition;
                     integrationsTrack.classList.add('dragging');
                 });
@@ -3682,8 +3716,19 @@
                     if (!isDragging) return;
                     e.preventDefault();
                     const x = e.pageX;
+                    const currentTime = Date.now();
+                    const deltaX = x - lastX;
+                    const deltaTime = currentTime - lastTime;
+
+                    // Calculate velocity
+                    if (deltaTime > 0) {
+                        velocity = deltaX / deltaTime * 16; // Scale to ~60fps
+                    }
+
+                    lastX = x;
+                    lastTime = currentTime;
+
                     const walk = (x - startX);
-                    const oldPosition = scrollPosition;
                     scrollPosition = dragStartScrollPos + walk;
                     normalizeScrollPosition();
                     // Adjust dragStartScrollPos if position was wrapped
@@ -3697,25 +3742,56 @@
                 integrationsTrack.addEventListener('mouseup', () => {
                     isDragging = false;
                     integrationsTrack.classList.remove('dragging');
+
+                    // Start momentum/coasting
+                    if (Math.abs(velocity) > 0.5) {
+                        isCoasting = true;
+                        applyMomentum();
+                    }
                 });
 
                 integrationsTrack.addEventListener('mouseleave', () => {
                     if (isDragging) {
                         isDragging = false;
                         integrationsTrack.classList.remove('dragging');
+
+                        // Start momentum/coasting
+                        if (Math.abs(velocity) > 0.5) {
+                            isCoasting = true;
+                            applyMomentum();
+                        }
                     }
                 });
 
                 // Touch drag for mobile
                 integrationsTrack.addEventListener('touchstart', (e) => {
                     isDragging = true;
+                    isCoasting = false;
+                    velocity = 0;
+                    if (coastingAnimationId) {
+                        cancelAnimationFrame(coastingAnimationId);
+                    }
                     startX = e.touches[0].pageX;
+                    lastX = e.touches[0].pageX;
+                    lastTime = Date.now();
                     dragStartScrollPos = scrollPosition;
                 });
 
                 integrationsTrack.addEventListener('touchmove', (e) => {
                     if (!isDragging) return;
                     const x = e.touches[0].pageX;
+                    const currentTime = Date.now();
+                    const deltaX = x - lastX;
+                    const deltaTime = currentTime - lastTime;
+
+                    // Calculate velocity
+                    if (deltaTime > 0) {
+                        velocity = deltaX / deltaTime * 16; // Scale to ~60fps
+                    }
+
+                    lastX = x;
+                    lastTime = currentTime;
+
                     const walk = (x - startX);
                     scrollPosition = dragStartScrollPos + walk;
                     normalizeScrollPosition();
@@ -3729,6 +3805,12 @@
 
                 integrationsTrack.addEventListener('touchend', () => {
                     isDragging = false;
+
+                    // Start momentum/coasting
+                    if (Math.abs(velocity) > 0.5) {
+                        isCoasting = true;
+                        applyMomentum();
+                    }
                 });
 
                 // Start the animation
