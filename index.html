@@ -3629,24 +3629,28 @@
             let scrollSpeed = 0.3; // Normal scroll speed (pixels per frame)
             let animationId = null;
 
+            function normalizeScrollPosition() {
+                // Get the width of one set of items (first 11 items)
+                const firstItem = integrationsTrack.querySelector('.integration-capsule');
+                if (firstItem) {
+                    const itemWidth = firstItem.offsetWidth;
+                    const gap = 16; // 1rem gap
+                    const oneSetWidth = (itemWidth + gap) * 11; // 11 items in original set
+
+                    // Handle infinite loop in both directions
+                    if (scrollPosition <= -oneSetWidth) {
+                        scrollPosition = 0;
+                    } else if (scrollPosition > 0) {
+                        scrollPosition = -oneSetWidth + scrollPosition;
+                    }
+                }
+            }
+
             function scrollIntegrations() {
                 if (integrationsTrack) {
                     scrollPosition -= scrollSpeed;
-
-                    // Get the width of one set of items (first 11 items)
-                    const firstItem = integrationsTrack.querySelector('.integration-capsule');
-                    if (firstItem) {
-                        const itemWidth = firstItem.offsetWidth;
-                        const gap = 16; // 1rem gap
-                        const oneSetWidth = (itemWidth + gap) * 11; // 11 items in original set
-
-                        // Reset when we've scrolled through one complete set
-                        if (Math.abs(scrollPosition) >= oneSetWidth) {
-                            scrollPosition = 0;
-                        }
-
-                        integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
-                    }
+                    normalizeScrollPosition();
+                    integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
                 }
 
                 animationId = requestAnimationFrame(scrollIntegrations);
@@ -3679,7 +3683,15 @@
                     e.preventDefault();
                     const x = e.pageX;
                     const walk = (x - startX);
+                    const oldPosition = scrollPosition;
                     scrollPosition = dragStartScrollPos + walk;
+                    normalizeScrollPosition();
+                    // Adjust dragStartScrollPos if position was wrapped
+                    const positionDelta = scrollPosition - (dragStartScrollPos + walk);
+                    if (positionDelta !== 0) {
+                        dragStartScrollPos += positionDelta;
+                    }
+                    integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
                 });
 
                 integrationsTrack.addEventListener('mouseup', () => {
@@ -3706,6 +3718,13 @@
                     const x = e.touches[0].pageX;
                     const walk = (x - startX);
                     scrollPosition = dragStartScrollPos + walk;
+                    normalizeScrollPosition();
+                    // Adjust dragStartScrollPos if position was wrapped
+                    const positionDelta = scrollPosition - (dragStartScrollPos + walk);
+                    if (positionDelta !== 0) {
+                        dragStartScrollPos += positionDelta;
+                    }
+                    integrationsTrack.style.transform = `translateX(${scrollPosition}px)`;
                 });
 
                 integrationsTrack.addEventListener('touchend', () => {
