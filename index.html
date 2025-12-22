@@ -937,9 +937,9 @@
         }
 
         .carousel-dot.active {
-            width: 24px;
+            width: 36px;
             border-radius: 4px;
-            transition: transform 0.3s ease, border-radius 0.3s ease, width 0.1s linear;
+            transition: transform 0.3s ease, border-radius 0.3s ease, width 0.3s ease-out;
         }
 
         .phone-header {
@@ -3507,9 +3507,9 @@
                         }
                     }
 
-                    // Map progress to width: start at 24px (0% progress), end at 8px (100% progress)
+                    // Map progress to width: start at 36px (0% progress), end at 8px (100% progress)
                     const minWidth = 8;
-                    const maxWidth = 24;
+                    const maxWidth = 36;
                     const currentWidth = maxWidth - (progress * (maxWidth - minWidth));
 
                     activeDot.style.width = `${currentWidth}px`;
