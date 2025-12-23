@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — Tiempo</title>
+    <meta name="description" content="Get help and support for Tiempo: AI Daily Planner">
+    <link rel="icon" type="image/png" href="../logo.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NBB94Y0ELK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NBB94Y0ELK');
+    </script>
+
+    <style>
+        :root {
+            --color-primary: #007AFF;
+            --color-success: #34C759;
+            --color-warning: #FF9500;
+            --color-danger: #FF3B30;
+            --color-purple: #AF52DE;
+            --color-white: #FFFFFF;
+            --color-background: #F2F2F7;
+            --color-card: #FFFFFF;
+            --color-gray-200: #E5E5EA;
+            --color-gray-400: #C7C7CC;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #C7C7CC;
+            --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            --radius-sm: 10px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            --space-md: 0.75rem;
+            --space-xl: 1.5rem;
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-white);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav .btn {
+            border-radius: var(--radius-full);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .support-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .support-header h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .support-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .support-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .support-content p {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .support-content a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .support-content a:hover {
+            text-decoration: underline;
+        }
+
+        .support-card {
+            background: var(--color-background);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .support-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .support-card p {
+            margin-bottom: 0;
+        }
+
+        footer {
+            background: var(--color-background);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            main {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .support-header h1 {
+                font-size: 2rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 1rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="../logo.png" alt="Tiempo">
+            <span class="logo-text">Tiempo</span>
+        </a>
+        <nav>
+            <a href="/#features">Features</a>
+            <a href="/faq">FAQ</a>
+            <a href="https://apps.apple.com/app/tiempo-ai-daily-planner/id6738964879" class="btn" target="_blank">Download</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="support-header">
+            <h1>Support</h1>
+            <p class="subtitle">We're here to help you get the most out of Tiempo.</p>
+        </div>
+
+        <div class="support-content">
+            <div class="support-card">
+                <h3>Check the FAQ</h3>
+                <p>Find answers to common questions about Tiempo, including features, subscriptions, and integrations. <a href="/faq">View FAQ</a></p>
+            </div>
+
+            <div class="support-card">
+                <h3>Contact Us</h3>
+                <p>Can't find what you're looking for? Reach out to our support team at <a href="mailto:support@usetiempoapp.com">support@usetiempoapp.com</a></p>
+            </div>
+
+            <h2>Common Topics</h2>
+
+            <p><strong>Calendar Sync Issues</strong><br>
+            If your calendars aren't syncing, try disconnecting and reconnecting your calendar account in Settings. Make sure Tiempo has permission to access your calendar.</p>
+
+            <p><strong>Subscription & Billing</strong><br>
+            Subscriptions are managed through the App Store. To cancel or modify your subscription, go to Settings on your iPhone > Apple ID > Subscriptions > Tiempo.</p>
+
+            <p><strong>Feature Requests</strong><br>
+            We love hearing your ideas! Send feature requests to <a href="mailto:feedback@usetiempoapp.com">feedback@usetiempoapp.com</a></p>
+
+            <h2>System Requirements</h2>
+            <p>Tiempo requires iOS 17.0 or later. For the best experience, we recommend keeping your device updated to the latest iOS version.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="/" class="logo">
+                <img src="../wordmark.png" alt="Tiempo" style="height: 32px;">
+            </a>
+            <div class="footer-links">
+                <a href="/faq">FAQ</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="/support">Support</a>
+            </div>
+            <p class="footer-copy">© 2026 Tiempo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
