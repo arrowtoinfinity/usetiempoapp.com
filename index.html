@@ -2275,7 +2275,7 @@
             bottom: 0;
             white-space: nowrap;
             opacity: 0;
-            transform: translateX(-50%) translateY(50%);
+            transform: translateX(-50%) translateY(100%);
             color: var(--text-primary);
         }
 
@@ -2318,7 +2318,7 @@
                         word.style.transform = 'translateX(-50%) translateY(0)';
                         word.style.opacity = '1';
                     } else {
-                        word.style.transform = 'translateX(-50%) translateY(50%)';
+                        word.style.transform = 'translateX(-50%) translateY(100%)';
                         word.style.opacity = '1';
                     }
                 });
@@ -2350,7 +2350,7 @@
                     // After animation completes, reset current word to below (no transition)
                     setTimeout(() => {
                         currentWord.style.transition = 'none';
-                        currentWord.style.transform = 'translateX(-50%) translateY(50%)';
+                        currentWord.style.transform = 'translateX(-50%) translateY(100%)';
                         currentWord.style.opacity = '1';
                         currentWord.classList.remove('active');
                         nextWord.classList.add('active');
