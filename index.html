@@ -2262,11 +2262,17 @@
 </head>
 <body>
     <!-- Coming Soon Overlay -->
-    <div class="coming-soon-overlay">
+    <div class="coming-soon-overlay" id="comingSoonOverlay">
         <img src="logo.png" alt="Tiempo">
         <h1>Coming Soon</h1>
         <p>Tiempo is launching soon. Stay tuned for something amazing.</p>
     </div>
+    <script>
+        // Secret preview access - add ?preview=tiempo2025 to URL to bypass
+        if (new URLSearchParams(window.location.search).get('preview') === 'tiempo2025') {
+            document.getElementById('comingSoonOverlay').style.display = 'none';
+        }
+    </script>
 
     <!-- SVG Definitions -->
     <svg width="0" height="0" style="position: absolute;">
