@@ -2305,15 +2305,19 @@
 
                 let currentIndex = 0;
                 const DISPLAY_DURATION = 2500;
-                const ANIMATION_DURATION = 0.5;
+                const ANIMATION_DURATION = 500;
 
                 // Set initial width to first word
                 const firstWord = words[0];
                 container.style.width = firstWord.offsetWidth + 'px';
 
-                // Set all other words below
+                // Initialize all words - first one visible, rest below
                 words.forEach((word, i) => {
-                    if (i !== 0) {
+                    word.style.transition = 'none';
+                    if (i === 0) {
+                        word.style.transform = 'translateX(-50%) translateY(0)';
+                        word.style.opacity = '1';
+                    } else {
                         word.style.transform = 'translateX(-50%) translateY(100%)';
                         word.style.opacity = '1';
                     }
@@ -2324,32 +2328,33 @@
                     const nextIndex = (currentIndex + 1) % words.length;
                     const nextWord = words[nextIndex];
 
-                    // Measure next word width
-                    nextWord.style.transform = 'translateX(-50%) translateY(0)';
-                    nextWord.style.position = 'relative';
-                    const nextWidth = nextWord.offsetWidth;
-                    nextWord.style.position = 'absolute';
-                    nextWord.style.transform = 'translateX(-50%) translateY(100%)';
+                    // Pre-measure next word width (hidden measurement)
+                    const tempSpan = document.createElement('span');
+                    tempSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit;';
+                    tempSpan.textContent = nextWord.textContent;
+                    container.appendChild(tempSpan);
+                    const nextWidth = tempSpan.offsetWidth;
+                    container.removeChild(tempSpan);
 
-                    // Animate current word out
-                    currentWord.style.transition = `transform ${ANIMATION_DURATION}s ease-in-out, opacity ${ANIMATION_DURATION}s ease-in-out`;
+                    // Enable transitions for animation
+                    currentWord.style.transition = `transform ${ANIMATION_DURATION}ms ease-in-out, opacity ${ANIMATION_DURATION}ms ease-in-out`;
+                    nextWord.style.transition = `transform ${ANIMATION_DURATION}ms ease-in-out`;
+                    container.style.transition = `width ${ANIMATION_DURATION}ms ease-in-out`;
+
+                    // Animate: current goes up and fades, next comes up from below
                     currentWord.style.transform = 'translateX(-50%) translateY(-100%)';
                     currentWord.style.opacity = '0';
-
-                    // Animate next word in
-                    nextWord.style.transition = `transform ${ANIMATION_DURATION}s ease-in-out`;
                     nextWord.style.transform = 'translateX(-50%) translateY(0)';
-
-                    // Animate container width
-                    container.style.transition = `width ${ANIMATION_DURATION}s ease-in-out`;
                     container.style.width = nextWidth + 'px';
 
+                    // After animation completes, reset current word to below (no transition)
                     setTimeout(() => {
-                        currentWord.classList.remove('active');
+                        currentWord.style.transition = 'none';
                         currentWord.style.transform = 'translateX(-50%) translateY(100%)';
                         currentWord.style.opacity = '1';
+                        currentWord.classList.remove('active');
                         nextWord.classList.add('active');
-                    }, ANIMATION_DURATION * 1000);
+                    }, ANIMATION_DURATION);
 
                     currentIndex = nextIndex;
                 }
