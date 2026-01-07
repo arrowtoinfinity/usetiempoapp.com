@@ -3,339 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiempo Marketing Generator</title>
+    <title>Tiempo - Auto Marketing Generator</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         :root {
-            /* Copied from index.html */
-            --color-yellow: #f9ed32;
-            --color-orange: #f26522;
-            --color-magenta: #ec008c;
-            --color-sunrise-blue: #1c75bc;
+            /* Brand Colors */
             --color-primary: #007AFF;
-            --color-success: #34C759;
-            --color-warning: #FF9500;
-            --color-danger: #FF3B30;
-            --color-purple: #AF52DE;
             --color-white: #FFFFFF;
             --color-background: #F2F2F7;
-            --color-card: #FFFFFF;
-            --color-gray-100: #F2F2F7;
-            --color-gray-200: #E5E5EA;
-            --color-gray-400: #C7C7CC;
             --text-primary: #1C1C1E;
             --text-secondary: #8E8E93;
-            --text-tertiary: #C7C7CC;
-            --gradient-sunrise: linear-gradient(45deg, var(--color-sunrise-blue) 0%, var(--color-magenta) 30%, var(--color-orange) 65%, var(--color-yellow) 100%);
+            
+            /* Gradients */
+            --gradient-sunrise: linear-gradient(45deg, #1c75bc 0%, #ec008c 30%, #f26522 65%, #f9ed32 100%);
+            --gradient-ocean: linear-gradient(45deg, #2E3192 0%, #1BFFFF 100%);
+            --gradient-forest: linear-gradient(45deg, #134E5E 0%, #71B280 100%);
+            
+            /* Typography */
             --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
-            --radius-xl: 20px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: var(--font-body);
-            background: #1a1a1a; /* Dark BG for tool interface */
-            color: #333;
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
+            background: #111;
+            color: #eee;
+            min-height: 100vh;
         }
 
-        /* Layout */
-        .sidebar {
-            width: 350px;
-            background: #fff;
-            padding: 2rem;
+        /* Header */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            z-index: 100;
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            overflow-y: auto;
-            border-right: 1px solid #ccc;
-        }
-
-        .main {
-            flex: 1;
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            background: #2c2c2e;
-            padding: 2rem;
-            overflow: auto;
+            border-bottom: 1px solid #333;
         }
 
-        h2 { font-family: var(--font-display); margin-bottom: 0.5rem; }
-        
-        /* Controls */
-        .control-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); }
-        input, textarea, select {
-            padding: 0.8rem;
-            border: 1px solid var(--color-gray-200);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        textarea { resize: vertical; min-height: 80px; }
+        h1 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+        .badge { background: var(--color-primary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
 
-        .btn {
-            padding: 1rem;
-            background: var(--color-primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .btn:hover { opacity: 0.9; }
-
-        /* Canvas Preview */
-        #preview-container {
-            transform-origin: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        /* Feed */
+        #feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 6rem 2rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
-        .slide {
-            width: 1080px;
-            height: 1350px; /* 4:5 Portrait */
-            background: var(--color-white);
+        /* Slide Container */
+        .slide-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: appear 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes appear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-container {
             position: relative;
+            width: 100%;
+            padding-top: 125%; /* 4:5 Aspect Ratio by default */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .slide-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* The actual slide content (absolute to fit aspect ratio) */
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Backgrounds */
+        .bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transition: transform 10s ease;
+        }
+        
+        .slide:hover .bg-image { transform: scale(1.1); }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        /* Content Layouts */
+        .content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        /* Layout: Centered */
+        .layout-center .content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Layout: Bottom Left */
+        .layout-bottom-left .content {
+            justify-content: flex-end;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        /* Layout: Card */
+        .layout-card {
+            background: var(--color-background);
+            padding: 2rem;
+        }
+        .layout-card .card-box {
+            background: white;
+            flex: 1;
+            border-radius: 24px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            /* Scale down for preview if needed via JS transform */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        .slide.story { height: 1920px; /* 9:16 Story */ }
-
-        /* Slide Content Styles */
-        .slide-content {
+        .layout-card .card-image {
+            height: 60%;
+            width: 100%;
+            object-fit: cover;
+        }
+        .layout-card .card-text {
             flex: 1;
-            padding: 80px;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            z-index: 2;
         }
 
-        .slide-bg-gradient {
-            background: var(--gradient-sunrise);
-        }
-        
-        .slide-bg-gray {
-            background: var(--color-background);
-        }
-
-        /* Text Styles */
-        .slide-title {
-            font-family: var(--font-display);
-            font-size: 5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-        }
-
-        .slide-subtitle {
+        /* Typography */
+        .headline {
             font-family: var(--font-display);
             font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            animation: slideUp 0.8s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .subtitle {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
             font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            opacity: 0;
+            animation: slideUp 0.8s 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        .slide-body {
-            font-size: 2rem;
-            color: var(--text-primary);
-            max-width: 80%;
-            line-height: 1.5;
+        .layout-card .headline { color: var(--text-primary); text-shadow: none; }
+        .layout-card .subtitle { color: var(--text-secondary); text-shadow: none; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Variant: Dark Text on Gradient */
-        .slide-bg-gradient .slide-title, 
-        .slide-bg-gradient .slide-body { color: white; }
-        .slide-bg-gradient .slide-subtitle { color: rgba(255,255,255,0.9); }
-
-        /* Logo watermark */
+        /* Watermark */
         .watermark {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: auto;
             display: flex;
             align-items: center;
-            gap: 15px;
-            opacity: 0.8;
+            gap: 8px;
+            opacity: 0.9;
         }
-        .watermark img { height: 40px; }
-        .watermark span { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); }
-        .slide-bg-gradient .watermark span { color: white; }
-
-        /* Feature Card Style */
-        .feature-card-preview {
-            background: white;
-            border-radius: 40px;
-            padding: 60px;
-            box-shadow: var(--shadow-lg);
-            width: 80%;
-            display: none;
-        }
-        .style-card .feature-card-preview { display: block; }
+        .watermark img { height: 24px; width: auto; }
+        .watermark span { font-weight: 600; font-size: 1rem; color: white; }
         
-        .style-card .slide-title { font-size: 3.5rem; }
+        .layout-card .watermark { display: none; } /* Hide in card mode */
 
-        /* Quote Style */
-        .quote-mark { font-size: 8rem; line-height: 0; color: var(--color-primary); margin-bottom: 40px; display: none; }
-        .style-quote .quote-mark { display: block; }
-        .style-quote .slide-title { font-size: 3rem; font-weight: 500; font-style: italic; }
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #444; }
+        .btn-primary { background: var(--color-primary); }
+        .btn-primary:hover { background: #0066d6; }
+
+        /* Loader */
+        #loader {
+            text-align: center;
+            padding: 4rem;
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2>Slide Generator</h2>
-        
-        <div class="control-group">
-            <label>Template Style</label>
-            <select id="styleSelect">
-                <option value="simple">Simple Text</option>
-                <option value="quote">Quote</option>
-                <option value="card">Card Feature</option>
-            </select>
+    <header>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <img src="../logo.png" style="height:30px;">
+            <h1>Marketing Gen</h1>
+            <span class="badge">AI AUTO-MODE</span>
         </div>
+    </header>
 
-        <div class="control-group">
-            <label>Dimensions</label>
-            <select id="sizeSelect">
-                <option value="post">Post (4:5)</option>
-                <option value="story">Story (9:16)</option>
-            </select>
-        </div>
-
-        <div class="control-group">
-            <label>Background</label>
-            <select id="bgSelect">
-                <option value="white">White</option>
-                <option value="gray">Gray</option>
-                <option value="gradient">Sunrise Gradient</option>
-            </select>
-        </div>
-
-        <div class="control-group">
-            <label>Title / Heading</label>
-            <input type="text" id="titleInput" value="Plan your day with AI">
-        </div>
-
-        <div class="control-group">
-            <label>Subtitle / Caption</label>
-            <input type="text" id="subtitleInput" value="Better health, better habits.">
-        </div>
-
-        <div class="control-group">
-            <label>Body Text</label>
-            <textarea id="bodyInput">Tiempo helps you organize your schedule while keeping your health goals in check.</textarea>
-        </div>
-
-        <button class="btn" id="downloadBtn">Download PNG</button>
-        <p style="font-size: 0.8rem; color: #666; margin-top: 1rem;">Note: This runs locally in your browser.</p>
+    <div id="feed">
+        <!-- Slides generated here -->
     </div>
 
-    <div class="main">
-        <div id="preview-wrapper" style="transform: scale(0.4);">
-            <div id="slide" class="slide">
-                <div class="slide-content">
-                    <div class="quote-mark">“</div>
-                    
-                    <div class="feature-card-preview">
-                        <!-- Content moves here for card style -->
-                    </div>
+    <div id="loader">Generating new styles...</div>
 
-                    <h1 class="slide-title">Plan your day with AI</h1>
-                    <h2 class="slide-subtitle">Better health, better habits.</h2>
-                    <p class="slide-body">Tiempo helps you organize your schedule while keeping your health goals in check.</p>
-                </div>
-
-                <div class="watermark">
-                    <img src="../logo.png" alt="Logo">
-                    <span>Tiempo</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
-        const slide = document.getElementById('slide');
-        const inputs = {
-            title: document.getElementById('titleInput'),
-            subtitle: document.getElementById('subtitleInput'),
-            body: document.getElementById('bodyInput'),
-            style: document.getElementById('styleSelect'),
-            size: document.getElementById('sizeSelect'),
-            bg: document.getElementById('bgSelect')
-        };
+        const feed = document.getElementById('feed');
+        const loader = document.getElementById('loader');
 
-        const elements = {
-            title: document.querySelector('.slide-title'),
-            subtitle: document.querySelector('.slide-subtitle'),
-            body: document.querySelector('.slide-body'),
-            card: document.querySelector('.feature-card-preview')
-        };
+        // Content Libraries
+        const headlines = [
+            "Plan your day with AI",
+            "Achieve your goals",
+            "Health & Habits",
+            "Focus on what matters",
+            "Your daily companion",
+            "Simplify your life",
+            "Nutrition Tracking",
+            "Mindful Productivity",
+            "Start your journey",
+            "Wellness reimagined"
+        ];
 
-        // Update function
-        function updateSlide() {
-            // Text
-            elements.title.textContent = inputs.title.value;
-            elements.subtitle.textContent = inputs.subtitle.value;
-            elements.body.textContent = inputs.body.value;
+        const subtitles = [
+            "Better health, better habits, better you.",
+            "The all-in-one planner for a balanced life.",
+            "Smart scheduling meets health tracking.",
+            "Stay consistent with Tiempo.",
+            "Designed for your well-being.",
+            "Take control of your schedule today.",
+            "AI-powered insights for your daily routine.",
+            "Balance your work and your health."
+        ];
 
-            // Classes
-            slide.className = 'slide'; // Reset
-            slide.classList.add(inputs.size.value); // story or post
-            
-            // Background
-            if (inputs.bg.value === 'gradient') slide.classList.add('slide-bg-gradient');
-            else if (inputs.bg.value === 'gray') slide.classList.add('slide-bg-gray');
+        const images = [
+            "https://images.unsplash.com/photo-1544367563-12123d8965cd?w=800&q=80", // Yoga
+            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80", // Gym
+            "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80", // Nutrition
+            "https://images.unsplash.com/photo-1434494878577-86c23be5a630?w=800&q=80", // Watch/Run
+            "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80", // Zen/Yoga
+            "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80", // Planning
+            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80", // Healthy Food
+            "https://images.unsplash.com/photo-1552674605-65a059e5520c?w=800&q=80", // Focus
+            "https://images.unsplash.com/photo-1493770348161-369560ae357d?w=800&q=80", // Breakfast
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80"  // Social/Lifestyle
+        ];
 
-            // Style
-            slide.classList.add('style-' + inputs.style.value);
+        const layouts = ['layout-center', 'layout-bottom-left', 'layout-card'];
 
-            // Move elements for card style logic if needed
-            // For simplicity, we just use CSS display toggling for now
+        function randomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        // Listeners
-        Object.values(inputs).forEach(input => {
-            input.addEventListener('input', updateSlide);
-        });
+        function createSlide() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'slide-wrapper';
 
-        // Download
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            const btn = document.getElementById('downloadBtn');
-            btn.textContent = 'Generating...';
+            const layout = randomItem(layouts);
+            const image = randomItem(images);
+            const headline = randomItem(headlines);
+            const subtitle = randomItem(subtitles);
             
+            // HTML Structure
+            let innerHTML = '';
+
+            if (layout === 'layout-card') {
+                innerHTML = `
+                    <div class="slide ${layout}">
+                        <div class="card-box">
+                            <img src="${image}" class="card-image" crossorigin="anonymous">
+                            <div class="card-text">
+                                <h2 class="headline">${headline}</h2>
+                                <p class="subtitle">${subtitle}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                innerHTML = `
+                    <div class="slide ${layout}">
+                        <img src="${image}" class="bg-image" crossorigin="anonymous">
+                        <div class="overlay"></div>
+                        <div class="content">
+                            <h2 class="headline">${headline}</h2>
+                            <p class="subtitle">${subtitle}</p>
+                            <div class="watermark">
+                                <img src="../logo.png" crossorigin="anonymous">
+                                <span>Tiempo</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const container = document.createElement('div');
+            container.className = 'slide-container';
+            container.innerHTML = innerHTML;
+
+            // Action Buttons
+            const actions = document.createElement('div');
+            actions.className = 'actions';
+            
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'btn btn-primary';
+            downloadBtn.innerHTML = 'Download Image';
+            downloadBtn.onclick = () => downloadSlide(container);
+
+            actions.appendChild(downloadBtn);
+
+            wrapper.appendChild(container);
+            wrapper.appendChild(actions);
+            feed.appendChild(wrapper);
+        }
+
+        function downloadSlide(container) {
+            const slide = container.querySelector('.slide');
+            
+            // Fix for high-res download
             html2canvas(slide, {
-                scale: 2, // High res
+                scale: 3,
                 useCORS: true,
-                backgroundColor: null
+                allowTaint: true,
+                backgroundColor: null,
+                logging: false
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `tiempo-slide-${Date.now()}.png`;
+                link.download = `tiempo-social-${Date.now()}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                btn.textContent = 'Download PNG';
             });
-        });
+        }
 
-        // Init
-        updateSlide();
+        // Infinite Scroll
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                // Generate more slides
+                for(let i=0; i<4; i++) createSlide();
+            }
+        }, { rootMargin: '200px' });
+
+        observer.observe(loader);
+
+        // Initial Load
+        for(let i=0; i<6; i++) createSlide();
+
     </script>
 </body>
 </html>
