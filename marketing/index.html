@@ -3,410 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiempo - Auto Marketing Generator</title>
+    <title>Tiempo Studio - AI Marketing Gen</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         :root {
-            /* Brand Colors */
+            /* Tiempo Design System */
             --color-primary: #007AFF;
-            --color-white: #FFFFFF;
-            --color-background: #F2F2F7;
+            --color-success: #34C759;
+            --color-warning: #FF9500;
+            --color-danger: #FF3B30;
+            --color-purple: #AF52DE;
+            --color-bg: #F2F2F7;
+            --color-card: #FFFFFF;
             --text-primary: #1C1C1E;
             --text-secondary: #8E8E93;
             
-            /* Gradients */
             --gradient-sunrise: linear-gradient(45deg, #1c75bc 0%, #ec008c 30%, #f26522 65%, #f9ed32 100%);
-            --gradient-ocean: linear-gradient(45deg, #2E3192 0%, #1BFFFF 100%);
-            --gradient-forest: linear-gradient(45deg, #134E5E 0%, #71B280 100%);
             
-            /* Typography */
             --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            
+            --shadow-card: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-body);
-            background: #111;
-            color: #eee;
-            min-height: 100vh;
+            background: #1c1c1e; /* Dark studio background */
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        /* Header */
+        /* Toolbar */
         header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(20px);
-            padding: 1rem 2rem;
-            z-index: 100;
+            height: 60px;
+            background: #2c2c2e;
+            border-bottom: 1px solid #3a3a3c;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #333;
+            padding: 0 2rem;
+            justify-content: space-between;
         }
 
-        h1 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
-        .badge { background: var(--color-primary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
-
-        /* Feed */
-        #feed {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            padding: 6rem 2rem 2rem;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        /* Slide Container */
-        .slide-wrapper {
+        .brand {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
             gap: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: appear 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        @keyframes appear {
-            to { opacity: 1; transform: translateY(0); }
+        button {
+            background: #3a3a3c;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .slide-container {
+        button:hover { background: #48484a; }
+        
+        button.primary {
+            background: var(--color-primary);
+        }
+        button.primary:hover { background: #0063d6; }
+
+        /* Workspace */
+        .workspace {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1c1c1e;
             position: relative;
-            width: 100%;
-            padding-top: 125%; /* 4:5 Aspect Ratio by default */
-            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .canvas-wrapper {
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        /* The Slide Canvas */
+        #canvas {
+            width: 1080px;
+            height: 1350px; /* Default Post 4:5 */
+            background: var(--color-card);
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .slide-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        /* The actual slide content (absolute to fit aspect ratio) */
-        .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            transform-origin: center center;
         }
 
+        /* --- GENERATED CONTENT STYLES --- */
+        
         /* Backgrounds */
-        .bg-image {
+        .bg-layer {
             position: absolute;
             inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
             z-index: 0;
-            transition: transform 10s ease;
         }
+        .bg-layer img { width: 100%; height: 100%; object-fit: cover; }
+        .bg-layer.gradient { background: var(--gradient-sunrise); }
+        .bg-layer.white { background: var(--color-card); }
+        .bg-layer.gray { background: var(--color-bg); }
         
-        .slide:hover .bg-image { transform: scale(1.1); }
-
         .overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            background: rgba(0,0,0,0.3);
             z-index: 1;
         }
+        .overlay.gradient-fade {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+        }
 
-        /* Content Layouts */
-        .content {
+        /* Content Layer */
+        .content-layer {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 2rem;
-        }
-
-        /* Layout: Centered */
-        .layout-center .content {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* Layout: Bottom Left */
-        .layout-bottom-left .content {
-            justify-content: flex-end;
-            align-items: flex-start;
-            text-align: left;
-        }
-
-        /* Layout: Card */
-        .layout-card {
-            background: var(--color-background);
-            padding: 2rem;
-        }
-        .layout-card .card-box {
-            background: white;
-            flex: 1;
-            border-radius: 24px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .layout-card .card-image {
-            height: 60%;
-            width: 100%;
-            object-fit: cover;
-        }
-        .layout-card .card-text {
-            flex: 1;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            padding: 80px;
         }
 
         /* Typography */
-        .headline {
+        .slide-title {
             font-family: var(--font-display);
-            font-size: 2.5rem;
             font-weight: 800;
+            font-size: 4rem;
             line-height: 1.1;
-            margin-bottom: 0.5rem;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            opacity: 0;
-            animation: slideUp 0.8s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
         }
-
-        .subtitle {
-            font-family: var(--font-display);
-            font-size: 1.2rem;
+        
+        .slide-subtitle {
+            font-size: 1.8rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            opacity: 0;
-            animation: slideUp 0.8s 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0.9;
+            line-height: 1.4;
         }
 
-        .layout-card .headline { color: var(--text-primary); text-shadow: none; }
-        .layout-card .subtitle { color: var(--text-secondary); text-shadow: none; }
+        /* Tiempo UI Components */
+        
+        /* 1. Event Bubble */
+        .event-bubble {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 6px solid var(--bubble-color, var(--color-primary));
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+            width: 100%;
+            max-width: 600px;
+            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
 
+        .event-bubble .emoji {
+            font-size: 2.5rem;
+            background: #f2f2f7;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .event-bubble .details { flex: 1; }
+        .event-bubble .title { font-weight: 600; font-size: 1.4rem; color: var(--text-primary); }
+        .event-bubble .time { color: var(--text-secondary); font-size: 1.1rem; margin-top: 4px; }
+
+        /* 2. Timeline View */
+        .timeline-container {
+            position: relative;
+            padding-left: 60px;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #e5e5ea;
+            border-radius: 2px;
+        }
+        
+        /* 3. Floating Circles */
+        .floating-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 4. Phone Mockup (Simple CSS version) */
+        .phone-mockup {
+            width: 500px;
+            border-radius: 60px;
+            border: 12px solid #333;
+            background: white;
+            overflow: hidden;
+            box-shadow: var(--shadow-float);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .phone-header {
+            height: 40px;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .phone-notch {
+            width: 160px;
+            height: 28px;
+            background: black;
+            border-radius: 0 0 20px 20px;
+        }
+        .phone-screen {
+            flex: 1;
+            background: var(--color-bg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Layouts */
+        
+        /* Center Text */
+        .layout-center { text-align: center; justify-content: center; align-items: center; }
+        .layout-center .slide-title { color: white; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .layout-center .slide-subtitle { color: rgba(255,255,255,0.9); }
+
+        /* Feature List */
+        .layout-feature { align-items: flex-start; justify-content: center; background: var(--color-bg); }
+        .layout-feature .slide-title { color: var(--text-primary); font-size: 3.5rem; }
+        .layout-feature .slide-subtitle { color: var(--text-secondary); margin-bottom: 3rem; }
+
+        /* UI Spotlight */
+        .layout-ui { background: var(--gradient-sunrise); justify-content: center; align-items: center; }
+        .layout-ui .slide-title { color: white; margin-bottom: 2rem; text-align: center; }
+
+        /* Animations */
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         /* Watermark */
         .watermark {
-            margin-top: auto;
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 8px;
-            opacity: 0.9;
+            gap: 12px;
+            opacity: 0.8;
+            z-index: 20;
         }
-        .watermark img { height: 24px; width: auto; }
-        .watermark span { font-weight: 600; font-size: 1rem; color: white; }
-        
-        .layout-card .watermark { display: none; } /* Hide in card mode */
-
-        /* Actions */
-        .actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s;
-        }
-        .btn:hover { background: #444; }
-        .btn-primary { background: var(--color-primary); }
-        .btn-primary:hover { background: #0066d6; }
-
-        /* Loader */
-        #loader {
-            text-align: center;
-            padding: 4rem;
-            color: #666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .watermark img { height: 40px; }
+        .watermark span { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; }
+        .dark-watermark span { color: var(--text-primary); }
+        .light-watermark span { color: white; }
 
     </style>
 </head>
 <body>
 
     <header>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <img src="../logo.png" style="height:30px;">
-            <h1>Marketing Gen</h1>
-            <span class="badge">AI AUTO-MODE</span>
+        <div class="brand">
+            <img src="../logo.png" height="32">
+            <span>Tiempo Studio</span>
+        </div>
+        <div class="controls">
+            <button onclick="toggleFormat()" id="formatBtn">Post (4:5)</button>
+            <button class="primary" onclick="generateSlide()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg>
+                Generate New
+            </button>
+            <button onclick="downloadSlide()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+                Download
+            </button>
         </div>
     </header>
 
-    <div id="feed">
-        <!-- Slides generated here -->
+    <div class="workspace">
+        <div class="canvas-wrapper" id="canvasWrapper">
+            <div id="canvas">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
     </div>
 
-    <div id="loader">Generating new styles...</div>
-
     <script>
-        const feed = document.getElementById('feed');
-        const loader = document.getElementById('loader');
+        // --- DATA ---
+        const copy = {
+            headlines: [
+                "Master Your Day", "Focus & Flow", "Health Meets Calendar", 
+                "Your Life, Organized", "Simply Productive", "Wellness First"
+            ],
+            subtitles: [
+                "The AI planner that helps you build better habits.",
+                "Schedule your life around your health goals.",
+                "Stop juggling apps. Start living.",
+                "Smart scheduling for busy professionals."
+            ],
+            events: [
+                { title: "Morning Yoga", time: "7:00 AM - 8:00 AM", emoji: "🧘‍♀️", color: "#FF9500" },
+                { title: "Deep Work", time: "9:00 AM - 11:30 AM", emoji: "💻", color: "#007AFF" },
+                { title: "Healthy Lunch", time: "12:00 PM - 1:00 PM", emoji: "🥗", color: "#34C759" },
+                { title: "Team Sync", time: "2:00 PM - 3:00 PM", emoji: "👥", color: "#AF52DE" },
+                { title: "Evening Run", time: "6:00 PM - 7:00 PM", emoji: "🏃‍♂️", color: "#FF3B30" }
+            ],
+            images: [
+                "https://images.unsplash.com/photo-1493770348161-369560ae357d?w=1200&q=80",
+                "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80",
+                "https://images.unsplash.com/photo-1434494878577-86c23be5a630?w=1200&q=80",
+                "https://images.unsplash.com/photo-1544367563-12123d8965cd?w=1200&q=80",
+                "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80"
+            ]
+        };
 
-        // Content Libraries
-        const headlines = [
-            "Plan your day with AI",
-            "Achieve your goals",
-            "Health & Habits",
-            "Focus on what matters",
-            "Your daily companion",
-            "Simplify your life",
-            "Nutrition Tracking",
-            "Mindful Productivity",
-            "Start your journey",
-            "Wellness reimagined"
-        ];
+        const canvas = document.getElementById('canvas');
+        const wrapper = document.getElementById('canvasWrapper');
+        let currentFormat = 'post';
 
-        const subtitles = [
-            "Better health, better habits, better you.",
-            "The all-in-one planner for a balanced life.",
-            "Smart scheduling meets health tracking.",
-            "Stay consistent with Tiempo.",
-            "Designed for your well-being.",
-            "Take control of your schedule today.",
-            "AI-powered insights for your daily routine.",
-            "Balance your work and your health."
-        ];
+        // --- SCALE ---
+        function fitCanvas() {
+            const h = window.innerHeight - 100;
+            const w = window.innerWidth - 100;
+            const scale = Math.min(h / 1350, w / 1080);
+            wrapper.style.transform = `scale(${scale})`;
+        }
+        window.addEventListener('resize', fitCanvas);
+        fitCanvas();
 
-        const images = [
-            "https://images.unsplash.com/photo-1544367563-12123d8965cd?w=800&q=80", // Yoga
-            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80", // Gym
-            "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80", // Nutrition
-            "https://images.unsplash.com/photo-1434494878577-86c23be5a630?w=800&q=80", // Watch/Run
-            "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80", // Zen/Yoga
-            "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80", // Planning
-            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80", // Healthy Food
-            "https://images.unsplash.com/photo-1552674605-65a059e5520c?w=800&q=80", // Focus
-            "https://images.unsplash.com/photo-1493770348161-369560ae357d?w=800&q=80", // Breakfast
-            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80"  // Social/Lifestyle
-        ];
+        // --- GENERATORS ---
 
-        const layouts = ['layout-center', 'layout-bottom-left', 'layout-card'];
+        function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-        function randomItem(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
+        // 1. Hero Template (Image + Text)
+        function renderHero() {
+            const img = getRandom(copy.images);
+            const hl = getRandom(copy.headlines);
+            const sub = getRandom(copy.subtitles);
+            
+            return `
+                <div class="bg-layer"><img src="${img}" crossorigin="anonymous"></div>
+                <div class="overlay gradient-fade"></div>
+                <div class="content-layer layout-center">
+                    <h1 class="slide-title">${hl}</h1>
+                    <p class="slide-subtitle">${sub}</p>
+                    <div class="watermark light-watermark">
+                        <img src="../logo.png" crossorigin="anonymous">
+                        <span>Tiempo</span>
+                    </div>
+                </div>
+            `;
         }
 
-        function createSlide() {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'slide-wrapper';
-
-            const layout = randomItem(layouts);
-            const image = randomItem(images);
-            const headline = randomItem(headlines);
-            const subtitle = randomItem(subtitles);
+        // 2. Feature List Template (Bubbles)
+        function renderFeatures() {
+            const hl = "Your day, at a glance.";
             
-            // HTML Structure
-            let innerHTML = '';
-
-            if (layout === 'layout-card') {
-                innerHTML = `
-                    <div class="slide ${layout}">
-                        <div class="card-box">
-                            <img src="${image}" class="card-image" crossorigin="anonymous">
-                            <div class="card-text">
-                                <h2 class="headline">${headline}</h2>
-                                <p class="subtitle">${subtitle}</p>
-                            </div>
+            let bubbles = '';
+            // Pick 3 random events
+            const evts = [...copy.events].sort(() => 0.5 - Math.random()).slice(0, 3);
+            
+            evts.forEach(e => {
+                bubbles += `
+                    <div class="event-bubble" style="--bubble-color: ${e.color}">
+                        <div class="emoji">${e.emoji}</div>
+                        <div class="details">
+                            <div class="title">${e.title}</div>
+                            <div class="time">${e.time}</div>
                         </div>
                     </div>
                 `;
+            });
+
+            return `
+                <div class="bg-layer gray"></div>
+                <div class="content-layer layout-feature">
+                    <h1 class="slide-title">${hl}</h1>
+                    <p class="slide-subtitle">AI-powered scheduling that adapts to you.</p>
+                    <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                        ${bubbles}
+                    </div>
+                    <div class="watermark dark-watermark">
+                        <img src="../logo.png" crossorigin="anonymous">
+                        <span>Tiempo</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. UI Showcase (Phone)
+        function renderUI() {
+            const evts = copy.events.slice(0, 4);
+            let screenContent = '';
+            
+            evts.forEach(e => {
+                screenContent += `
+                    <div class="event-bubble" style="padding: 16px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); --bubble-color: ${e.color}; border-left-width: 4px;">
+                        <div class="emoji" style="width: 40px; height: 40px; font-size: 1.5rem;">${e.emoji}</div>
+                        <div class="details">
+                            <div class="title" style="font-size: 1rem;">${e.title}</div>
+                            <div class="time" style="font-size: 0.8rem;">${e.time}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            return `
+                <div class="bg-layer gradient"></div>
+                <div class="content-layer layout-ui">
+                    <h1 class="slide-title">Designed for Focus</h1>
+                    <div class="phone-mockup">
+                        <div class="phone-header"><div class="phone-notch"></div></div>
+                        <div class="phone-screen">
+                            <h3 style="color: black; font-weight: 700; font-size: 1.5rem; margin-bottom: 10px;">Today</h3>
+                            ${screenContent}
+                        </div>
+                    </div>
+                    <div class="watermark light-watermark">
+                        <img src="../logo.png" crossorigin="anonymous">
+                        <span>Tiempo</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- CONTROLS ---
+
+        function generateSlide() {
+            const templates = [renderHero, renderFeatures, renderUI];
+            const render = getRandom(templates);
+            canvas.innerHTML = render();
+        }
+
+        function toggleFormat() {
+            const btn = document.getElementById('formatBtn');
+            if (currentFormat === 'post') {
+                currentFormat = 'story';
+                canvas.style.height = '1920px';
+                btn.textContent = 'Story (9:16)';
             } else {
-                innerHTML = `
-                    <div class="slide ${layout}">
-                        <img src="${image}" class="bg-image" crossorigin="anonymous">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h2 class="headline">${headline}</h2>
-                            <p class="subtitle">${subtitle}</p>
-                            <div class="watermark">
-                                <img src="../logo.png" crossorigin="anonymous">
-                                <span>Tiempo</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                currentFormat = 'post';
+                canvas.style.height = '1350px';
+                btn.textContent = 'Post (4:5)';
             }
-
-            const container = document.createElement('div');
-            container.className = 'slide-container';
-            container.innerHTML = innerHTML;
-
-            // Action Buttons
-            const actions = document.createElement('div');
-            actions.className = 'actions';
-            
-            const downloadBtn = document.createElement('button');
-            downloadBtn.className = 'btn btn-primary';
-            downloadBtn.innerHTML = 'Download Image';
-            downloadBtn.onclick = () => downloadSlide(container);
-
-            actions.appendChild(downloadBtn);
-
-            wrapper.appendChild(container);
-            wrapper.appendChild(actions);
-            feed.appendChild(wrapper);
+            fitCanvas();
         }
 
-        function downloadSlide(container) {
-            const slide = container.querySelector('.slide');
-            
-            // Fix for high-res download
-            html2canvas(slide, {
-                scale: 3,
+        function downloadSlide() {
+            html2canvas(canvas, {
+                scale: 2,
                 useCORS: true,
-                allowTaint: true,
-                backgroundColor: null,
-                logging: false
-            }).then(canvas => {
+                backgroundColor: null
+            }).then(c => {
                 const link = document.createElement('a');
-                link.download = `tiempo-social-${Date.now()}.png`;
-                link.href = canvas.toDataURL('image/png');
+                link.download = `tiempo-marketing-${Date.now()}.png`;
+                link.href = c.toDataURL('image/png');
                 link.click();
             });
         }
 
-        // Infinite Scroll
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                // Generate more slides
-                for(let i=0; i<4; i++) createSlide();
-            }
-        }, { rootMargin: '200px' });
-
-        observer.observe(loader);
-
-        // Initial Load
-        for(let i=0; i<6; i++) createSlide();
+        // Init
+        generateSlide();
 
     </script>
 </body>
