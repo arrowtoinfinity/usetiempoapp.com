@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiempo Studio - Infinite Feed</title>
+    <title>Tiempo Studio - Chat</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         :root {
@@ -13,478 +13,555 @@
             --color-warning: #FF9500;
             --color-danger: #FF3B30;
             --color-purple: #AF52DE;
-            --color-bg: #F2F2F7;
-            --color-card: #FFFFFF;
-            --text-primary: #1C1C1E;
-            --text-secondary: #8E8E93;
+            
+            --color-bg-dark: #1c1c1e;
+            --color-panel: #2c2c2e;
+            --color-border: #3a3a3c;
+            --text-primary: #ffffff;
+            --text-secondary: #8e8e93;
             
             --gradient-sunrise: linear-gradient(45deg, #1c75bc 0%, #ec008c 30%, #f26522 65%, #f9ed32 100%);
             
             --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-            
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-            --shadow-card: 0 4px 16px rgba(0,0,0,0.08);
-            --shadow-float: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-body);
-            background: #111;
-            color: white;
-            min-height: 100vh;
+            background: var(--color-bg-dark);
+            color: var(--text-primary);
+            height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 60px;
-            background: rgba(28, 28, 30, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            z-index: 100;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        /* Feed Layout */
-        .feed-container {
-            margin-top: 80px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4rem;
-            padding-bottom: 4rem;
-        }
-
-        .slide-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-            opacity: 0;
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        @keyframes fadeIn { to { opacity: 1; } }
-
-        /* The Slide Canvas */
-        .canvas-container {
-            position: relative;
-            /* Default Post 4:5 scaling container */
-            width: 540px; 
-            height: 675px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            border-radius: 2px;
             overflow: hidden;
         }
 
-        .slide {
-            /* Actual canvas size: 1080x1350 */
+        /* --- LAYOUT --- */
+        .sidebar {
+            width: 400px;
+            background: var(--color-panel);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .main-stage {
+            flex: 1;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        /* --- CHAT UI --- */
+        .chat-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .chat-header h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            animation: popIn 0.3s ease;
+        }
+
+        .msg.ai {
+            align-self: flex-start;
+            background: #3a3a3c;
+            border-bottom-left-radius: 4px;
+            color: #eee;
+        }
+
+        .msg.user {
+            align-self: flex-end;
+            background: var(--color-primary);
+            border-bottom-right-radius: 4px;
+            color: white;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid var(--color-border);
+            background: var(--color-panel);
+        }
+
+        .input-wrapper {
+            background: #3a3a3c;
+            border-radius: 24px;
+            padding: 4px 4px 4px 16px;
+            display: flex;
+            align-items: center;
+            border: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .input-wrapper:focus-within { border-color: var(--color-primary); }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            padding: 8px 0;
+        }
+
+        .send-btn {
+            background: var(--color-primary);
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.1s;
+        }
+        .send-btn:active { transform: scale(0.9); }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- PREVIEW CANVAS --- */
+        .canvas-container {
+            /* Scale container to fit view */
+            width: 540px; 
+            height: 675px;
+            position: relative;
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* 1080x1350 Canvas */
+        #slide {
             width: 1080px;
             height: 1350px;
-            background: var(--color-card);
+            background: white;
             position: absolute;
             top: 0; left: 0;
             transform-origin: top left;
-            transform: scale(0.5); /* Scale down to fit visual container */
+            transform: scale(0.5); /* 50% scale to fit container */
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* --- GENERATED CONTENT STYLES --- */
-        
-        /* Backgrounds */
-        .bg-layer { position: absolute; inset: 0; z-index: 0; }
-        .bg-layer img { width: 100%; height: 100%; object-fit: cover; }
-        .bg-layer.gradient { background: var(--gradient-sunrise); }
-        .bg-layer.white { background: var(--color-card); }
-        .bg-layer.gray { background: var(--color-bg); }
-        
-        .overlay {
+        /* Empty State */
+        .empty-state {
+            color: var(--text-secondary);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .empty-state svg { width: 48px; height: 48px; opacity: 0.5; }
+
+        /* Actions */
+        .toolbar {
             position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.2);
-            z-index: 1;
+            top: 24px; right: 24px;
+            display: flex; gap: 12px;
         }
-        .overlay.gradient-fade {
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
-        }
-
-        /* Content Layer */
-        .content-layer {
-            position: relative;
-            z-index: 10;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 80px;
-        }
-
-        /* Typography */
-        .slide-title {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 4rem;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-        
-        .slide-subtitle {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
+        .tool-btn {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
             font-weight: 500;
-            opacity: 0.9;
-            line-height: 1.4;
+            transition: 0.2s;
         }
+        .tool-btn:hover { background: rgba(255,255,255,0.2); }
 
-        /* --- TIEMPO UI COMPONENTS --- */
+        /* --- GENERATED UI COMPONENTS --- */
         
-        /* Event Bubble - Matches Home Page .timeline-item */
+        /* 1. Event Bubble (Strict Design System) */
         .event-bubble {
-            background: var(--color-card);
-            border-radius: 24px; /* Scaled for 1080p */
+            background: #FFFFFF;
+            border-radius: 28px;
             padding: 24px;
             display: flex;
             align-items: center;
             gap: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 700px;
-            border: 1px solid rgba(0,0,0,0.05); /* Subtle border like design system */
+            max-width: 800px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0,0,0,0.02);
             animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .event-bubble .icon-box {
-            width: 80px;
-            height: 80px;
+        .event-icon-box {
+            width: 80px; height: 80px;
             min-width: 80px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
+            border-radius: 22px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.8rem;
             color: white;
-            background: var(--bubble-color, var(--color-primary));
-            /* Or gradient if specified */
+            /* bg set inline */
         }
 
-        .event-bubble .details { flex: 1; text-align: left; }
-        
-        .event-bubble .title { 
+        .event-content { flex: 1; text-align: left; }
+        .event-title { 
+            font-family: var(--font-display); 
             font-weight: 600; 
-            font-size: 1.6rem; 
-            color: var(--text-primary); 
+            font-size: 1.8rem; 
+            color: #1C1C1E; 
             margin-bottom: 6px;
-            font-family: var(--font-display);
         }
-        
-        .event-bubble .time { 
-            color: var(--text-secondary); 
-            font-size: 1.2rem; 
+        .event-time { 
+            font-family: var(--font-body); 
+            font-size: 1.3rem; 
+            color: #8E8E93; 
             font-weight: 500;
         }
 
-        /* Phone Mockup */
+        /* 2. Phone Mockup */
         .phone-mockup {
-            width: 540px;
-            height: 1000px;
-            border-radius: 70px;
-            background: white;
-            overflow: hidden;
-            box-shadow: var(--shadow-float);
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            border: 16px solid #111; /* Bezel */
+            width: 600px;
+            height: 1100px;
+            background: #000;
+            border-radius: 84px;
+            padding: 18px;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.4);
             position: relative;
+            margin: 40px auto 0;
         }
-        
         .phone-screen {
-            flex: 1;
-            background: var(--color-bg);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+            background: #F2F2F7;
+            width: 100%; height: 100%;
+            border-radius: 66px;
+            overflow: hidden;
+            position: relative;
+            display: flex; flex-direction: column;
         }
-
-        .phone-header-ui {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .dynamic-island {
+            width: 180px; height: 50px;
+            background: black;
+            border-radius: 25px;
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 50;
+        }
+        .phone-ui {
+            padding: 100px 40px 40px;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .phone-header-date {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: #1C1C1E;
             margin-bottom: 20px;
-            padding-top: 20px;
         }
-        .phone-date { color: black; font-weight: 700; font-size: 2rem; font-family: var(--font-display); }
-        .phone-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--gradient-sunrise); }
 
-        /* Timeline Line */
-        .timeline-line {
-            position: absolute;
-            left: 64px;
-            top: 100px;
-            bottom: 100px;
-            width: 4px;
-            background: #E5E5EA;
-            z-index: 0;
+        /* 3. Typography & Layers */
+        .bg-layer { position: absolute; inset: 0; z-index: 0; }
+        .bg-layer img { width: 100%; height: 100%; object-fit: cover; }
+        .bg-layer.gradient { background: var(--gradient-sunrise); }
+        .bg-layer.clean { background: #FFFFFF; }
+
+        .overlay { position: absolute; inset: 0; z-index: 1; }
+        .overlay.dark { background: rgba(0,0,0,0.3); }
+        .overlay.fade { background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%); }
+
+        .content-layer {
+            position: relative; z-index: 10;
+            flex: 1; padding: 80px;
+            display: flex; flex-direction: column;
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 5rem;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+        .slide-subtitle {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 500;
+            opacity: 0.9;
         }
 
         /* Layouts */
-        .layout-center { text-align: center; justify-content: center; align-items: center; }
-        .layout-center .slide-title { color: white; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .layout-center .slide-subtitle { color: rgba(255,255,255,0.9); }
+        .layout-hero { justify-content: center; text-align: center; color: white; }
+        .layout-ui { background: var(--gradient-sunrise); justify-content: flex-end; }
+        .layout-clean { justify-content: center; text-align: center; }
 
-        .layout-ui { background: var(--gradient-sunrise); justify-content: flex-end; align-items: center; padding-bottom: 0; }
-        .layout-ui .slide-title { color: white; margin-bottom: 40px; text-align: center; font-size: 3.5rem; }
+        /* Branding */
+        .watermark {
+            position: absolute; bottom: 60px; width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 16px;
+            z-index: 20; opacity: 0.9;
+        }
+        .watermark img { height: 48px; }
+        .watermark span { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; }
 
-        .layout-feature { background: white; justify-content: center; align-items: center; }
-        .layout-feature .slide-title { color: var(--text-primary); text-align: center; margin-bottom: 60px; }
-
-        /* Animations */
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Watermark */
-        .watermark {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            opacity: 0.9;
-            z-index: 20;
-        }
-        .watermark img { height: 48px; width: auto; }
-        .watermark span { font-family: var(--font-display); font-weight: 600; font-size: 1.8rem; }
-        .dark-watermark span { color: var(--text-primary); }
-        .light-watermark span { color: white; }
-
-        /* Controls */
-        .actions {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        button {
-            padding: 0.8rem 1.5rem;
-            background: #333;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        button:hover { background: #444; }
-        button.primary { background: var(--color-primary); }
-        button.primary:hover { background: #0063d6; }
-
-        #loader { text-align: center; color: #666; padding: 2rem; }
-
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">
-            <img src="../logo.png" height="32">
+    <div class="sidebar">
+        <div class="chat-header">
+            <img src="../logo.png" height="28">
             <span>Tiempo Studio</span>
         </div>
-        <button onclick="createSlide()">Generate New</button>
-    </header>
-
-    <div class="feed-container" id="feed">
-        <!-- Slides -->
+        <div class="chat-history" id="chat">
+            <div class="msg ai">
+                Hello! I can generate marketing slides for you.
+                <br><br>
+                Try saying:
+                <br>• "Create a post about morning yoga"
+                <br>• "Show me a deep work schedule"
+                <br>• "Quote about planning"
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <div class="input-wrapper">
+                <input type="text" id="input" placeholder="Type a request..." autocomplete="off">
+                <button class="send-btn" onclick="send()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div id="loader">Scroll for more...</div>
+    <div class="main-stage">
+        <div class="toolbar">
+            <button class="tool-btn" onclick="downloadSlide()">Download PNG</button>
+        </div>
+        
+        <div class="canvas-container">
+            <div id="slide">
+                <!-- Content will be injected here -->
+                <div style="flex:1; display:flex; align-items:center; justify-content:center; color:#1C1C1E;">
+                    <div style="text-align:center; opacity:0.4;">
+                        <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16" style="margin-bottom:16px"><path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg>
+                        <h2 style="font-size:1.5rem; font-weight:600;">Ready to create</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const feed = document.getElementById('feed');
-        const loader = document.getElementById('loader');
+        const chat = document.getElementById('chat');
+        const input = document.getElementById('input');
+        const slide = document.getElementById('slide');
 
-        const copy = {
-            headlines: [
-                "Master Your Day", "Focus & Flow", "Health Meets Calendar", 
-                "Your Life, Organized", "Simply Productive", "Wellness First",
-                "AI-Powered Planning", "Achieve More"
-            ],
-            subtitles: [
-                "The AI planner that helps you build better habits.",
-                "Schedule your life around your health goals.",
-                "Stop juggling apps. Start living.",
-                "Smart scheduling for busy professionals."
-            ],
-            events: [
-                { title: "Morning Yoga", time: "7:00 AM - 8:00 AM", emoji: "🧘‍♀️", color: "#FF9500", grad: "linear-gradient(135deg, #f26522, #ec008c)" },
-                { title: "Deep Work", time: "9:00 AM - 11:30 AM", emoji: "💻", color: "#007AFF", grad: "linear-gradient(135deg, #007AFF, #AF52DE)" },
-                { title: "Healthy Lunch", time: "12:00 PM - 1:00 PM", emoji: "🥗", color: "#34C759", grad: "linear-gradient(135deg, #34C759, #81C784)" },
-                { title: "Team Sync", time: "2:00 PM - 3:00 PM", emoji: "👥", color: "#AF52DE", grad: "linear-gradient(135deg, #AF52DE, #5856D6)" },
-                { title: "Evening Run", time: "6:00 PM - 7:00 PM", emoji: "🏃‍♂️", color: "#FF3B30", grad: "linear-gradient(135deg, #FF3B30, #FF9500)" }
-            ],
-            images: [
-                "images/desk.jpg",
-                "images/yoga.jpg",
-                "images/gym.jpg",
-                "images/planning.jpg",
-                "images/lifestyle.jpg"
-            ]
+        // Assets
+        const assets = {
+            images: {
+                yoga: "images/yoga.jpg",
+                gym: "images/gym.jpg",
+                work: "images/desk.jpg",
+                plan: "images/planning.jpg",
+                life: "images/lifestyle.jpg"
+            },
+            gradients: {
+                orange: "linear-gradient(135deg, #f26522, #ec008c)",
+                blue: "linear-gradient(135deg, #007AFF, #AF52DE)",
+                green: "linear-gradient(135deg, #34C759, #007AFF)",
+                red: "linear-gradient(135deg, #FF3B30, #FF9500)"
+            }
         };
 
-        function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        // Logic
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') send();
+        });
 
-        function renderEventBubble(e) {
-            return `
-                <div class="event-bubble">
-                    <div class="icon-box" style="background: ${e.grad || e.color}">${e.emoji}</div>
-                    <div class="details">
-                        <div class="title">${e.title}</div>
-                        <div class="time">${e.time}</div>
+        function send() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add User Msg
+            addMsg(text, 'user');
+            input.value = '';
+
+            // Process
+            setTimeout(() => process(text), 500);
+        }
+
+        function addMsg(text, type) {
+            const div = document.createElement('div');
+            div.className = `msg ${type}`;
+            div.innerHTML = text;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function process(text) {
+            const lower = text.toLowerCase();
+            let context = 'life';
+            if (lower.includes('yoga') || lower.includes('health')) context = 'yoga';
+            else if (lower.includes('gym') || lower.includes('fitness')) context = 'gym';
+            else if (lower.includes('work') || lower.includes('focus')) context = 'work';
+            else if (lower.includes('plan')) context = 'plan';
+
+            // Decide Layout
+            if (lower.includes('phone') || lower.includes('ui') || lower.includes('schedule')) {
+                renderUI(context);
+                addMsg(`I've generated a UI mockup for ${context}.`, 'ai');
+            } else if (lower.includes('list') || lower.includes('features')) {
+                renderList(context);
+                addMsg(`Here's a feature list for ${context}.`, 'ai');
+            } else {
+                // Default to Hero
+                renderHero(context);
+                addMsg(`Created a lifestyle slide for ${context}.`, 'ai');
+            }
+        }
+
+        // --- RENDERERS ---
+
+        function renderHero(ctx) {
+            const titles = {
+                yoga: "Start Your Day<br>With Intention",
+                gym: "Push Your<br>Limits",
+                work: "Deep Focus<br>Mode",
+                plan: "Organize<br>Your Life",
+                life: "Live in the<br>Moment"
+            };
+            const img = assets.images[ctx] || assets.images.life;
+            const title = titles[ctx] || titles.life;
+
+            slide.innerHTML = `
+                <div class="bg-layer"><img src="${img}" crossorigin="anonymous"></div>
+                <div class="overlay fade"></div>
+                <div class="content-layer layout-hero">
+                    <h1 class="slide-title">${title}</h1>
+                    <div class="watermark" style="color:white">
+                        <img src="../logo.png" crossorigin="anonymous">
+                        <span>Tiempo</span>
                     </div>
                 </div>
             `;
         }
 
-        function createSlide() {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'slide-wrapper';
+        function renderUI(ctx) {
+            // Contextual Events
+            const evts = [
+                { t: "Morning Yoga", time: "7:00 AM", i: "🧘‍♀️", g: assets.gradients.orange },
+                { t: "Deep Work", time: "9:30 AM", i: "💻", g: assets.gradients.blue },
+                { t: "Team Sync", time: "1:00 PM", i: "👥", g: assets.gradients.green },
+                { t: "Evening Run", time: "6:00 PM", i: "🏃", g: assets.gradients.red }
+            ];
 
-            const container = document.createElement('div');
-            container.className = 'canvas-container';
-
-            const slide = document.createElement('div');
-            slide.className = 'slide';
-
-            // Random Layout
-            const type = Math.random();
-            
-            if (type < 0.33) {
-                // HERO LAYOUT
-                const img = getRandom(copy.images);
-                slide.innerHTML = `
-                    <div class="bg-layer"><img src="${img}" crossorigin="anonymous"></div>
-                    <div class="overlay gradient-fade"></div>
-                    <div class="content-layer layout-center">
-                        <h1 class="slide-title">${getRandom(copy.headlines)}</h1>
-                        <p class="slide-subtitle">${getRandom(copy.subtitles)}</p>
-                        <div class="watermark light-watermark">
-                            <img src="../logo.png" crossorigin="anonymous">
-                            <span>Tiempo</span>
-                        </div>
+            let bubbles = evts.map(e => `
+                <div class="event-bubble" style="border-radius:20px; padding:16px; margin-bottom:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+                    <div class="event-icon-box" style="width:54px; height:54px; min-width:54px; border-radius:16px; font-size:1.8rem; background:${e.g}">${e.i}</div>
+                    <div class="event-content">
+                        <div class="event-title" style="font-size:1.2rem;">${e.t}</div>
+                        <div class="event-time" style="font-size:0.9rem;">${e.time}</div>
                     </div>
-                `;
-            } else if (type < 0.66) {
-                // PHONE UI LAYOUT
-                const evts = copy.events.slice(0, 4);
-                let bubbles = evts.map(renderEventBubble).join('');
-                slide.innerHTML = `
-                    <div class="bg-layer gradient"></div>
-                    <div class="content-layer layout-ui">
-                        <h1 class="slide-title">Your day,<br>beautifully organized.</h1>
-                        <div class="phone-mockup">
-                            <div class="phone-screen">
-                                <div class="phone-header-ui">
-                                    <div class="phone-date">Today</div>
-                                    <div class="phone-avatar"></div>
-                                </div>
+                </div>
+            `).join('');
+
+            slide.innerHTML = `
+                <div class="bg-layer gradient"></div>
+                <div class="content-layer layout-ui">
+                    <h1 class="slide-title" style="text-align:center; font-size:4rem; margin-bottom:40px; color:white;">Your Day,<br>Sorted.</h1>
+                    <div class="phone-mockup">
+                        <div class="dynamic-island"></div>
+                        <div class="phone-screen">
+                            <div class="phone-ui">
+                                <div class="phone-header-date">Today</div>
                                 ${bubbles}
                             </div>
                         </div>
-                        <div class="watermark light-watermark">
-                            <img src="../logo.png" crossorigin="anonymous">
-                            <span>Tiempo</span>
-                        </div>
                     </div>
-                `;
-            } else {
-                // FEATURE LIST LAYOUT
-                const evts = [...copy.events].sort(() => 0.5 - Math.random()).slice(0, 3);
-                let bubbles = evts.map(renderEventBubble).join('');
-                slide.innerHTML = `
-                    <div class="bg-layer white"></div>
-                    <div class="content-layer layout-feature">
-                        <h1 class="slide-title">${getRandom(copy.headlines)}</h1>
-                        <div class="timeline-line"></div>
-                        <div style="width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 2;">
-                            ${bubbles}
-                        </div>
-                        <div class="watermark dark-watermark">
-                            <img src="../logo.png" crossorigin="anonymous">
-                            <span>Tiempo</span>
-                        </div>
+                    <div class="watermark" style="color:white">
+                        <img src="../logo.png" crossorigin="anonymous">
+                        <span>Tiempo</span>
                     </div>
-                `;
-            }
-
-            container.appendChild(slide);
-            
-            // Buttons
-            const actions = document.createElement('div');
-            actions.className = 'actions';
-            
-            const dlBtn = document.createElement('button');
-            dlBtn.className = 'primary';
-            dlBtn.textContent = 'Download Image';
-            dlBtn.onclick = () => {
-                html2canvas(slide, {
-                    scale: 2, // Output at native 1080p width
-                    useCORS: true,
-                    backgroundColor: null
-                }).then(c => {
-                    const link = document.createElement('a');
-                    link.download = `tiempo-${Date.now()}.png`;
-                    link.href = c.toDataURL('image/png');
-                    link.click();
-                });
-            };
-
-            actions.appendChild(dlBtn);
-
-            wrapper.appendChild(container);
-            wrapper.appendChild(actions);
-            feed.appendChild(wrapper);
+                </div>
+            `;
         }
 
-        // Infinite Scroll
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                createSlide();
-                createSlide();
-            }
-        }, { rootMargin: '400px' });
+        function renderList(ctx) {
+            const evts = [
+                { t: "Smart Scheduling", i: "📅", g: assets.gradients.blue },
+                { t: "Habit Tracking", i: "✅", g: assets.gradients.green },
+                { t: "Focus Timer", i: "⏲️", g: assets.gradients.orange }
+            ];
 
-        // Add sentinel
-        const sentinel = document.createElement('div');
-        feed.after(sentinel);
-        observer.observe(sentinel);
+            let bubbles = evts.map(e => `
+                <div class="event-bubble">
+                    <div class="event-icon-box" style="background:${e.g}">${e.i}</div>
+                    <div class="event-content">
+                        <div class="event-title">${e.t}</div>
+                        <div class="event-time">AI-Powered</div>
+                    </div>
+                </div>
+            `).join('');
 
-        // Initial Load
-        createSlide();
-        createSlide();
+            slide.innerHTML = `
+                <div class="bg-layer clean"></div>
+                <div class="content-layer layout-clean">
+                    <h1 class="slide-title" style="color:#1C1C1E; margin-bottom:80px;">All-in-One<br>Productivity</h1>
+                    <div style="width:100%; max-width:800px;">
+                        ${bubbles}
+                    </div>
+                    <div class="watermark" style="color:#1C1C1E">
+                        <img src="../logo.png" crossorigin="anonymous">
+                        <span>Tiempo</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadSlide() {
+            html2canvas(slide, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null
+            }).then(c => {
+                const link = document.createElement('a');
+                link.download = `tiempo-export-${Date.now()}.png`;
+                link.href = c.toDataURL('image/png');
+                link.click();
+            });
+        }
 
     </script>
 </body>
