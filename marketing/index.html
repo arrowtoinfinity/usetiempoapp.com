@@ -559,13 +559,15 @@
 
             slide.innerHTML = `
                 <div class="noise-overlay"></div>
-                <div class="bg-layer"><img src="${img}" crossorigin="anonymous"></div>
+                <div class="bg-layer" style="background:var(--color-bg-dark)">
+                    <img src="./${img}" onerror="this.style.display='none'; this.parentElement.style.background='var(--gradient-sunrise)'">
+                </div>
                 <div class="overlay fade"></div>
                 <div class="content-layer layout-hero">
                     <h1 class="slide-title">${title}</h1>
                     <p class="slide-subtitle">${sub}</p>
                     <div class="watermark" style="color:white">
-                        <img src="../logo.png" crossorigin="anonymous">
+                        <img src="../logo.png">
                         <span>Tiempo</span>
                     </div>
                 </div>
@@ -609,7 +611,7 @@
                         </div>
                     </div>
                     <div class="watermark" style="color:white; left:50%; transform:translateX(-50%); bottom:60px;">
-                        <img src="../logo.png" crossorigin="anonymous">
+                        <img src="../logo.png">
                         <span>Tiempo</span>
                     </div>
                 </div>
@@ -642,7 +644,7 @@
                         ${bubbles}
                     </div>
                     <div class="watermark" style="color:#1C1C1E; left:50%; transform:translateX(-50%);">
-                        <img src="../logo.png" crossorigin="anonymous">
+                        <img src="../logo.png">
                         <span>Tiempo</span>
                     </div>
                 </div>
