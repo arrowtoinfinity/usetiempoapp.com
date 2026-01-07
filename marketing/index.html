@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiempo Marketing Generator</title>
+    <style>
+        :root {
+            /* Copied from index.html */
+            --color-yellow: #f9ed32;
+            --color-orange: #f26522;
+            --color-magenta: #ec008c;
+            --color-sunrise-blue: #1c75bc;
+            --color-primary: #007AFF;
+            --color-success: #34C759;
+            --color-warning: #FF9500;
+            --color-danger: #FF3B30;
+            --color-purple: #AF52DE;
+            --color-white: #FFFFFF;
+            --color-background: #F2F2F7;
+            --color-card: #FFFFFF;
+            --color-gray-100: #F2F2F7;
+            --color-gray-200: #E5E5EA;
+            --color-gray-400: #C7C7CC;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #C7C7CC;
+            --gradient-sunrise: linear-gradient(45deg, var(--color-sunrise-blue) 0%, var(--color-magenta) 30%, var(--color-orange) 65%, var(--color-yellow) 100%);
+            --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --radius-xl: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-body);
+            background: #1a1a1a; /* Dark BG for tool interface */
+            color: #333;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Layout */
+        .sidebar {
+            width: 350px;
+            background: #fff;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            border-right: 1px solid #ccc;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2c2c2e;
+            padding: 2rem;
+            overflow: auto;
+        }
+
+        h2 { font-family: var(--font-display); margin-bottom: 0.5rem; }
+        
+        /* Controls */
+        .control-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); }
+        input, textarea, select {
+            padding: 0.8rem;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        textarea { resize: vertical; min-height: 80px; }
+
+        .btn {
+            padding: 1rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        /* Canvas Preview */
+        #preview-container {
+            transform-origin: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .slide {
+            width: 1080px;
+            height: 1350px; /* 4:5 Portrait */
+            background: var(--color-white);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            /* Scale down for preview if needed via JS transform */
+        }
+
+        .slide.story { height: 1920px; /* 9:16 Story */ }
+
+        /* Slide Content Styles */
+        .slide-content {
+            flex: 1;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .slide-bg-gradient {
+            background: var(--gradient-sunrise);
+        }
+        
+        .slide-bg-gray {
+            background: var(--color-background);
+        }
+
+        /* Text Styles */
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .slide-subtitle {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .slide-body {
+            font-size: 2rem;
+            color: var(--text-primary);
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        /* Variant: Dark Text on Gradient */
+        .slide-bg-gradient .slide-title, 
+        .slide-bg-gradient .slide-body { color: white; }
+        .slide-bg-gradient .slide-subtitle { color: rgba(255,255,255,0.9); }
+
+        /* Logo watermark */
+        .watermark {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0.8;
+        }
+        .watermark img { height: 40px; }
+        .watermark span { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); }
+        .slide-bg-gradient .watermark span { color: white; }
+
+        /* Feature Card Style */
+        .feature-card-preview {
+            background: white;
+            border-radius: 40px;
+            padding: 60px;
+            box-shadow: var(--shadow-lg);
+            width: 80%;
+            display: none;
+        }
+        .style-card .feature-card-preview { display: block; }
+        
+        .style-card .slide-title { font-size: 3.5rem; }
+
+        /* Quote Style */
+        .quote-mark { font-size: 8rem; line-height: 0; color: var(--color-primary); margin-bottom: 40px; display: none; }
+        .style-quote .quote-mark { display: block; }
+        .style-quote .slide-title { font-size: 3rem; font-weight: 500; font-style: italic; }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Slide Generator</h2>
+        
+        <div class="control-group">
+            <label>Template Style</label>
+            <select id="styleSelect">
+                <option value="simple">Simple Text</option>
+                <option value="quote">Quote</option>
+                <option value="card">Card Feature</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Dimensions</label>
+            <select id="sizeSelect">
+                <option value="post">Post (4:5)</option>
+                <option value="story">Story (9:16)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Background</label>
+            <select id="bgSelect">
+                <option value="white">White</option>
+                <option value="gray">Gray</option>
+                <option value="gradient">Sunrise Gradient</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Title / Heading</label>
+            <input type="text" id="titleInput" value="Plan your day with AI">
+        </div>
+
+        <div class="control-group">
+            <label>Subtitle / Caption</label>
+            <input type="text" id="subtitleInput" value="Better health, better habits.">
+        </div>
+
+        <div class="control-group">
+            <label>Body Text</label>
+            <textarea id="bodyInput">Tiempo helps you organize your schedule while keeping your health goals in check.</textarea>
+        </div>
+
+        <button class="btn" id="downloadBtn">Download PNG</button>
+        <p style="font-size: 0.8rem; color: #666; margin-top: 1rem;">Note: This runs locally in your browser.</p>
+    </div>
+
+    <div class="main">
+        <div id="preview-wrapper" style="transform: scale(0.4);">
+            <div id="slide" class="slide">
+                <div class="slide-content">
+                    <div class="quote-mark">“</div>
+                    
+                    <div class="feature-card-preview">
+                        <!-- Content moves here for card style -->
+                    </div>
+
+                    <h1 class="slide-title">Plan your day with AI</h1>
+                    <h2 class="slide-subtitle">Better health, better habits.</h2>
+                    <p class="slide-body">Tiempo helps you organize your schedule while keeping your health goals in check.</p>
+                </div>
+
+                <div class="watermark">
+                    <img src="../logo.png" alt="Logo">
+                    <span>Tiempo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        const slide = document.getElementById('slide');
+        const inputs = {
+            title: document.getElementById('titleInput'),
+            subtitle: document.getElementById('subtitleInput'),
+            body: document.getElementById('bodyInput'),
+            style: document.getElementById('styleSelect'),
+            size: document.getElementById('sizeSelect'),
+            bg: document.getElementById('bgSelect')
+        };
+
+        const elements = {
+            title: document.querySelector('.slide-title'),
+            subtitle: document.querySelector('.slide-subtitle'),
+            body: document.querySelector('.slide-body'),
+            card: document.querySelector('.feature-card-preview')
+        };
+
+        // Update function
+        function updateSlide() {
+            // Text
+            elements.title.textContent = inputs.title.value;
+            elements.subtitle.textContent = inputs.subtitle.value;
+            elements.body.textContent = inputs.body.value;
+
+            // Classes
+            slide.className = 'slide'; // Reset
+            slide.classList.add(inputs.size.value); // story or post
+            
+            // Background
+            if (inputs.bg.value === 'gradient') slide.classList.add('slide-bg-gradient');
+            else if (inputs.bg.value === 'gray') slide.classList.add('slide-bg-gray');
+
+            // Style
+            slide.classList.add('style-' + inputs.style.value);
+
+            // Move elements for card style logic if needed
+            // For simplicity, we just use CSS display toggling for now
+        }
+
+        // Listeners
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updateSlide);
+        });
+
+        // Download
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const btn = document.getElementById('downloadBtn');
+            btn.textContent = 'Generating...';
+            
+            html2canvas(slide, {
+                scale: 2, // High res
+                useCORS: true,
+                backgroundColor: null
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `tiempo-slide-${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                btn.textContent = 'Download PNG';
+            });
+        });
+
+        // Init
+        updateSlide();
+    </script>
+</body>
+</html>
