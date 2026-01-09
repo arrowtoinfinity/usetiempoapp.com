@@ -185,6 +185,54 @@
             margin-left: 0;
         }
 
+        /* Header Badge */
+        .header-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 6px 8px 6px 12px;
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+            font-size: var(--text-small);
+        }
+
+        .header-badge .badge-platform-primary {
+            color: var(--text-primary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .header-badge .badge-toggle {
+            display: inline-flex;
+            align-items: center;
+            background: var(--color-white);
+            border-radius: var(--radius-full);
+            padding: 2px;
+            gap: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .header-badge .badge-toggle-btn {
+            background: transparent;
+            border: none;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: var(--radius-full);
+            transition: all 0.2s ease;
+        }
+
+        .header-badge .badge-toggle-btn:hover:not(.active) {
+            color: var(--text-primary);
+        }
+
+        .header-badge .badge-toggle-btn.active {
+            background: var(--text-primary);
+            color: var(--color-white);
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -415,128 +463,6 @@
         .event-circle:nth-child(13) { left: 50%; animation: floatUp 24s ease-in-out infinite; animation-delay: -11s; --circle-color: #ec008c; }
         .event-circle:nth-child(14) { left: 70%; animation: drift 18s ease-in-out infinite; animation-delay: -13s; --circle-color: #f9ed32; }
         .event-circle:nth-child(15) { left: 88%; animation: popIn 22s ease-in-out infinite; animation-delay: -15s; --circle-color: #FF9500; }
-
-        .hero-badge-wrapper {
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease forwards;
-            opacity: 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-sm);
-            padding: var(--space-sm) var(--space-sm);
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.6);
-            border-radius: var(--radius-full);
-            font-size: var(--text-small);
-            font-weight: 500;
-            color: var(--text-secondary);
-            box-shadow: var(--shadow-md);
-            position: relative;
-            z-index: 100;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .hero-badge.is-sticky {
-            position: fixed;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .hero-badge-icon {
-            width: 28px;
-            height: 28px;
-            background: var(--text-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .hero-badge-icon svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
-        }
-
-        /* Platform availability hierarchy */
-        .badge-platform-primary {
-            color: var(--text-primary);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .badge-divider {
-            width: 1px;
-            height: 20px;
-            background: rgba(0,0,0,0.15);
-            margin: 0 var(--space-sm);
-            flex-shrink: 0;
-        }
-
-        .badge-platform-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-secondary);
-            font-weight: 400;
-            white-space: nowrap;
-        }
-
-        .badge-coming-soon-label {
-            font-size: 0.8125rem;
-            opacity: 0.85;
-        }
-
-        .badge-platform-list {
-            font-size: var(--text-small);
-            font-weight: 500;
-        }
-
-        /* Badge Toggle - Pill Style */
-        .badge-toggle {
-            display: inline-flex;
-            align-items: center;
-            background: var(--color-gray-100);
-            border-radius: var(--radius-full);
-            padding: 3px;
-            gap: 2px;
-        }
-
-        .badge-toggle-btn {
-            background: transparent;
-            border: none;
-            padding: 4px 12px;
-            font-size: var(--text-small);
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            border-radius: var(--radius-full);
-            transition: all 0.2s ease;
-        }
-
-        .badge-toggle-btn:hover:not(.active) {
-            color: var(--text-primary);
-        }
-
-        .badge-toggle-btn.active {
-            background: var(--color-white);
-            color: var(--text-primary);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .badge-toggle-separator {
-            display: none;
-        }
 
         .hero h1 {
             font-family: var(--font-display);
@@ -2196,30 +2122,8 @@
                 padding: 6rem 1.5rem 3rem;
             }
 
-            .hero-badge {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: var(--space-xs);
-                padding: var(--space-sm) var(--space-md);
-            }
-
-            .badge-divider {
+            .header-badge {
                 display: none;
-            }
-
-            .badge-platform-secondary {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 3px;
-            }
-
-            .badge-platform-primary,
-            .badge-platform-list {
-                font-size: 0.8125rem;
-            }
-
-            .badge-coming-soon-label {
-                font-size: 0.75rem;
             }
 
             .hero-subtitle {
@@ -2452,6 +2356,13 @@
             <img src="logo.png" alt="Tiempo Logo">
             <span class="logo-text">Tiempo</span>
         </a>
+        <div class="header-badge">
+            <span class="badge-platform-primary">Available on</span>
+            <div class="badge-toggle">
+                <button class="badge-toggle-btn active" data-platform="ios">iOS</button>
+                <button class="badge-toggle-btn" data-platform="macos">macOS</button>
+            </div>
+        </div>
         <nav>
             <a href="#features">Features</a>
             <a href="#how-it-works">How it Works</a>
@@ -2480,20 +2391,6 @@
                 <div class="event-circle pending size-sm">✨</div>
             </div>
 
-            <div class="hero-badge-wrapper" id="badge-wrapper">
-                <div class="hero-badge" id="sticky-badge">
-                    <span class="hero-badge-icon">
-                        <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                    </span>
-                    <span class="badge-platform-primary">Available on</span>
-                    <div class="badge-toggle">
-                        <button class="badge-toggle-btn active" data-platform="ios">iOS</button>
-                        <span class="badge-toggle-separator">&</span>
-                        <button class="badge-toggle-btn" data-platform="macos">macOS</button>
-                    </div>
-                </div>
-            </div>
-            
             <h1>Plan your <span class="cycling-word-container"><span class="cycling-word active" data-word="day">day.</span><span class="cycling-word" data-word="routines">routines.</span><span class="cycling-word" data-word="focus">focus.</span><span class="cycling-word" data-word="goals">goals.</span><span class="cycling-word" data-word="health">health.</span><span class="cycling-word" data-word="nutrition">nutrition.</span><span class="cycling-word" data-word="life">life.</span></span></h1>
             <p class="hero-tagline">AI-Powered Daily Planning</p>
 
@@ -3086,47 +2983,6 @@
                 });
             });
 
-            // Sticky badge behavior
-            const stickyBadge = document.getElementById('sticky-badge');
-            const badgeWrapper = document.getElementById('badge-wrapper');
-            let badgeOriginalTop = null;
-            let badgeHeight = null;
-            let badgeInitialized = false;
-
-            function initBadgeMeasurements() {
-                if (!stickyBadge || !badgeWrapper || badgeInitialized) return;
-                // Wait for animation to complete before measuring
-                setTimeout(() => {
-                    badgeHeight = stickyBadge.offsetHeight;
-                    badgeOriginalTop = badgeWrapper.getBoundingClientRect().top + window.scrollY;
-                    badgeInitialized = true;
-                }, 900); // After fadeInUp animation (0.8s)
-            }
-
-            function updateStickyBadge() {
-                if (!stickyBadge || !badgeWrapper || !badgeInitialized) return;
-
-                const scrollY = window.scrollY;
-                const headerHeight = 90;
-
-                if (scrollY > badgeOriginalTop - headerHeight) {
-                    if (!stickyBadge.classList.contains('is-sticky')) {
-                        // Set wrapper height to prevent content jump
-                        badgeWrapper.style.height = badgeHeight + 'px';
-                        stickyBadge.classList.add('is-sticky');
-                    }
-                } else {
-                    if (stickyBadge.classList.contains('is-sticky')) {
-                        // Remove fixed height
-                        badgeWrapper.style.height = '';
-                        stickyBadge.classList.remove('is-sticky');
-                    }
-                }
-            }
-
-            // Initialize badge measurements after animation
-            initBadgeMeasurements();
-
             // Update gray timeline line to always reach the last circle
             function updateTimelineLineHeight() {
                 if (!timeline || timelineSteps.length < 2) return;
@@ -3237,7 +3093,6 @@
                         updateCenteredStep();
                         updateCenteredCard();
                         updateHeaderButtonVisibility();
-                        updateStickyBadge();
                         ticking = false;
                     });
                     ticking = true;
@@ -3250,19 +3105,6 @@
                 updateCenteredCard();
                 updateTimelineLineHeight();
                 updateHeaderButtonVisibility();
-                // Reset badge measurements on resize
-                badgeOriginalTop = null;
-                badgeHeight = null;
-                badgeInitialized = false;
-                if (badgeWrapper) badgeWrapper.style.height = '';
-                if (stickyBadge) stickyBadge.classList.remove('is-sticky');
-                // Re-measure immediately (no animation delay needed on resize)
-                if (stickyBadge && badgeWrapper) {
-                    badgeHeight = stickyBadge.offsetHeight;
-                    badgeOriginalTop = badgeWrapper.getBoundingClientRect().top + window.scrollY;
-                    badgeInitialized = true;
-                }
-                updateStickyBadge();
             });
 
             // Initial update
@@ -3270,7 +3112,6 @@
             updateCenteredCard();
             updateTimelineLineHeight();
             updateHeaderButtonVisibility();
-            updateStickyBadge();
 
             // GSAP Review Card Animations - Natural toss with inverted exit angle
             gsap.registerPlugin(MotionPathPlugin);
