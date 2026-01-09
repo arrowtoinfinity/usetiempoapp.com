@@ -4198,11 +4198,13 @@
                 // Mobile: Show only iOS, hide toggle
                 toggleParts.forEach(part => part.classList.remove('show'));
 
-                // Set iOS as active and update links
-                document.querySelectorAll('.platform-option[data-platform="ios"]').forEach(opt => {
-                    opt.classList.add('active');
-                });
+                // Change text to "Download on the App Store"
                 allButtons.forEach(btn => {
+                    const smallText = btn.querySelector('.small');
+                    const iosOption = btn.querySelector('.platform-option[data-platform="ios"]');
+                    if (smallText) smallText.textContent = 'Download on the';
+                    if (iosOption) iosOption.textContent = 'App Store';
+                    iosOption?.classList.add('active');
                     btn.href = appStoreLinks.ios;
                 });
             } else {
