@@ -2151,7 +2151,7 @@
             }
 
             .hero-badge {
-                display: none;
+                top: 70px;
             }
 
             .hero-subtitle {
@@ -4088,20 +4088,24 @@
                 macos: '#'  // TODO: Replace with actual macOS App Store URL
             };
 
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             const allButtons = document.querySelectorAll('.app-store-btn');
             const badgeToggleBtns = document.querySelectorAll('.badge-toggle-btn');
 
-            // Update App Store links when badge toggle changes
+            // Update App Store links when badge toggle changes (desktop only)
             badgeToggleBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const platform = btn.dataset.platform;
-                    allButtons.forEach(b => {
-                        b.href = appStoreLinks[platform];
-                    });
+                    // Only change button links on desktop
+                    if (!isMobile) {
+                        allButtons.forEach(b => {
+                            b.href = appStoreLinks[platform];
+                        });
+                    }
                 });
             });
 
-            // Set initial link to iOS (default active)
+            // Set initial link to iOS (always iOS on mobile)
             allButtons.forEach(btn => {
                 btn.href = appStoreLinks.ios;
             });
