@@ -4121,33 +4121,36 @@
 
     <script>
         // Badge visibility
-        (function() {
+        window.addEventListener('load', function() {
             const heroBadge = document.querySelector('.hero-badge');
             const heroBtn = document.getElementById('hero-app-store-btn');
 
-            if (!heroBadge || !heroBtn) {
-                console.log('Badge elements not found:', { heroBadge, heroBtn });
-                return;
-            }
+            if (!heroBadge || !heroBtn) return;
 
-            function updateBadge() {
-                const btnRect = heroBtn.getBoundingClientRect();
-                const badgeBottom = 100 + heroBadge.offsetHeight;
+            // Get the button's initial position from top of page
+            const btnOffsetTop = heroBtn.getBoundingClientRect().top + window.scrollY;
 
-                // Show if button is below badge OR button scrolled off top
-                const btnBelowBadge = btnRect.top > badgeBottom + 50;
-                const btnGone = btnRect.bottom < 0;
+            document.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
 
-                if (btnBelowBadge || btnGone) {
+                // Fade out point: when badge area would overlap with button
+                const fadeOutAt = btnOffsetTop - 200;
+
+                // Fade back in point: when button is scrolled past viewport
+                const fadeInAt = btnOffsetTop + heroBtn.offsetHeight;
+
+                if (scrollY < fadeOutAt) {
+                    // Before reaching button - show badge
+                    heroBadge.classList.remove('hidden');
+                } else if (scrollY > fadeInAt) {
+                    // Button scrolled past - show badge again
                     heroBadge.classList.remove('hidden');
                 } else {
+                    // Button in view area - hide badge
                     heroBadge.classList.add('hidden');
                 }
-            }
-
-            window.addEventListener('scroll', updateBadge, { passive: true });
-            updateBadge();
-        })();
+            });
+        });
     </script>
 </body>
 </html>
