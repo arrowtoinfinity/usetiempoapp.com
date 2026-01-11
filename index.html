@@ -2965,6 +2965,7 @@
             const headerDownloadBtn = document.getElementById('header-download-btn');
             const heroAppStoreBtn = document.getElementById('hero-app-store-btn');
             const ctaAppStoreBtn = document.getElementById('cta-app-store-btn');
+            const heroBadge = document.querySelector('.hero-badge');
 
             function updateHeaderButtonVisibility() {
                 if (!headerDownloadBtn || !heroAppStoreBtn || !ctaAppStoreBtn) return;
@@ -2978,8 +2979,12 @@
 
                 if (heroAboveViewport && ctaBelowViewport) {
                     headerDownloadBtn.classList.add('visible');
+                    // Hide badge when header button is visible
+                    if (heroBadge) heroBadge.classList.add('hidden');
                 } else {
                     headerDownloadBtn.classList.remove('visible');
+                    // Show badge when header button is hidden
+                    if (heroBadge) heroBadge.classList.remove('hidden');
                 }
             }
 
@@ -4119,38 +4124,5 @@
         });
     </script>
 
-    <script>
-        // Badge visibility
-        window.addEventListener('load', function() {
-            const heroBadge = document.querySelector('.hero-badge');
-            const heroBtn = document.getElementById('hero-app-store-btn');
-
-            if (!heroBadge || !heroBtn) return;
-
-            // Get the button's initial position from top of page
-            const btnOffsetTop = heroBtn.getBoundingClientRect().top + window.scrollY;
-
-            document.addEventListener('scroll', function() {
-                const scrollY = window.scrollY;
-
-                // Fade out point: when badge area would overlap with button
-                const fadeOutAt = btnOffsetTop - 200;
-
-                // Fade back in point: when button is scrolled past viewport
-                const fadeInAt = btnOffsetTop + heroBtn.offsetHeight;
-
-                if (scrollY < fadeOutAt) {
-                    // Before reaching button - show badge
-                    heroBadge.classList.remove('hidden');
-                } else if (scrollY > fadeInAt) {
-                    // Button scrolled past - show badge again
-                    heroBadge.classList.remove('hidden');
-                } else {
-                    // Button in view area - hide badge
-                    heroBadge.classList.add('hidden');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
