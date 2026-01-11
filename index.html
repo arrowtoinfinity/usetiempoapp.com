@@ -4123,22 +4123,25 @@
                     const heroBottom = heroSection.getBoundingClientRect().bottom;
                     const heroBtnRect = heroBtn.getBoundingClientRect();
                     const badgeHeight = heroBadge.offsetHeight;
-                    const heroBtnVisible = heroBtnRect.bottom > 0;
 
-                    // In hero section - show
-                    if (heroBottom > badgeTop + badgeHeight + 20) {
+                    // Hero download button is off screen (scrolled past)
+                    const heroBtnGone = heroBtnRect.bottom < 0;
+
+                    // Badge would overlap with content below hero
+                    const pastHeroBoundary = heroBottom <= badgeTop + badgeHeight + 20;
+
+                    if (!pastHeroBoundary) {
+                        // In hero section - show
                         heroBadge.style.opacity = '1';
                         heroBadge.style.pointerEvents = 'auto';
-                    }
-                    // Past hero, hero button still visible - hide
-                    else if (heroBtnVisible) {
+                    } else if (heroBtnGone) {
+                        // Hero button gone - show again
+                        heroBadge.style.opacity = '1';
+                        heroBadge.style.pointerEvents = 'auto';
+                    } else {
+                        // Between hero boundary and button gone - hide
                         heroBadge.style.opacity = '0';
                         heroBadge.style.pointerEvents = 'none';
-                    }
-                    // Hero button scrolled away - show again (same position under header)
-                    else {
-                        heroBadge.style.opacity = '1';
-                        heroBadge.style.pointerEvents = 'auto';
                     }
                 });
             }
