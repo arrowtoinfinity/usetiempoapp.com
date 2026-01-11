@@ -205,7 +205,6 @@
             font-weight: 500;
             color: var(--text-secondary);
             box-shadow: var(--shadow-md);
-            transition: opacity 0.2s ease;
         }
 
         .hero-badge-icon {
@@ -4111,23 +4110,27 @@
                 btn.href = appStoreLinks.ios;
             });
 
-            // Hide badge when it reaches the features section
+            // Stop badge at hero section boundary
             const heroBadge = document.querySelector('.hero-badge');
             const heroSection = document.querySelector('.hero');
 
             if (heroBadge && heroSection) {
-                window.addEventListener('scroll', () => {
-                    const heroBottom = heroSection.getBoundingClientRect().bottom;
-                    const badgeHeight = heroBadge.offsetHeight;
-                    const badgeTop = 100; // Fixed top position of badge
+                const badgeTop = 100; // Fixed top position of badge
 
-                    // Hide badge when hero bottom reaches the badge position
-                    if (heroBottom <= badgeTop + badgeHeight + 20) {
-                        heroBadge.style.opacity = '0';
-                        heroBadge.style.pointerEvents = 'none';
+                window.addEventListener('scroll', () => {
+                    const heroRect = heroSection.getBoundingClientRect();
+                    const badgeHeight = heroBadge.offsetHeight;
+                    const stopPoint = badgeTop + badgeHeight + 20;
+
+                    // When hero bottom reaches the badge, switch to absolute positioning
+                    if (heroRect.bottom <= stopPoint) {
+                        heroBadge.style.position = 'absolute';
+                        heroBadge.style.top = 'auto';
+                        heroBadge.style.bottom = '20px';
                     } else {
-                        heroBadge.style.opacity = '1';
-                        heroBadge.style.pointerEvents = 'auto';
+                        heroBadge.style.position = 'fixed';
+                        heroBadge.style.top = badgeTop + 'px';
+                        heroBadge.style.bottom = 'auto';
                     }
                 });
             }
