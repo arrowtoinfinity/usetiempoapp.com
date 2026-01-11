@@ -2977,14 +2977,22 @@
                 const heroAboveViewport = heroRect.bottom < 0;
                 const ctaBelowViewport = ctaRect.top > window.innerHeight;
 
+                // Badge hides 200px after hero button scrolls past
+                const badgeHidePoint = heroRect.bottom < -200;
+
                 if (heroAboveViewport && ctaBelowViewport) {
                     headerDownloadBtn.classList.add('visible');
-                    // Hide badge when header button is visible
-                    if (heroBadge) heroBadge.classList.add('hidden');
                 } else {
                     headerDownloadBtn.classList.remove('visible');
-                    // Show badge when header button is hidden
-                    if (heroBadge) heroBadge.classList.remove('hidden');
+                }
+
+                // Badge visibility (offset by 200px from header button)
+                if (heroBadge) {
+                    if (badgeHidePoint && ctaBelowViewport) {
+                        heroBadge.classList.add('hidden');
+                    } else {
+                        heroBadge.classList.remove('hidden');
+                    }
                 }
             }
 
