@@ -4114,35 +4114,31 @@
             // Badge visibility logic
             const heroBadge = document.querySelector('.hero-badge');
             const heroSection = document.querySelector('.hero');
-            const headerBtn = document.getElementById('header-download-btn');
+            const heroBtn = document.getElementById('hero-app-store-btn');
 
-            if (heroBadge && heroSection && headerBtn) {
+            if (heroBadge && heroSection && heroBtn) {
                 const badgeTop = 100;
 
                 window.addEventListener('scroll', () => {
                     const heroBottom = heroSection.getBoundingClientRect().bottom;
-                    const headerBtnRect = headerBtn.getBoundingClientRect();
+                    const heroBtnRect = heroBtn.getBoundingClientRect();
                     const badgeHeight = heroBadge.offsetHeight;
-                    const headerBtnVisible = headerBtnRect.bottom > 0;
+                    const heroBtnVisible = heroBtnRect.bottom > 0;
 
-                    // In hero section - show at top
+                    // In hero section - show
                     if (heroBottom > badgeTop + badgeHeight + 20) {
                         heroBadge.style.opacity = '1';
                         heroBadge.style.pointerEvents = 'auto';
-                        heroBadge.style.top = badgeTop + 'px';
-                        heroBadge.style.bottom = 'auto';
                     }
-                    // Past hero, header button still visible - hide
-                    else if (headerBtnVisible) {
+                    // Past hero, hero button still visible - hide
+                    else if (heroBtnVisible) {
                         heroBadge.style.opacity = '0';
                         heroBadge.style.pointerEvents = 'none';
                     }
-                    // Header button scrolled away - show at bottom
+                    // Hero button scrolled away - show again (same position under header)
                     else {
                         heroBadge.style.opacity = '1';
                         heroBadge.style.pointerEvents = 'auto';
-                        heroBadge.style.top = 'auto';
-                        heroBadge.style.bottom = '20px';
                     }
                 });
             }
