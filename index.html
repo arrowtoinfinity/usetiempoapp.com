@@ -1622,7 +1622,6 @@
 
         .macos-visual {
             margin-bottom: var(--space-xl);
-            padding-bottom: 20px;
         }
 
         .mac-mockup {
@@ -1640,27 +1639,14 @@
         .mac-screen::before {
             content: '';
             position: absolute;
-            top: 8px;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
+            width: 120px;
+            height: 20px;
             background: #1a1a1a;
-            border-radius: 0 0 3px 3px;
+            border-radius: 0 0 12px 12px;
             z-index: 10;
-        }
-
-        .mac-mockup::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40%;
-            height: 12px;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .mac-screen {
@@ -1711,20 +1697,14 @@
                 padding: 4px;
             }
 
-            .mac-mockup::after {
-                bottom: -8px;
-                height: 8px;
-                width: 35%;
-            }
-
             .mac-screen {
                 border-radius: 4px;
             }
 
             .mac-screen::before {
-                top: 6px;
-                width: 30px;
-                height: 2px;
+                width: 80px;
+                height: 14px;
+                border-radius: 0 0 8px 8px;
             }
 
             .coming-soon-logo {
