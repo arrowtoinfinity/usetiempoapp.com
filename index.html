@@ -4115,41 +4115,39 @@
     </script>
 
     <script>
-        // Badge visibility - separate script to ensure it runs
+        // Badge visibility
         (function() {
             const heroBadge = document.querySelector('.hero-badge');
-            const heroSection = document.querySelector('.hero');
             const heroBtn = document.getElementById('hero-app-store-btn');
 
-            if (!heroBadge || !heroSection || !heroBtn) return;
+            if (!heroBadge || !heroBtn) return;
 
             function updateBadge() {
-                const heroRect = heroSection.getBoundingClientRect();
                 const btnRect = heroBtn.getBoundingClientRect();
 
-                // Check if we're past the hero section
-                const pastHero = heroRect.bottom < 150;
+                // Badge top position
+                const badgeTop = 100;
+                const badgeBottom = badgeTop + heroBadge.offsetHeight;
 
-                // Check if download button is off screen
-                const btnGone = btnRect.bottom < 0;
+                // Download button position relative to viewport
+                const btnTop = btnRect.top;
+                const btnBottom = btnRect.bottom;
 
-                if (!pastHero) {
-                    // Still in hero - show badge
-                    heroBadge.style.opacity = '1';
-                    heroBadge.style.pointerEvents = 'auto';
-                } else if (btnGone) {
-                    // Past hero AND button gone - show badge
+                // Show badge if: button is below badge area OR button is completely off screen (scrolled past)
+                const btnBelowBadge = btnTop > badgeBottom + 50;
+                const btnGone = btnBottom < 0;
+
+                if (btnBelowBadge || btnGone) {
                     heroBadge.style.opacity = '1';
                     heroBadge.style.pointerEvents = 'auto';
                 } else {
-                    // Past hero but button still visible - hide badge
                     heroBadge.style.opacity = '0';
                     heroBadge.style.pointerEvents = 'none';
                 }
             }
 
             window.addEventListener('scroll', updateBadge);
-            updateBadge(); // Run once on load
+            updateBadge();
         })();
     </script>
 </body>
