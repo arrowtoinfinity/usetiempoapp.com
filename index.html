@@ -4111,23 +4111,38 @@
                 btn.href = appStoreLinks.ios;
             });
 
-            // Hide badge when it reaches the features section
+            // Badge visibility logic
             const heroBadge = document.querySelector('.hero-badge');
             const heroSection = document.querySelector('.hero');
+            const headerBtn = document.getElementById('header-download-btn');
 
-            if (heroBadge && heroSection) {
+            if (heroBadge && heroSection && headerBtn) {
+                const badgeTop = 100;
+
                 window.addEventListener('scroll', () => {
                     const heroBottom = heroSection.getBoundingClientRect().bottom;
+                    const headerBtnRect = headerBtn.getBoundingClientRect();
                     const badgeHeight = heroBadge.offsetHeight;
-                    const badgeTop = 100; // Fixed top position of badge
+                    const headerBtnVisible = headerBtnRect.bottom > 0;
 
-                    // Hide badge when hero bottom reaches the badge position
-                    if (heroBottom <= badgeTop + badgeHeight + 20) {
-                        heroBadge.style.opacity = '0';
-                        heroBadge.style.pointerEvents = 'none';
-                    } else {
+                    // In hero section - show at top
+                    if (heroBottom > badgeTop + badgeHeight + 20) {
                         heroBadge.style.opacity = '1';
                         heroBadge.style.pointerEvents = 'auto';
+                        heroBadge.style.top = badgeTop + 'px';
+                        heroBadge.style.bottom = 'auto';
+                    }
+                    // Past hero, header button still visible - hide
+                    else if (headerBtnVisible) {
+                        heroBadge.style.opacity = '0';
+                        heroBadge.style.pointerEvents = 'none';
+                    }
+                    // Header button scrolled away - show at bottom
+                    else {
+                        heroBadge.style.opacity = '1';
+                        heroBadge.style.pointerEvents = 'auto';
+                        heroBadge.style.top = 'auto';
+                        heroBadge.style.bottom = '20px';
                     }
                 });
             }
