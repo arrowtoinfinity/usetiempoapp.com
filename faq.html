@@ -179,8 +179,23 @@
             margin: 0;
         }
 
+        .faq-category {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin: 3rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .faq-category:first-of-type {
+            margin-top: 2rem;
+        }
+
         .faq-list {
-            margin-top: 3rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
         }
 
         .faq-item {
@@ -312,84 +327,258 @@
                 <h2 class="section-title">Frequently Asked Questions</h2>
             </div>
 
+            <!-- Common Setup Issues -->
+            <h3 class="faq-category">Common Setup Issues</h3>
             <div class="faq-list">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Is my data private and secure?</h3>
+                        <h3>My calendars aren't showing up in Tiempo</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes. Your data stays on your device and is synced securely through iCloud. We don't have access to your personal information, calendar events, or health data. Everything is encrypted and only accessible by you.</p>
+                        <p>Go to Settings > Privacy & Security > Calendars and make sure Tiempo has permission. Then open Tiempo's settings and tap "Calendars" to select which ones to display. If you use Google or Outlook, ensure those accounts are added in iOS Settings > Calendar > Accounts first.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>What devices does Tiempo work on?</h3>
+                        <h3>Health data isn't syncing from Apple Health</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Tiempo is available on iPhone and iPad running iOS 16 or later. Your data syncs seamlessly across all your Apple devices using iCloud.</p>
+                        <p>Open the Health app > Sharing > Apps > Tiempo and enable all the data types you want to sync. If Tiempo isn't listed, open Tiempo first and grant Health permissions when prompted. You may need to restart Tiempo after granting permissions.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Does Tiempo work offline?</h3>
+                        <h3>Notifications aren't working</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes! All core features work offline. You can view your schedule, add events, track habits, and use the AI planner without an internet connection. Changes sync automatically when you're back online.</p>
+                        <p>Check Settings > Notifications > Tiempo and ensure notifications are enabled. Make sure "Allow Notifications" is on, and choose your preferred alert style. Also verify that Do Not Disturb or a Focus mode isn't blocking Tiempo notifications.</p>
                     </div>
                 </div>
 
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Data isn't syncing between my devices</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tiempo uses iCloud to sync. Make sure you're signed into the same Apple ID on all devices, and that iCloud is enabled for Tiempo in Settings > [Your Name] > iCloud > Apps Using iCloud. Try pulling down on the main screen to force a sync.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>The app is running slowly or crashing</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Try force-closing the app and reopening it. If issues persist, check that you're running the latest version from the App Store. As a last resort, you can delete and reinstall the app—your data will be restored from iCloud.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Explanations -->
+            <h3 class="faq-category">Feature Explanations</h3>
+            <div class="faq-list">
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>How does the AI planning assistant work?</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Our AI analyzes your calendar, habits, and goals to provide personalized recommendations. It suggests optimal times for tasks, identifies scheduling conflicts, and helps you maintain work-life balance. You're always in control—AI suggestions are just recommendations.</p>
+                        <p>The AI analyzes your calendar, habits, energy patterns, and goals to provide personalized recommendations. It suggests optimal times for tasks, identifies scheduling conflicts, and helps you maintain work-life balance. All AI processing happens on-device for privacy—your data never leaves your phone.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Can I sync with Google Calendar or Outlook?</h3>
+                        <h3>What is Focus Mode and how does it work?</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes! Tiempo integrates with Google Calendar, Outlook, and Apple Calendar. All your events stay in sync across platforms.</p>
+                        <p>Focus Mode is a distraction-free timer that helps you concentrate on a single task. Tap the circle on the timeline to start a focus session. You can set a duration or use infinite mode for open-ended work. The app tracks your focus time and shows it in your daily stats.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Does this connect to Salesforce?</h3>
+                        <h3>How does habit tracking work?</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>There's no direct Salesforce integration, but if your Salesforce is synced to your calendar (like Outlook or Google Calendar), those events will appear in Tiempo automatically. This works because Tiempo syncs with your calendar, which already contains your Salesforce meetings and appointments.</p>
+                        <p>Create habits with custom frequencies (daily, weekly, specific days). Tiempo tracks your streaks and completion rates over time. Habits appear on your timeline at the times you set, and you can mark them complete with a single tap. View your progress in the Insights tab.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>What's included in the free version?</h3>
+                        <h3>What does the nutrition scanning feature do?</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>The free version includes basic calendar features, habit tracking, and daily reminders. Premium features like AI planning, nutrition scanning, and advanced analytics require a subscription.</p>
+                        <p>Point your camera at any meal and the AI identifies the foods and estimates nutritional content (calories, protein, carbs, fat). It logs this to your timeline and Apple Health. You can edit the AI's estimates if needed. This feature requires a Premium subscription.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Can I cancel my subscription anytime?</h3>
+                        <h3>How do calendar integrations work?</h3>
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes, you can cancel anytime through your App Store subscription settings. Your premium features will remain active until the end of your billing period.</p>
+                        <p>Tiempo syncs with Apple Calendar, Google Calendar, and Outlook through iOS's built-in calendar system. Events you create in Tiempo appear in your other calendar apps, and vice versa. Changes sync both ways in real-time.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are Routines?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Routines are sequences of tasks you do regularly, like a morning routine or workout warmup. Create a routine once, and Tiempo can add all its steps to your timeline with one tap. Great for building consistent daily habits.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Known Limitations -->
+            <h3 class="faq-category">Known Limitations</h3>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is there an Android version?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Not currently. Tiempo is iOS-only and deeply integrated with Apple's ecosystem (HealthKit, EventKit, iCloud). An Android version would require significant rebuilding. We're focused on making the iOS experience great first.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Does Tiempo have a web version?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Not yet. Tiempo is currently a native iOS app. A web version is on our roadmap, but there's no timeline. Your calendar events are accessible through other web calendars (Google, Outlook, iCloud.com) since Tiempo syncs with them.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I connect directly to Salesforce, Notion, or Todoist?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>There are no direct integrations with these services. However, if they sync to your calendar (like Salesforce meetings to Outlook), those events appear in Tiempo automatically. We're exploring more integrations for future updates.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is there a macOS app?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A macOS version is coming soon! It will sync with your iPhone via iCloud and offer the same timeline-based planning experience optimized for desktop use.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Why can't I edit events from certain calendars?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Some calendars are read-only (like subscribed calendars, holidays, or shared calendars where you only have view access). Tiempo respects these permissions—you can view these events but not edit them. Check the calendar's sharing settings in its original app.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Does Tiempo support recurring tasks with complex patterns?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, Tiempo supports daily, weekly, and specific-day recurrence. Complex patterns like "first Monday of every month" or "every 3 weeks" aren't supported yet. For complex recurring events, create them in Google Calendar or Outlook and they'll sync to Tiempo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How-To Guides -->
+            <h3 class="faq-category">How-To Guides</h3>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I create a new event?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tap and hold anywhere on the timeline to create an event at that time. Or tap the + button in the top right. Fill in the title, time, and any other details. Drag the event's edges to adjust the duration, or drag the whole event to reschedule it.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I set up a morning routine?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Go to the Routines tab and tap "New Routine". Add each step of your routine (wake up, exercise, shower, etc.) with estimated durations. Set a start time and which days to repeat. The routine will appear on your timeline and you can check off each step as you go.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I track my water intake?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Create a habit for water intake with your daily goal. Each time you drink water, tap the habit to log it. Tiempo syncs this data to Apple Health. You can also use the quick-add button on the timeline to log water without opening the full habit view.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I use the AI to plan my day?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tap the AI button (sparkle icon) on your timeline. Tell it what you want to accomplish, like "Schedule 2 hours for deep work" or "Find time for a workout". The AI will suggest times based on your existing schedule and energy patterns. Accept or modify its suggestions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I view my weekly or monthly calendar?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pinch outward on the timeline to zoom out to week view. Pinch again to see the month view. Pinch inward to zoom back to day view. You can also tap the date header to quickly jump between views or select a specific date.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I export my data?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Go to Settings > Data > Export. You can export your habits, routines, and tracked data as a JSON or CSV file. Calendar events are already accessible through your synced calendar services. Health data can be exported from Apple Health directly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I cancel my subscription?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Open Settings on your iPhone > tap your name > Subscriptions > Tiempo > Cancel Subscription. Your premium features remain active until the end of your billing period. Your data is never deleted—you just lose access to premium features.</p>
                     </div>
                 </div>
             </div>
