@@ -2463,8 +2463,9 @@
         }
 
         .waitlist-form {
+            position: relative;
             display: flex;
-            gap: 0.75rem;
+            align-items: center;
             width: 100%;
             padding: 6px;
             background: var(--gradient-sunrise);
@@ -2474,8 +2475,8 @@
         }
 
         .waitlist-input {
-            flex: 1;
-            padding: 14px 18px;
+            width: 100%;
+            padding: 14px 60px 14px 18px;
             font-family: var(--font-body);
             font-size: 1rem;
             color: var(--text-primary);
@@ -2507,65 +2508,44 @@
         }
 
         .waitlist-btn {
-            position: relative;
+            position: absolute;
+            right: 10px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 14px 28px;
-            background: var(--color-primary);
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            background: var(--color-gray-400);
             color: var(--color-white);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            font-weight: 600;
             border: none;
-            border-radius: 12px;
+            border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25),
-                        0 2px 4px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
-            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
         }
 
-        .waitlist-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0) 100%);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .waitlist-btn:hover::before {
-            transform: translateX(100%);
+        .waitlist-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         .waitlist-btn:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.35),
-                        0 4px 8px rgba(0, 0, 0, 0.15);
+            background: var(--text-secondary);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
         }
 
         .waitlist-btn:active {
-            transform: translateY(0) scale(0.98);
-            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
         }
 
         .waitlist-btn:disabled {
-            background: var(--color-gray-400);
+            background: var(--color-gray-200);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
-        }
-
-        .waitlist-btn:disabled::before {
-            display: none;
         }
 
         .waitlist-success {
@@ -2621,12 +2601,13 @@
             }
 
             .waitlist-input {
-                padding: 16px 18px;
+                padding: 14px 54px 14px 16px;
             }
 
             .waitlist-btn {
-                width: 100%;
-                padding: 16px 28px;
+                right: 8px;
+                width: 40px;
+                height: 40px;
             }
         }
 
@@ -2659,7 +2640,11 @@
                     required
                     autocomplete="email"
                 >
-                <button type="submit" class="waitlist-btn">Join Waitlist</button>
+                <button type="submit" class="waitlist-btn" aria-label="Join Waitlist">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 4L10 16M10 4L6 8M10 4L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
             </form>
             <div class="waitlist-success" id="waitlistSuccess" style="display: none;">
                 <svg class="success-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
