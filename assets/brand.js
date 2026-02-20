@@ -185,8 +185,9 @@
     document.documentElement.setAttribute("data-brand", brand);
     document.documentElement.lang = brand === TIEMPO ? "es" : "en";
 
-    const logoFile = brand === TIEMPO ? "logo-tiempo.png" : "logo.png";
-    const wordmarkFile = brand === TIEMPO ? "wordmark-tiempo.png" : "wordmark.png";
+    // Use the same new logo assets for both brands so Spanish pages never fall back to stale legacy files.
+    const logoFile = "logo.png";
+    const wordmarkFile = "wordmark.png";
 
     document.querySelectorAll("img[src]").forEach((img) => {
       const source = img.getAttribute("src") || "";
@@ -198,6 +199,10 @@
 
       if (/(^|\/)wordmark(-tiempo)?\.png$/i.test(normalized)) {
         img.setAttribute("src", swapFileNameInPath(source, wordmarkFile));
+      }
+
+      if (/(^|\/)success-clock\.png$/i.test(normalized)) {
+        img.setAttribute("src", swapFileNameInPath(source, logoFile));
       }
 
       if (img.alt) {
