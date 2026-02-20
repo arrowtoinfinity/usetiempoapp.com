@@ -141,42 +141,6 @@
     });
   }
 
-  function addBrandToggle(activeBrand) {
-    const footerLinks = document.querySelector(".footer-links");
-    if (!footerLinks || footerLinks.querySelector("[data-brand-toggle='1']")) {
-      return;
-    }
-
-    const nextBrand = activeBrand === TIEMPO ? ALLTIME : TIEMPO;
-    const link = document.createElement("a");
-    link.href = "#";
-    link.dataset.brandToggle = "1";
-    link.className = "brand-toggle-link";
-    link.textContent = activeBrand === TIEMPO ? "Switch to AllTime" : "Cambiar a Tiempo";
-
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      setStoredBrand(nextBrand);
-
-      const target = new URL(window.location.href);
-      target.searchParams.set("brand", nextBrand);
-
-      if (target.hostname === "usealltimeapp.com") {
-        if (nextBrand === TIEMPO && !isSpanishPath(target.pathname)) {
-          target.pathname = `/es${target.pathname === "/" ? "/" : target.pathname}`;
-        }
-
-        if (nextBrand === ALLTIME && isSpanishPath(target.pathname)) {
-          target.pathname = target.pathname.replace(/^\/es(?=\/|$)/, "") || "/";
-        }
-      }
-
-      window.location.href = target.toString();
-    });
-
-    footerLinks.appendChild(link);
-  }
-
   function applyBranding() {
     const brand = resolveBrand();
     const brandName = brand === TIEMPO ? "Tiempo" : "AllTime";
@@ -228,8 +192,6 @@
 
     updateMetaBranding(brandName, canonicalDomain);
     updateCanonicalLinks();
-    addBrandToggle(brand);
-
     window.AllTimeBrand = {
       getBrand() {
         return brand;
