@@ -10,7 +10,6 @@
   --font-brand: "HelveticaNeueCondensedBlack", "Helvetica Neue Condensed Black", "Helvetica Neue", "Arial Narrow", "Arial Black", sans-serif;
 }
 
-html[data-brand="alltime"] .logo-text,
 html[data-brand="alltime"] .brand-wordmark-text {
   font-family: var(--font-brand) !important;
   font-weight: 900 !important;
