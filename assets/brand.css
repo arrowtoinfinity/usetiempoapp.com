@@ -10,7 +10,7 @@
   --font-brand: "HelveticaNeueCondensedBlack", "Helvetica Neue Condensed Black", "Helvetica Neue", "Arial Narrow", "Arial Black", sans-serif;
 }
 
-/* New sunrise icons have more transparent padding, so increase rendered height to match original Tiempo visual size. */
+/* Keep the sunrise mark rendered at the legacy header size for visual parity. */
 header .logo img {
   height: 49px !important;
   width: auto;
@@ -20,21 +20,4 @@ html[data-brand="alltime"] .brand-wordmark-text {
   font-family: var(--font-brand) !important;
   font-weight: 900 !important;
   letter-spacing: 0.02em;
-}
-
-.brand-toggle-link {
-  color: #8E8E93;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-}
-
-.brand-toggle-link:hover {
-  color: #1C1C1E;
-}
-
-/* Safety override: never show brand switch links in footer. */
-.footer-links .brand-toggle-link,
-.footer-links [data-brand-toggle="1"] {
-  display: none !important;
 }
