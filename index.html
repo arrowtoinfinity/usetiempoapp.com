@@ -1254,18 +1254,18 @@
         }
 
         .feature-card:not(.parent-container) {
-            background: #e7eeff;
-            border: 2px solid #bcc9ec;
+            background: var(--card-fill);
+            border: 2px solid var(--card-border);
         }
 
         .feature-card:not(.parent-container):hover {
-            background: #dde7ff;
-            border: 2px solid #a9b9e7;
+            background: color-mix(in srgb, var(--card-color) 25%, transparent);
+            border: 2px solid color-mix(in srgb, var(--card-color) 80%, transparent);
         }
 
         .feature-card:not(.parent-container).centered {
-            background: #e7eeff;
-            border: 2px solid #bcc9ec;
+            background: var(--card-fill);
+            border: 2px solid var(--card-border);
         }
 
         /* Resize handles - visible on hover, positioned on edges */
@@ -1430,8 +1430,8 @@
             align-items: flex-start;
             gap: var(--space-sm);
             padding: var(--space-md);
-            background: #eadcf8;
-            border: 2px solid #c9afe9;
+            background: #d2a3ea;
+            border: 2px solid #bc7fe0;
             border-radius: 8px;
             position: relative;
             transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
@@ -1439,14 +1439,14 @@
         }
 
         .child-events .child-event:hover {
-            background: #e0cef3;
-            border: 2px solid #ba99df;
+            background: rgba(175, 82, 222, 0.25);
+            border: 2px solid rgba(175, 82, 222, 0.8);
             transform: scale(1.02);
         }
 
         .child-events .child-event.centered {
-            background: #eadcf8;
-            border: 2px solid #c9afe9;
+            background: #d2a3ea;
+            border: 2px solid #bc7fe0;
             transform: scale(1.02);
         }
 
