@@ -3273,6 +3273,17 @@
                 }
 
                 var fGrid = document.querySelector('.features-grid');
+
+                // If section is already scrolled past on load, show everything immediately
+                if (fGrid && fGrid.getBoundingClientRect().bottom < window.innerHeight) {
+                    if (fHeader) {
+                        fHeader.style.opacity = '1';
+                        fHeader.style.transform = 'translateY(0)';
+                    }
+                    featureCards.forEach(function(card) { card.classList.add('visible'); });
+                    return;
+                }
+
                 var fPrevScrollY = window.scrollY;
                 var fScrollingDown = true;
                 window.addEventListener('scroll', function() {
