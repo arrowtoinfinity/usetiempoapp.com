@@ -1308,7 +1308,9 @@
             position: absolute;
             width: 32px;
             height: 6px;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: inherit;
             border-radius: 100px;
             opacity: 0;
@@ -1316,6 +1318,11 @@
             z-index: 10;
         }
 
+
+        body.dark-mode .feature-card::before,
+        body.dark-mode .feature-card::after {
+            background: rgba(28, 28, 30, 0.55);
+        }
 
         /* End time handle - top-left, half in half out */
         .feature-card::before {
@@ -1502,7 +1509,9 @@
             position: absolute;
             width: 24px;
             height: 5px;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 2px solid rgba(175, 82, 222, 0.8);
             border-radius: 100px;
             opacity: 0;
@@ -1525,6 +1534,11 @@
         .child-events .child-event.centered::before,
         .child-events .child-event.centered::after {
             opacity: 1;
+        }
+
+        body.dark-mode .child-event::before,
+        body.dark-mode .child-event::after {
+            background: rgba(28, 28, 30, 0.55);
         }
 
 
