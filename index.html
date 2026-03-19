@@ -170,15 +170,6 @@
             border-color: color-mix(in srgb, var(--card-color) 50%, transparent);
         }
 
-        body.dark-mode .feature-card::before,
-        body.dark-mode .feature-card::after {
-            background: #2C2C2E;
-        }
-
-        body.dark-mode .child-event::before,
-        body.dark-mode .child-event::after {
-            background: #2C2C2E;
-        }
 
         body.dark-mode .review-card {
             background: rgba(255, 255, 255, 0.08);
@@ -1317,8 +1308,8 @@
             position: absolute;
             width: 32px;
             height: 6px;
-            background: white;
-            border: 2px solid color-mix(in srgb, var(--card-color) 80%, transparent);
+            background: transparent;
+            border: 2px solid color-mix(in srgb, var(--card-color) 40%, transparent);
             border-radius: 100px;
             opacity: 0;
             transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1510,8 +1501,8 @@
             position: absolute;
             width: 24px;
             height: 5px;
-            background: white;
-            border: 2px solid rgba(175, 82, 222, 0.8);
+            background: transparent;
+            border: 2px solid rgba(175, 82, 222, 0.4);
             border-radius: 100px;
             opacity: 0;
             transition: opacity 0.2s ease;
