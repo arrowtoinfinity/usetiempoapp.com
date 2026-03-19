@@ -3273,9 +3273,16 @@
                 }
 
                 var fGrid = document.querySelector('.features-grid');
+                var fPrevScrollY = window.scrollY;
+                var fScrollingDown = true;
+                window.addEventListener('scroll', function() {
+                    fScrollingDown = window.scrollY > fPrevScrollY;
+                    fPrevScrollY = window.scrollY;
+                }, { passive: true });
+
                 var fObserver = new IntersectionObserver(function(entries) {
                     entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
+                        if (entry.isIntersecting && fScrollingDown) {
                             if (fHeader) {
                                 fHeader.style.opacity = '1';
                                 fHeader.style.transform = 'translateY(0)';
