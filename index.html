@@ -1278,10 +1278,10 @@
         /* Event Bubble Card style for features */
         .feature-card {
             background: color-mix(in srgb, var(--card-color) 15%, transparent);
-            border: 2px solid color-mix(in srgb, var(--card-color) 40%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-color) 40%, transparent);
             border-radius: var(--radius-md);
-            padding: var(--space-lg) var(--space-xl);
-            transition: border-color 0.2s ease-out, background 0.2s ease-out,
+            padding: calc(var(--space-lg) + 1px) calc(var(--space-xl) + 1px);
+            transition: border-color 0.2s ease-out, background 0.2s ease-out, padding 0.2s ease-out,
                         opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                         transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
@@ -1298,7 +1298,8 @@
         .feature-card:hover,
         .feature-card.centered {
             background: color-mix(in srgb, var(--card-color) 25%, transparent);
-            border-color: color-mix(in srgb, var(--card-color) 80%, transparent);
+            border: 2px solid color-mix(in srgb, var(--card-color) 80%, transparent);
+            padding: var(--space-lg) var(--space-xl);
         }
 
         /* Resize handles - visible on hover, positioned on edges */
@@ -1399,17 +1400,18 @@
         /* Parent-Child Group Container */
         .feature-card.parent-container {
             background: rgba(175, 82, 222, 0.15);
-            border: 2px solid rgba(175, 82, 222, 0.4);
+            border: 1px solid rgba(175, 82, 222, 0.4);
             display: flex;
             flex-direction: column;
-            padding: var(--space-lg);
+            padding: calc(var(--space-lg) + 1px);
             overflow: visible;
         }
 
         .feature-card.parent-container:hover:not(:has(.child-event:hover)),
         .feature-card.parent-container.centered {
             background: rgba(175, 82, 222, 0.25);
-            border-color: rgba(175, 82, 222, 0.8);
+            border: 2px solid rgba(175, 82, 222, 0.8);
+            padding: var(--space-lg);
         }
 
         .feature-card.parent-container::before,
@@ -1503,19 +1505,20 @@
             display: flex;
             align-items: flex-start;
             gap: var(--space-sm);
-            padding: var(--space-md);
+            padding: calc(var(--space-md) + 1px);
             background: rgba(175, 82, 222, 0.15);
-            border: 2px solid rgba(175, 82, 222, 0.4);
+            border: 1px solid rgba(175, 82, 222, 0.4);
             border-radius: 8px;
             position: relative;
-            transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+            transition: border 0.2s ease, transform 0.2s ease, background 0.2s ease, padding 0.2s ease;
             pointer-events: auto;
         }
 
         .child-events .child-event:hover,
         .child-events .child-event.centered {
             background: rgba(175, 82, 222, 0.25);
-            border-color: rgba(175, 82, 222, 0.8);
+            border: 2px solid rgba(175, 82, 222, 0.8);
+            padding: var(--space-md);
             transform: scale(1.02);
         }
 
