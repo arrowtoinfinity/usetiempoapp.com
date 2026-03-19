@@ -278,14 +278,7 @@
                 orbTransitionDelays[d.index] = rank * staggerStep;
             });
 
-            // Only toggle dark mode via scroll if user hasn't manually chosen
-            if (window.__themeToggle && !window.__themeToggle.isUserChosen()) {
-                if (currentZone === 'macos') {
-                    document.body.classList.add('dark-mode');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                }
-            }
+            // Dark mode is controlled by system preference and manual toggle only
         }
     }
 
