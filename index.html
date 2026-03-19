@@ -1665,9 +1665,13 @@
         }
 
         .mac-screen::before {
+            display: none;
+        }
+
+        .mac-mockup::after {
             content: '';
             position: absolute;
-            top: 0;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
             width: 120px;
@@ -1736,10 +1740,11 @@
                 border-radius: 4px;
             }
 
-            .mac-screen::before {
+            .mac-mockup::after {
                 width: 80px;
                 height: 14px;
                 border-radius: 0 0 8px 8px;
+                top: 4px;
             }
 
             .coming-soon-logo {
