@@ -1409,7 +1409,35 @@
 
         .feature-card.parent-container::before,
         .feature-card.parent-container::after {
-            display: none;
+            display: block;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(175, 82, 222, 0.4);
+        }
+
+        .feature-card.parent-container:hover::before,
+        .feature-card.parent-container:hover::after,
+        .feature-card.parent-container.centered::before,
+        .feature-card.parent-container.centered::after {
+            border: 2px solid rgba(175, 82, 222, 0.8);
+        }
+
+        .feature-card.parent-container::before {
+            top: -6px;
+            right: auto;
+        }
+
+        .feature-card.parent-container::after {
+            bottom: -6px;
+            left: 50%;
+        }
+
+        body.dark-mode .feature-card.parent-container::before,
+        body.dark-mode .feature-card.parent-container::after {
+            background: rgba(28, 28, 30, 0.55);
         }
 
         .parent-label {
