@@ -2626,9 +2626,311 @@
                 font-size: var(--text-caption);
             }
         }
+        /* Coming Soon Overlay */
+        .coming-soon-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-white);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .coming-soon-overlay img {
+            height: 80px;
+            margin-bottom: 2rem;
+        }
+
+        .coming-soon-overlay h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon-overlay p {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 400px;
+        }
+
+        .coming-soon-word-container {
+            display: inline-block;
+            position: relative;
+            vertical-align: bottom;
+            overflow: visible;
+            height: 1.1em;
+            clip-path: inset(-100% -100% 0 -100%);
+        }
+
+        .coming-soon-word {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-50%) translateY(100%);
+            color: var(--text-primary);
+        }
+
+        .coming-soon-word.active {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .waitlist-container {
+            margin: 1.5rem 0 2rem;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .waitlist-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 6px;
+            background: var(--gradient-sunrise);
+            border-radius: var(--radius-full);
+            box-shadow: 0 4px 16px rgba(255, 149, 0, 0.2),
+                        0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .waitlist-input {
+            width: 100%;
+            padding: 14px 58px 14px 18px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--color-white);
+            border: 2px solid transparent;
+            border-radius: var(--radius-full);
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .waitlist-input::placeholder {
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        .waitlist-input:invalid:not(:placeholder-shown) {
+            color: var(--color-danger);
+        }
+
+        .waitlist-btn {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: var(--color-gray-400);
+            color: var(--color-white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .waitlist-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .waitlist-btn.ready {
+            background: var(--color-primary);
+            cursor: pointer;
+        }
+
+        .waitlist-btn:disabled {
+            background: var(--color-gray-200);
+            cursor: not-allowed;
+        }
+
+        .waitlist-success {
+            text-align: center;
+            padding: 1.5rem;
+            animation: fadeInSlideUp 0.5s ease forwards;
+        }
+
+        .success-icon {
+            margin-bottom: 1rem;
+            animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .waitlist-success p {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--color-success);
+            margin: 0;
+        }
+
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .crisp-client.hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
     </style>
 </head>
 <body>
+    <!-- Coming Soon Overlay -->
+    <div class="coming-soon-overlay" id="comingSoonOverlay">
+        <img src="logo.png" alt="AllTime">
+        <h1><span class="coming-soon-word-container"><span class="coming-soon-word active">Coming Soon</span><span class="coming-soon-word">Próximamente</span><span class="coming-soon-word">Bientôt</span><span class="coming-soon-word">Prossimamente</span><span class="coming-soon-word">即将推出</span><span class="coming-soon-word">जल्द आ रहा है</span><span class="coming-soon-word">قريباً</span><span class="coming-soon-word">Em Breve</span><span class="coming-soon-word">Скоро</span><span class="coming-soon-word">近日公開</span><span class="coming-soon-word">Demnächst</span><span class="coming-soon-word">곧 출시</span></span></h1>
+
+        <div class="waitlist-container" id="waitlistContainer">
+            <form class="waitlist-form" id="waitlistForm"
+                  action="https://docs.google.com/forms/d/e/1FAIpQLSd3fINTpCKJmDvF7ckbPqq2B8g1-1HSbnFdP6Lhe4h4h1tDng/formResponse"
+                  method="POST"
+                  target="waitlist-iframe">
+                <input type="email" name="entry.2123595470" id="waitlistEmail" class="waitlist-input" placeholder="Enter your email" required autocomplete="email">
+                <button type="submit" class="waitlist-btn" aria-label="Join Waitlist">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4L10 16M10 4L6 8M10 4L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </form>
+            <div class="waitlist-success" id="waitlistSuccess" style="display: none;">
+                <svg class="success-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="22" fill="#34C759" opacity="0.12"/>
+                    <path d="M14 24L20 30L34 16" stroke="#34C759" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>Thanks! We'll notify you when we launch.</p>
+            </div>
+        </div>
+
+        <p>AllTime is launching soon. Stay tuned for something amazing.</p>
+        <iframe name="waitlist-iframe" style="display: none;"></iframe>
+    </div>
+    <script>
+        // Preview bypass: add ?preview=alltime2026 to URL to see full site
+        (function() {
+            const overlay = document.getElementById('comingSoonOverlay');
+            if (new URLSearchParams(window.location.search).get('preview') === 'alltime2026') {
+                if (overlay) overlay.style.display = 'none';
+                return;
+            }
+
+            // Coming Soon word cycling animation
+            const container = document.querySelector('.coming-soon-word-container');
+            const words = document.querySelectorAll('.coming-soon-word');
+            if (!container || words.length === 0) return;
+
+            let currentIndex = 0;
+            const DISPLAY_DURATION = 2500;
+            const ANIMATION_DURATION = 500;
+
+            const firstWord = words[0];
+            container.style.width = firstWord.offsetWidth + 'px';
+
+            words.forEach((word, i) => {
+                word.style.transition = 'none';
+                if (i === 0) {
+                    word.style.transform = 'translateX(-50%) translateY(0)';
+                    word.style.opacity = '1';
+                } else {
+                    word.style.transform = 'translateX(-50%) translateY(100%)';
+                    word.style.opacity = '1';
+                }
+            });
+
+            function cycleWord() {
+                const currentWord = words[currentIndex];
+                const nextIndex = (currentIndex + 1) % words.length;
+                const nextWord = words[nextIndex];
+
+                const tempSpan = document.createElement('span');
+                tempSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit;';
+                tempSpan.textContent = nextWord.textContent;
+                container.appendChild(tempSpan);
+                const nextWidth = tempSpan.offsetWidth;
+                container.removeChild(tempSpan);
+
+                currentWord.style.transition = `transform ${ANIMATION_DURATION}ms ease-in-out, opacity ${ANIMATION_DURATION}ms ease-in-out`;
+                nextWord.style.transition = `transform ${ANIMATION_DURATION}ms ease-in-out`;
+                container.style.transition = `width ${ANIMATION_DURATION}ms ease-in-out`;
+
+                currentWord.style.transform = 'translateX(-50%) translateY(-75%)';
+                currentWord.style.opacity = '0';
+                nextWord.style.transform = 'translateX(-50%) translateY(0)';
+                container.style.width = nextWidth + 'px';
+
+                setTimeout(() => {
+                    currentWord.style.transition = 'none';
+                    currentWord.style.transform = 'translateX(-50%) translateY(100%)';
+                    currentWord.style.opacity = '1';
+                    currentWord.classList.remove('active');
+                    nextWord.classList.add('active');
+                }, ANIMATION_DURATION);
+
+                currentIndex = nextIndex;
+            }
+
+            setTimeout(() => setInterval(cycleWord, DISPLAY_DURATION), 1500);
+
+            // Waitlist form handling
+            const form = document.getElementById('waitlistForm');
+            const wlContainer = document.getElementById('waitlistContainer');
+            const successMsg = document.getElementById('waitlistSuccess');
+            const emailInput = document.getElementById('waitlistEmail');
+            const submitBtn = form?.querySelector('.waitlist-btn');
+
+            if (form && wlContainer && successMsg) {
+                form.addEventListener('submit', function() {
+                    submitBtn.disabled = true;
+                    setTimeout(function() {
+                        form.style.display = 'none';
+                        successMsg.style.display = 'block';
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'waitlist_signup', { 'event_category': 'engagement', 'event_label': 'Coming Soon Overlay' });
+                        }
+                    }, 500);
+                });
+
+                emailInput.addEventListener('input', function() {
+                    if (emailInput.validity.valid && emailInput.value.length > 0) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.add('ready');
+                    } else {
+                        submitBtn.disabled = true;
+                        submitBtn.classList.remove('ready');
+                    }
+                });
+            }
+
+            // Hide Crisp chat when overlay is visible
+            const checkCrisp = setInterval(function() {
+                const crispClient = document.querySelector('.crisp-client');
+                if (crispClient) { crispClient.classList.add('hidden'); clearInterval(checkCrisp); }
+            }, 100);
+            setTimeout(function() { clearInterval(checkCrisp); }, 5000);
+        })();
+    </script>
+
     <!-- SVG Definitions -->
     <svg width="0" height="0" style="position: absolute;">
         <defs>
