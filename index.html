@@ -798,7 +798,7 @@
 
         .phone-preview {
             width: 140px;
-            height: 287.5px;
+            height: 304px;
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
@@ -869,14 +869,13 @@
 
         .phone-mockup {
             width: 220px;
-            height: 455px;
-            background: #000000;
-            border-radius: 36px;
-            padding: 9px;
+            height: 478px;
+            background: transparent;
+            border-radius: 30px;
+            padding: 0;
             box-shadow:
                 0 50px 100px -20px rgba(0,0,0,0.2),
-                0 30px 60px -30px rgba(0,0,0,0.25),
-                inset 0 0 0 2px rgba(255,255,255,0.1);
+                0 30px 60px -30px rgba(0,0,0,0.25);
             position: relative;
             flex-shrink: 0;
         }
@@ -961,95 +960,50 @@
 
         /* Carousel Navigation */
         .carousel-nav {
-            text-align: center;
-            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .carousel-nav-row {
+        .carousel-click-zone {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .carousel-click-zone.left {
+            left: 0;
+        }
+
+        .carousel-click-zone.right {
+            right: 0;
+        }
+
+        .carousel-nav-dots {
             display: flex;
-            justify-content: center;
+            gap: 6px;
             align-items: center;
-            gap: 12px;
         }
 
         .carousel-nav-dot {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-        }
-
-        .carousel-nav-dot svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .carousel-nav-dot:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .carousel-nav-pill {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 28px;
-            padding: 0 14px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: rgb(28, 117, 188);
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 600;
-            white-space: nowrap;
-            cursor: default;
-            overflow: hidden;
-            transition: color 0.1s ease-out, width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
-        }
-
-        .carousel-mobile-title {
-            display: none;
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-align: center;
-            margin: 0 0 0.75rem 0;
-        }
-
-        .carousel-mobile-dots {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 1rem;
-        }
-
-        .carousel-mobile-dot {
             width: 8px;
             height: 8px;
-            border-radius: 50%;
-            background: var(--color-gray-400);
+            border-radius: 4px;
+            background: var(--text-tertiary);
+            opacity: 0.4;
             cursor: pointer;
-            transition: background 0.3s ease, width 0.1s ease-out, border-radius 0.1s ease-out;
+            transition: all 0.3s ease;
         }
 
-        .carousel-mobile-dot.active {
-            width: 36px;
-            border-radius: 4px;
+        .carousel-nav-dot.active {
+            width: 24px;
+            background: rgb(28, 117, 188);
+            opacity: 1;
         }
 
         .phone-header {
@@ -1767,9 +1721,9 @@
         .mac-mockup {
             max-width: 900px;
             margin: 0 auto;
-            background: #000;
+            background: transparent;
             border-radius: 12px;
-            padding: 8px;
+            padding: 0;
             box-shadow: 0 25px 80px rgba(0,0,0,0.3);
             position: relative;
         }
@@ -1779,27 +1733,17 @@
         }
 
         .mac-mockup::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 20px;
-            background: #000;
-            border-radius: 0 0 12px 12px;
-            z-index: 10;
+            display: none;
         }
 
         .mac-screen {
             background: var(--color-white);
-            border-radius: 6px;
+            border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16/10;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
             position: relative;
             clip-path: inset(50% 0 50% 0);
             transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.84, 0);
@@ -1810,25 +1754,74 @@
             transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .mac-coming-soon {
+        .mac-screenshots {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .mac-screenshot {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .mac-screenshot.active {
+            opacity: 1;
+        }
+
+        .mac-screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mac-carousel-nav {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: var(--space-lg);
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .coming-soon-logo {
-            width: 120px;
-            height: 120px;
-            opacity: 0.8;
+        .mac-click-zone {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            cursor: pointer;
+            z-index: 5;
         }
 
-        .coming-soon-text {
-            font-family: var(--font-display);
-            font-size: var(--text-xlarge);
-            font-weight: 600;
-            color: var(--text-secondary);
-            letter-spacing: 0.05em;
+        .mac-click-zone.left {
+            left: 0;
+        }
+
+        .mac-click-zone.right {
+            right: 0;
+        }
+
+        .mac-carousel-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .mac-carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--text-tertiary);
+            opacity: 0.4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mac-carousel-dot.active {
+            width: 24px;
+            background: rgb(28, 117, 188);
+            opacity: 1;
         }
 
         .macos-cta {
@@ -1843,27 +1836,14 @@
 
             .mac-mockup {
                 border-radius: 8px;
-                padding: 4px;
             }
 
             .mac-screen {
-                border-radius: 4px;
+                border-radius: 8px;
             }
 
-            .mac-mockup::after {
-                width: 80px;
-                height: 14px;
-                border-radius: 0 0 8px 8px;
-                top: 4px;
-            }
-
-            .coming-soon-logo {
-                width: 80px;
-                height: 80px;
-            }
-
-            .coming-soon-text {
-                font-size: var(--text-large);
+            .mac-carousel-nav {
+                margin-top: 1rem;
             }
         }
 
@@ -2517,54 +2497,16 @@
 
             .phone-mockup {
                 width: 200px;
-                height: 413px;
+                height: 434px;
             }
 
             .hero-visual {
                 position: relative;
             }
 
-            .carousel-nav-dot {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                width: auto;
-                height: auto;
-                background: none;
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-                border: none;
-                color: var(--text-secondary);
-            }
-
-            .carousel-nav-dot svg {
-                width: 36px;
-                height: 36px;
-            }
-
-            .carousel-nav-dot:hover {
-                background: none;
-                transform: translateY(-50%) scale(1.15);
-            }
-
-            .carousel-nav-prev {
-                left: -56px;
-            }
-
-            .carousel-nav-next {
-                right: -56px;
-            }
-
-            .carousel-nav-pill {
-                display: none;
-            }
-
-            .carousel-mobile-title {
-                display: block;
-            }
-
-            .carousel-mobile-dots {
-                display: flex;
+            .carousel-nav {
+                gap: 0.75rem;
+                margin-top: 1rem;
             }
 
             .phone-dynamic-island {
@@ -2969,7 +2911,6 @@
 
             <div class="hero-layout">
                 <div class="hero-visual">
-                    <p class="carousel-mobile-title">Powerful Controls</p>
                     <div class="phone-carousel">
                     <!-- Left Preview -->
                     <div class="phone-preview" data-screen="prev">
@@ -2984,56 +2925,68 @@
 
                     <div class="phone-mockup">
                         <div class="phone-screen">
+                            <div class="carousel-click-zone left"></div>
+                            <div class="carousel-click-zone right"></div>
                             <div class="phone-screens">
                                 <div class="phone-content active" data-screen="0">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/1_Time-Reimagined.png" alt="Time, Reimagined">
                                 </div>
                                 <div class="phone-content" data-screen="1">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/2_AI-Powered-Assistance.png" alt="AI-Powered Assistance">
                                 </div>
                                 <div class="phone-content" data-screen="2">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/3_Eliminate-Distraction.png" alt="Eliminate Distraction">
                                 </div>
                                 <div class="phone-content" data-screen="3">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/4_Efficient-ToDos.png" alt="Efficient To-Do's">
                                 </div>
                                 <div class="phone-content" data-screen="4">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/5_Cards-n-Blocks.png" alt="Cards & Blocks">
                                 </div>
                                 <div class="phone-content" data-screen="5">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/6_Powerful-Controls.png" alt="Powerful Controls">
                                 </div>
                                 <div class="phone-content" data-screen="6">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/7_AI-Nurtition-Tracker.png" alt="AI Nutrition Tracker">
                                 </div>
                                 <div class="phone-content" data-screen="7">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/8_Workout-Sync.png" alt="Workout Sync">
                                 </div>
                                 <div class="phone-content" data-screen="8">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/9_Analytics-Hub.png" alt="Analytics Hub">
                                 </div>
                                 <div class="phone-content" data-screen="9">
                                     <div class="loading-placeholder">
                                         <img src="logo.png" alt="Loading">
                                     </div>
+                                    <img src="screenshots/ios/10_Truly-Your-Own.png" alt="Truly Your Own">
                                 </div>
                             </div>
                         </div>
@@ -3052,24 +3005,18 @@
                 </div>
 
                 <div class="carousel-nav">
-                    <div class="carousel-nav-row">
-                        <span class="carousel-nav-dot carousel-nav-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></span>
-                        <span class="carousel-nav-pill">Powerful Controls</span>
-                        <span class="carousel-nav-dot carousel-nav-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                    <div class="carousel-nav-dots">
+                        <span class="carousel-nav-dot active" data-index="0"></span>
+                        <span class="carousel-nav-dot" data-index="1"></span>
+                        <span class="carousel-nav-dot" data-index="2"></span>
+                        <span class="carousel-nav-dot" data-index="3"></span>
+                        <span class="carousel-nav-dot" data-index="4"></span>
+                        <span class="carousel-nav-dot" data-index="5"></span>
+                        <span class="carousel-nav-dot" data-index="6"></span>
+                        <span class="carousel-nav-dot" data-index="7"></span>
+                        <span class="carousel-nav-dot" data-index="8"></span>
+                        <span class="carousel-nav-dot" data-index="9"></span>
                     </div>
-                </div>
-
-                <div class="carousel-mobile-dots">
-                    <span class="carousel-mobile-dot" data-index="0"></span>
-                    <span class="carousel-mobile-dot" data-index="1"></span>
-                    <span class="carousel-mobile-dot" data-index="2"></span>
-                    <span class="carousel-mobile-dot" data-index="3"></span>
-                    <span class="carousel-mobile-dot" data-index="4"></span>
-                    <span class="carousel-mobile-dot" data-index="5"></span>
-                    <span class="carousel-mobile-dot" data-index="6"></span>
-                    <span class="carousel-mobile-dot" data-index="7"></span>
-                    <span class="carousel-mobile-dot" data-index="8"></span>
-                    <span class="carousel-mobile-dot" data-index="9"></span>
                 </div>
             </div>
 
@@ -3339,10 +3286,54 @@
                 <div class="macos-visual">
                     <div class="mac-mockup">
                         <div class="mac-screen">
-                            <div class="mac-coming-soon">
-                                <img src="logo.png" alt="AllTime Logo" class="coming-soon-logo">
-                                <p class="coming-soon-text">Coming Soon</p>
+                            <div class="mac-click-zone left"></div>
+                            <div class="mac-click-zone right"></div>
+                            <div class="mac-screenshots">
+                                <div class="mac-screenshot active" data-mac-screen="0">
+                                    <img src="screenshots/macos/1_Time-Reimagined.png" alt="Time, Reimagined">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="1">
+                                    <img src="screenshots/macos/2_AI-Powered-Assistance.png" alt="AI-Powered Assistance">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="2">
+                                    <img src="screenshots/macos/3_Eliminate-Distraction.png" alt="Eliminate Distraction">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="3">
+                                    <img src="screenshots/macos/4_Efficient-ToDos.png" alt="Efficient To-Do's">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="4">
+                                    <img src="screenshots/macos/5_Cards-n-Blocks.png" alt="Cards & Blocks">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="5">
+                                    <img src="screenshots/macos/6_Powerful-Controls.png" alt="Powerful Controls">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="6">
+                                    <img src="screenshots/macos/7_AI-Nurtition-Tracker.png" alt="AI Nutrition Tracker">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="7">
+                                    <img src="screenshots/macos/8_Workout-Sync.png" alt="Workout Sync">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="8">
+                                    <img src="screenshots/macos/9_Analytics-Hub.png" alt="Analytics Hub">
+                                </div>
+                                <div class="mac-screenshot" data-mac-screen="9">
+                                    <img src="screenshots/macos/10_Truly-Your-Own.png" alt="Truly Your Own">
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="mac-carousel-nav">
+                        <div class="mac-carousel-dots">
+                            <span class="mac-carousel-dot active" data-mac-index="0"></span>
+                            <span class="mac-carousel-dot" data-mac-index="1"></span>
+                            <span class="mac-carousel-dot" data-mac-index="2"></span>
+                            <span class="mac-carousel-dot" data-mac-index="3"></span>
+                            <span class="mac-carousel-dot" data-mac-index="4"></span>
+                            <span class="mac-carousel-dot" data-mac-index="5"></span>
+                            <span class="mac-carousel-dot" data-mac-index="6"></span>
+                            <span class="mac-carousel-dot" data-mac-index="7"></span>
+                            <span class="mac-carousel-dot" data-mac-index="8"></span>
+                            <span class="mac-carousel-dot" data-mac-index="9"></span>
                         </div>
                     </div>
                 </div>
@@ -3798,6 +3789,110 @@
                 macObserver.observe(macMockup);
             })();
 
+            // macOS screenshot carousel
+            (function() {
+                var macScreenshots = document.querySelectorAll('.mac-screenshot');
+                var macDots = document.querySelectorAll('.mac-carousel-dot');
+                var macClickLeft = document.querySelector('.mac-click-zone.left');
+                var macClickRight = document.querySelector('.mac-click-zone.right');
+                var macMockupEl = document.querySelector('.mac-mockup');
+                if (!macScreenshots.length) return;
+
+                var macCurrentIndex = 0;
+                var macTotal = macScreenshots.length;
+                var macSlideStart = Date.now();
+                var macSlideDuration = 5000;
+                var macProgressId = null;
+                var macPaused = false;
+
+                // Sunset gradient: Blue → Magenta → Orange → Yellow
+                var sunriseBlue = { r: 28, g: 117, b: 188 };
+                var magenta = { r: 236, g: 0, b: 140 };
+                var orange = { r: 242, g: 101, b: 34 };
+                var yellow = { r: 249, g: 237, b: 50 };
+
+                function macLerp(c1, c2, t) {
+                    return 'rgb(' + Math.round(c1.r + (c2.r - c1.r) * t) + ',' +
+                        Math.round(c1.g + (c2.g - c1.g) * t) + ',' +
+                        Math.round(c1.b + (c2.b - c1.b) * t) + ')';
+                }
+
+                function macSunsetColor(p) {
+                    if (p < 0.25) return macLerp(sunriseBlue, magenta, p / 0.25);
+                    if (p < 0.65) return macLerp(magenta, orange, (p - 0.25) / 0.4);
+                    return macLerp(orange, yellow, (p - 0.65) / 0.35);
+                }
+
+                function macUpdateDots() {
+                    macDots.forEach(function(dot, i) {
+                        if (i === macCurrentIndex) {
+                            dot.classList.add('active');
+                            dot.style.width = '';
+                            dot.style.background = 'rgb(28, 117, 188)';
+                        } else {
+                            dot.classList.remove('active');
+                            dot.style.width = '';
+                            dot.style.background = '';
+                        }
+                    });
+                }
+
+                function macGoTo(index) {
+                    macScreenshots[macCurrentIndex].classList.remove('active');
+                    macCurrentIndex = (index + macTotal) % macTotal;
+                    macScreenshots[macCurrentIndex].classList.add('active');
+                    macUpdateDots();
+                    macSlideStart = Date.now();
+                }
+
+                var macPauseStart = 0;
+
+                function macAnimateProgress() {
+                    if (!macPaused) {
+                        var elapsed = Date.now() - macSlideStart;
+                        var progress = Math.min(elapsed / macSlideDuration, 1);
+
+                        var activeDot = macDots[macCurrentIndex];
+                        if (activeDot) {
+                            var eased = progress * (2 - progress);
+                            activeDot.style.width = (24 - eased * 16) + 'px';
+                            activeDot.style.background = macSunsetColor(progress);
+                        }
+
+                        if (progress >= 1) {
+                            macGoTo(macCurrentIndex + 1);
+                        }
+                    }
+
+                    macProgressId = requestAnimationFrame(macAnimateProgress);
+                }
+
+                // Click zones on mac frame: left = prev, right = next
+                if (macClickLeft) macClickLeft.addEventListener('click', function() { macGoTo(macCurrentIndex - 1); });
+                if (macClickRight) macClickRight.addEventListener('click', function() { macGoTo(macCurrentIndex + 1); });
+
+                macDots.forEach(function(dot) {
+                    dot.addEventListener('click', function() {
+                        macGoTo(parseInt(dot.dataset.macIndex));
+                    });
+                });
+
+                // Hover on mac frame pauses auto-advance
+                if (macMockupEl) {
+                    macMockupEl.addEventListener('mouseenter', function() {
+                        macPaused = true;
+                        macPauseStart = Date.now();
+                    });
+                    macMockupEl.addEventListener('mouseleave', function() {
+                        macPaused = false;
+                        // Offset the start time by how long we were paused
+                        macSlideStart += (Date.now() - macPauseStart);
+                    });
+                }
+
+                macProgressId = requestAnimationFrame(macAnimateProgress);
+            })();
+
             // GSAP Review Card Animations - Natural toss with inverted exit angle
             gsap.registerPlugin(MotionPathPlugin);
             const reviewCards = Array.from(document.querySelectorAll('.review-card'));
@@ -4028,33 +4123,40 @@
             // Phone Carousel
             const phoneScreens = document.querySelectorAll('.phone-screens .phone-content');
             const phonePreviews = document.querySelectorAll('.phone-preview');
-            const carouselNavPill = document.querySelector('.carousel-nav-pill');
-            const carouselNavPrev = document.querySelector('.carousel-nav-prev');
-            const carouselNavNext = document.querySelector('.carousel-nav-next');
-            const carouselNavContainer = document.querySelector('.carousel-nav');
-            const carouselMobileTitle = document.querySelector('.carousel-mobile-title');
-            const carouselMobileDots = document.querySelectorAll('.carousel-mobile-dot');
+            const carouselNavDots = document.querySelectorAll('.carousel-nav-dot');
+            const phoneClickLeft = document.querySelector('.phone-screen .carousel-click-zone.left');
+            const phoneClickRight = document.querySelector('.phone-screen .carousel-click-zone.right');
+            const phoneMockup = document.querySelector('.phone-mockup');
             let currentScreenIndex = 0;
             const totalScreens = phoneScreens.length;
             let isFirstCarouselLoop = true; // Special behavior for initial load
 
             // Media files for each screen (videos and images)
             const screenshotImages = [
-                '', '', '', '', '', '', '', '', '', ''
+                'screenshots/ios/1_Time-Reimagined.png',
+                'screenshots/ios/2_AI-Powered-Assistance.png',
+                'screenshots/ios/3_Eliminate-Distraction.png',
+                'screenshots/ios/4_Efficient-ToDos.png',
+                'screenshots/ios/5_Cards-n-Blocks.png',
+                'screenshots/ios/6_Powerful-Controls.png',
+                'screenshots/ios/7_AI-Nurtition-Tracker.png',
+                'screenshots/ios/8_Workout-Sync.png',
+                'screenshots/ios/9_Analytics-Hub.png',
+                'screenshots/ios/10_Truly-Your-Own.png'
             ];
 
             // Titles for each screen (main title / subtitle)
             const carouselTitles = [
-                { main: 'Powerful Controls', sub: 'Effortlessly Precise' },
-                { main: 'Timeline Blocks', sub: 'Day, Week, & Month Cards' },
+                { main: 'Time, Reimagined', sub: 'Get AllTime Free' },
+                { main: 'AI-Powered Assistance', sub: 'Plan with Conversation' },
+                { main: 'Eliminate Distraction', sub: 'Deep Focus Mode' },
                 { main: 'Efficient To-Do\'s', sub: 'Checklist View' },
-                { main: 'Deep Focus', sub: 'Get in Tune and Flow' },
-                { main: 'AI Chat Assistant', sub: 'Plan with Conversation' },
-                { main: 'Analytics Hub', sub: 'See the Big Picture' },
-                { main: 'Nutrition Analytics', sub: 'Scan, Save, Go' },
+                { main: 'Cards & Blocks', sub: 'Timeline View' },
+                { main: 'Powerful Controls', sub: 'Effortlessly Precise' },
+                { main: 'AI Nutrition Tracker', sub: 'Scan, Save, Go' },
                 { main: 'Workout Sync', sub: 'Goals, Progress, and Auto-Events' },
-                { main: 'Social Circle', sub: 'Family & Friends in Sync' },
-                { main: 'Truly Your Own', sub: 'Choose your style, while AI learns your preferences' }
+                { main: 'Analytics Hub', sub: 'See the Big Picture' },
+                { main: 'Truly Your Own', sub: 'Choose Your Style' }
             ];
 
             function updatePreviews() {
@@ -4062,9 +4164,9 @@
 
                 // Special behavior for first carousel loop on slide 0
                 if (isFirstCarouselLoop && currentScreenIndex === 0) {
-                    // Show video 3 on left, video 2 on right for natural left-to-right flow
-                    prevIndex = 2; // Video 3 (Checklist) on left
-                    nextIndex = 1; // Video 2 (Timeline) on right - natural next step
+                    // Show slide 2 on left, slide 1 on right for natural left-to-right flow
+                    prevIndex = 2; // Eliminate Distraction on left
+                    nextIndex = 1; // AI-Powered Assistance on right - natural next step
                 } else {
                     // Normal behavior: previous and next slides
                     prevIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
@@ -4127,56 +4229,18 @@
                 updatePreview('next', screenshotImages[nextIndex]);
             }
 
-            // Hidden element for measuring pill text width
-            const pillMeasure = document.createElement('span');
-            pillMeasure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-family:var(--font-display);font-size:0.85rem;font-weight:600;padding:0 14px;';
-            document.body.appendChild(pillMeasure);
-
-            // Set initial explicit width
-            if (carouselNavPill) {
-                carouselNavPill.style.width = carouselNavPill.offsetWidth + 'px';
-            }
-
             function updateDots() {
-                const titleData = carouselTitles[currentScreenIndex];
-                if (!titleData) return;
-
-                // Update mobile title
-                if (carouselMobileTitle) {
-                    carouselMobileTitle.textContent = titleData.main;
-                }
-
-                // Update mobile dots
-                carouselMobileDots.forEach((dot, index) => {
+                carouselNavDots.forEach((dot, index) => {
                     if (index === currentScreenIndex) {
                         dot.classList.add('active');
-                        dot.style.width = '36px';
+                        dot.style.width = '';
                         dot.style.background = 'rgb(28, 117, 188)';
                     } else {
                         dot.classList.remove('active');
-                        dot.style.width = '8px';
+                        dot.style.width = '';
                         dot.style.background = '';
                     }
                 });
-
-                if (!carouselNavPill) return;
-
-                // Fade out current text
-                carouselNavPill.style.opacity = '0';
-
-                // Measure new text width
-                pillMeasure.textContent = titleData.main;
-                const newWidth = pillMeasure.offsetWidth;
-
-                // Animate pill width to new size
-                carouselNavPill.style.width = newWidth + 'px';
-
-                // After fade out, swap text and fade in
-                setTimeout(() => {
-                    carouselNavPill.textContent = titleData.main;
-                    carouselNavPill.style.color = 'rgb(28, 117, 188)';
-                    carouselNavPill.style.opacity = '1';
-                }, 150);
             }
 
             function goToScreen(index) {
@@ -4270,23 +4334,45 @@
                 });
             });
 
-            carouselNavPrev.addEventListener('click', () => {
-                if (isFirstCarouselLoop && currentScreenIndex === 0) {
-                    goToScreen(2);
-                } else {
-                    goToScreen((currentScreenIndex - 1 + totalScreens) % totalScreens);
-                }
-            });
+            // Click zones on phone frame: left = prev, right = next
+            if (phoneClickLeft) {
+                phoneClickLeft.addEventListener('click', () => {
+                    if (isFirstCarouselLoop && currentScreenIndex === 0) {
+                        goToScreen(2);
+                    } else {
+                        goToScreen((currentScreenIndex - 1 + totalScreens) % totalScreens);
+                    }
+                });
+            }
 
-            carouselNavNext.addEventListener('click', () => {
-                if (isFirstCarouselLoop && currentScreenIndex === 0) {
-                    goToScreen(1);
-                } else {
-                    goToScreen((currentScreenIndex + 1) % totalScreens);
-                }
-            });
+            if (phoneClickRight) {
+                phoneClickRight.addEventListener('click', () => {
+                    if (isFirstCarouselLoop && currentScreenIndex === 0) {
+                        goToScreen(1);
+                    } else {
+                        goToScreen((currentScreenIndex + 1) % totalScreens);
+                    }
+                });
+            }
 
-            carouselMobileDots.forEach(dot => {
+            // Hover on phone frame pauses auto-advance
+            let phonePaused = false;
+            if (phoneMockup) {
+                phoneMockup.addEventListener('mouseenter', () => {
+                    phonePaused = true;
+                    if (autoAdvanceTimeout) {
+                        clearTimeout(autoAdvanceTimeout);
+                        autoAdvanceTimeout = null;
+                    }
+                    stopDotProgress();
+                });
+                phoneMockup.addEventListener('mouseleave', () => {
+                    phonePaused = false;
+                    scheduleNextSlide();
+                });
+            }
+
+            carouselNavDots.forEach(dot => {
                 dot.addEventListener('click', () => {
                     const index = parseInt(dot.dataset.index);
                     goToScreen(index);
@@ -4305,6 +4391,9 @@
                     clearTimeout(autoAdvanceTimeout);
                     autoAdvanceTimeout = null;
                 }
+
+                // Don't schedule if paused
+                if (phonePaused) return;
 
                 const activeScreen = document.querySelector('.phone-content.active');
                 const video = activeScreen?.querySelector('video');
@@ -4391,19 +4480,14 @@
                         }
                     }
 
-                    // Animate desktop pill text color
-                    if (carouselNavPill) {
-                        carouselNavPill.style.color = getSunsetColor(progress);
-                    }
-
-                    // Animate active mobile dot
-                    const activeMobileDot = document.querySelector('.carousel-mobile-dot.active');
-                    if (activeMobileDot) {
+                    // Animate active nav dot: color gradient + width shrink
+                    const activeDot = document.querySelector('.carousel-nav-dot.active');
+                    if (activeDot) {
                         const easeOutQuad = (t) => t * (2 - t);
                         const easedProgress = easeOutQuad(progress);
-                        const currentWidth = 36 - (easedProgress * (36 - 8));
-                        activeMobileDot.style.width = `${currentWidth}px`;
-                        activeMobileDot.style.background = getSunsetColor(progress);
+                        const currentWidth = 24 - (easedProgress * (24 - 8));
+                        activeDot.style.width = `${currentWidth}px`;
+                        activeDot.style.background = getSunsetColor(progress);
                     }
 
                     progressAnimationId = requestAnimationFrame(updateDotProgress);
