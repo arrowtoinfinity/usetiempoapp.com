@@ -484,7 +484,7 @@
         <div class="policy-header">
             <h1>Privacy Policy</h1>
             <p class="subtitle">AllTime: AI Daily Planner — Calendar, Habits, Health Goals</p>
-            <p class="meta">Effective Date: December 20, 2024 | Last Updated: December 20, 2024 | Version 1.0</p>
+            <p class="meta">Effective Date: December 20, 2024 | Last Updated: April 9, 2026 | Version 1.1</p>
         </div>
 
         <div class="toc">
@@ -538,7 +538,7 @@
                 </div>
                 <div class="qa-item">
                     <strong>Do we share your personal information with third parties?</strong>
-                    Yes, but only with service providers who help us operate the App (such as cloud hosting providers), and only when you provide consent, or when required by law. We do not share your data with third parties for their own marketing purposes.
+                    Yes, but only with service providers who help us operate the App (such as cloud hosting and AI processing providers), and only when you provide consent, or when required by law. When you enable AI features, some of your data is sent to Google's Gemini AI service via our secure servers for processing. We do not share your data with third parties for their own marketing purposes.
                 </div>
                 <div class="qa-item">
                     <strong>Do we share your personal information for targeted advertising?</strong>
@@ -550,7 +550,7 @@
                 </div>
                 <div class="qa-item">
                     <strong>Do we use AI to process your data?</strong>
-                    Yes. We use artificial intelligence and machine learning to provide personalized planning recommendations, analyze your habits, and generate insights. Your personal data is not used to train AI models for other customers without your explicit consent.
+                    Yes. When you enable AI features and grant consent, we send some of your data to <strong>Google's Gemini AI</strong> service via our secure servers (hosted by Supabase) to provide personalized planning recommendations, food nutrition analysis, workout and nutrition coaching, daily briefings, and smart suggestions. The specific data sent includes calendar event titles and times, health and workout data, food photos, and conversation history. Your personal data is not used to train AI models. You must explicitly consent before any data is sent to AI services, and you can revoke consent at any time in Settings.
                 </div>
                 <div class="qa-item">
                     <strong>Do we provide additional privacy protections for minors?</strong>
@@ -710,7 +710,10 @@
             <h4>3.1.4 Habits and Goals Data</h4>
             <p>When you use our habit tracking and goal management features, we collect habit names, frequencies, completion records, streak counts, goal definitions, and progress data.</p>
 
-            <h4>3.1.5 Health and Wellness Data (Sensitive Personal Information)</h4>
+            <h4>3.1.5 Food Photos</h4>
+            <p>When you use the AI nutrition analysis feature, we collect photos of food that you capture using the in-app camera. These photos are sent to Google's Gemini AI service via our secure servers for nutritional analysis. Photos are compressed, stripped of metadata, and are not stored beyond what is needed to generate the analysis response.</p>
+
+            <h4>3.1.6 Health and Wellness Data (Sensitive Personal Information)</h4>
             <p>With your explicit consent, we collect sensitive health-related information including:</p>
             <ul>
                 <li><strong>Workout and Exercise Data:</strong> Activity type, duration, intensity, calories burned, distance, pace, and exercise notes</li>
@@ -747,7 +750,16 @@
             <p>Account management, core features, notifications and reminders, data synchronization, and customer support.</p>
 
             <h3>4.2 To Provide AI-Powered Features</h3>
-            <p>Smart scheduling, habit recommendations, health insights, goal optimization, and natural language understanding.</p>
+            <p>When you consent to AI data sharing, we use your data to power the following AI features:</p>
+            <ul>
+                <li><strong>AI Chat Assistant:</strong> Uses your calendar events, goals, health data, and conversation history to provide personalized planning advice</li>
+                <li><strong>Food Nutrition Analysis:</strong> Uses photos you capture to identify foods and estimate nutritional content</li>
+                <li><strong>Workout and Nutrition Coaching:</strong> Uses your workout history, nutrition logs, and health metrics to generate insights</li>
+                <li><strong>Daily Briefings:</strong> Uses your upcoming events, weather data, and goals to generate personalized morning and evening summaries</li>
+                <li><strong>Smart Suggestions:</strong> Uses your event patterns, active goals, and schedule gaps to suggest events</li>
+                <li><strong>Event Subtask Generation:</strong> Uses event titles and details to suggest sub-tasks</li>
+            </ul>
+            <p>All AI processing is performed by Google's Gemini AI service via our secure servers hosted by Supabase. See Section 7 for full details.</p>
 
             <h3>4.3 To Personalize Your Experience</h3>
             <p>Recommending features, customizing the interface, and adapting to your preferences.</p>
@@ -765,6 +777,7 @@
             <p>We share your information only in the following circumstances:</p>
             <ul>
                 <li><strong>Service Providers:</strong> With vendors who help us operate the Services (hosting, analytics, payment processing)</li>
+                <li><strong>AI Processing Providers:</strong> When you enable AI features and grant consent, your data is sent to <strong>Google's Gemini AI</strong> service via our secure servers (hosted by <strong>Supabase</strong>) for processing. The data sent may include calendar event titles and times, health and workout metrics, food photos, and conversation history. Google processes this data solely to generate responses and does not use it to train AI models. See Section 7 for full details on what data is sent and how it is protected.</li>
                 <li><strong>With Your Consent:</strong> When you explicitly authorize sharing</li>
                 <li><strong>Legal Requirements:</strong> When required by law or to protect rights and safety</li>
                 <li><strong>Business Transfers:</strong> In connection with mergers, acquisitions, or asset sales</li>
@@ -775,7 +788,62 @@
             <p>Under various privacy laws, we collect the following categories: Identifiers, personal information, protected characteristics, commercial information, internet activity, geolocation data, sensory data, professional information, education information, and inferences.</p>
 
             <h2 id="ai">7. Artificial Intelligence and Machine Learning</h2>
-            <p>We use AI and machine learning to enhance your experience. Your personal data is processed by AI to provide personalized recommendations. We do not use your data to train AI models for other customers without explicit consent. You can opt out of AI-powered features in your settings.</p>
+            <p>AllTime uses artificial intelligence to provide personalized planning, coaching, and nutrition features. This section describes in detail what data is sent, to whom, and how we protect it.</p>
+
+            <h3>7.1 AI Service Provider</h3>
+            <p>AI features are powered by <strong>Google's Gemini AI</strong> service. Your data is sent from the AllTime app to our secure backend servers hosted by <strong>Supabase</strong>, which then forwards it to Google's Gemini API for processing. Google processes this data solely to generate responses to your requests and does not use it to train or improve their AI models.</p>
+            <ul>
+                <li><strong>Provider:</strong> Google LLC (Gemini AI)</li>
+                <li><strong>Infrastructure:</strong> Supabase Edge Functions (secure intermediary)</li>
+                <li><strong>Google's Privacy Policy:</strong> <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></li>
+                <li><strong>Google's AI Terms:</strong> <a href="https://ai.google.dev/gemini-api/terms" target="_blank">ai.google.dev/gemini-api/terms</a></li>
+            </ul>
+
+            <h3>7.2 Data Sent to AI Services</h3>
+            <p>When you use AI features, the following categories of data may be sent to Google's Gemini AI for processing:</p>
+            <ul>
+                <li><strong>Calendar Data:</strong> Event titles, start and end times, locations, descriptions, and calendar names</li>
+                <li><strong>Health and Fitness Data:</strong> Recent workouts (type, duration, calories), workout streaks, average sleep hours, resting heart rate, stress level, and menstrual cycle phase (if cycle tracking is enabled)</li>
+                <li><strong>Nutrition Data:</strong> Calorie intake, nutritional targets, and meal event details</li>
+                <li><strong>Food Photos:</strong> Images captured using the in-app camera for nutrition analysis (compressed and stripped of metadata before transmission)</li>
+                <li><strong>Conversation History:</strong> Your recent chat messages with the AI assistant (up to 8 prior messages for context)</li>
+                <li><strong>Goals Data:</strong> Active goal names, progress, and targets</li>
+                <li><strong>Weather Data:</strong> Current weather forecast for daily briefing generation</li>
+                <li><strong>Device Context:</strong> Platform (iOS/macOS), current date and time, and time zone</li>
+            </ul>
+
+            <h3>7.3 Consent and Control</h3>
+            <p>We require your <strong>explicit consent</strong> before any personal data is sent to AI services:</p>
+            <ul>
+                <li>A consent sheet is presented the first time you attempt to use any AI feature, clearly disclosing what data will be sent and to whom</li>
+                <li>No data is transmitted to AI services until you tap "Allow"</li>
+                <li>You can <strong>revoke consent at any time</strong> from Settings &gt; Privacy &gt; AI Data Sharing</li>
+                <li>When consent is revoked, all AI features immediately stop sending data; the app falls back to non-AI alternatives where available</li>
+                <li>Background AI features (such as smart notifications) silently use local fallback messages when consent is not granted</li>
+            </ul>
+
+            <h3>7.4 Data Protection and Retention</h3>
+            <ul>
+                <li>All data is transmitted over encrypted connections (TLS 1.3)</li>
+                <li>Food photos are compressed and have metadata (EXIF data) stripped before transmission</li>
+                <li>Data sent to Google Gemini is processed in real-time to generate a response and is not stored by Google beyond the duration of the API request</li>
+                <li>We do not store AI request/response data on our servers beyond what is needed to deliver the response to your device</li>
+                <li>Your data is <strong>not used to train, improve, or fine-tune</strong> any AI models</li>
+            </ul>
+
+            <h3>7.5 AI Features Requiring Data Sharing</h3>
+            <p>The following features require AI data sharing consent to function:</p>
+            <ul>
+                <li>AI Chat Assistant</li>
+                <li>Food Nutrition Analysis (camera-based)</li>
+                <li>Workout Coach Insights</li>
+                <li>Nutrition Coach Insights</li>
+                <li>Rise (morning) and Rest (evening) Daily Briefings</li>
+                <li>Smart Event Suggestions</li>
+                <li>Event Subtask Generation</li>
+                <li>AI-Powered Smart Notifications</li>
+            </ul>
+            <p>If you do not consent to AI data sharing, these features will be unavailable, but all other app functionality (calendar, event management, goals, health tracking, etc.) will continue to work normally.</p>
 
             <h2 id="security">8. Data Security</h2>
             <p>We implement comprehensive security measures including encryption (TLS 1.3, AES-256), access controls, security monitoring, regular audits, and incident response procedures. Health data receives enhanced protection with additional encryption and restricted access.</p>
@@ -796,7 +864,16 @@
             <p>Your data may be transferred to and processed in the United States. We use appropriate safeguards for international transfers, including Standard Contractual Clauses.</p>
 
             <h2 id="third-party">14. Third-Party Services and Integrations</h2>
-            <p>Our Services may integrate with third-party services. These services have their own privacy policies, and we encourage you to review them.</p>
+            <p>Our Services integrate with the following third-party services:</p>
+            <ul>
+                <li><strong>Google Gemini AI</strong> — Powers all AI features (chat, food analysis, coaching, briefings, suggestions). Data is sent only with your explicit consent. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a></li>
+                <li><strong>Supabase</strong> — Hosts our backend servers and edge functions that securely relay data to AI services, manage user authentication, and store synced data. <a href="https://supabase.com/privacy" target="_blank">Supabase Privacy Policy</a></li>
+                <li><strong>Apple Health / HealthKit</strong> — Syncs workout and health data with your consent</li>
+                <li><strong>Google Calendar / Outlook</strong> — Syncs calendar events when you connect these services</li>
+                <li><strong>TelemetryDeck</strong> — Privacy-first aggregate analytics (no personal data collected). <a href="https://telemetrydeck.com/privacy" target="_blank">TelemetryDeck Privacy Policy</a></li>
+                <li><strong>Mixpanel</strong> — Subscription funnel analytics (subscription tier, platform, account age). <a href="https://mixpanel.com/legal/privacy-policy" target="_blank">Mixpanel Privacy Policy</a></li>
+            </ul>
+            <p>Each third-party service has its own privacy policy. We encourage you to review them. We only share the minimum data necessary for each service to function, and we require that all third-party providers maintain privacy protections equal to or greater than our own.</p>
 
             <h2 id="cookies">15. Cookies and Tracking Technologies</h2>
             <p>We use cookies and similar technologies on our website for essential functionality, analytics, and preferences. You can manage cookie preferences through our cookie banner.</p>

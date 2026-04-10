@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Time — AllTime</title>
+    <meta name="description" content="Pick a time to meet">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <style>
+        :root {
+            --color-primary: #007AFF;
+            --color-success: #34C759;
+            --color-danger: #FF3B30;
+            --color-bg: #F2F2F7;
+            --color-card: #FFFFFF;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --radius: 12px;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #000000;
+                --color-card: #1C1C1E;
+                --text-primary: #F2F2F7;
+                --text-secondary: #8E8E93;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            background: var(--color-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 480px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 24px 0;
+        }
+        .header img { height: 48px; margin-bottom: 12px; }
+        .header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+        .header p { color: var(--text-secondary); font-size: 0.9rem; }
+        .duration-badge {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .slots-container { margin-top: 16px; }
+        .day-group { margin-bottom: 20px; }
+        .day-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .slot {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .slot:hover { border-color: var(--color-primary); }
+        .slot.selected {
+            border-color: var(--color-primary);
+            background: rgba(0, 122, 255, 0.08);
+        }
+        .slot-time { font-weight: 600; font-size: 0.95rem; }
+        .slot-duration { color: var(--text-secondary); font-size: 0.8rem; }
+        .booking-form {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .booking-form h3 { margin-bottom: 16px; font-size: 1.1rem; }
+        .form-field { margin-bottom: 12px; }
+        .form-field label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+        }
+        .form-field input, .form-field textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #C7C7CC;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: var(--color-bg);
+            color: var(--text-primary);
+        }
+        .form-field textarea { resize: vertical; min-height: 60px; }
+        .btn-book {
+            width: 100%;
+            padding: 14px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-book:hover { opacity: 0.9; }
+        .btn-book:disabled { opacity: 0.5; cursor: not-allowed; }
+        .success {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-icon { font-size: 3rem; margin-bottom: 12px; }
+        .error { color: var(--color-danger); font-size: 0.85rem; margin-top: 8px; }
+        .loading { text-align: center; padding: 60px 0; color: var(--text-secondary); }
+        .expired { text-align: center; padding: 60px 0; }
+        .expired-icon { font-size: 3rem; margin-bottom: 12px; }
+        .footer {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        .footer a { color: var(--color-primary); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading" class="loading">Loading availability...</div>
+        <div id="content" style="display:none"></div>
+        <div class="footer">
+            Powered by <a href="https://usealltimeapp.com">AllTime</a>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://rftgpqueavbcnjxyiatg.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmdGdwcXVlYXZiY25qeHlpYXRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI0MDU1ODQsImV4cCI6MjA0Nzk4MTU4NH0.KiAdS8lDBVQ0FvJqoJKbEhPPjpvYEQo1VGxf-5FeD9c';
+
+        let shareData = null;
+        let selectedSlot = null;
+
+        async function init() {
+            const path = window.location.pathname;
+            const code = path.split('/').filter(Boolean).pop();
+            if (!code || code === 'a') {
+                showError('No availability code provided.');
+                return;
+            }
+
+            try {
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/availability_shares?share_code=eq.${code}&is_active=eq.true&select=*`,
+                    { headers: { 'apikey': SUPABASE_ANON_KEY, 'Accept': 'application/json' } }
+                );
+                const shares = await res.json();
+
+                if (!shares || shares.length === 0) {
+                    showExpired();
+                    return;
+                }
+
+                shareData = shares[0];
+
+                // Check expiry
+                if (shareData.expires_at && new Date(shareData.expires_at) < new Date()) {
+                    showExpired();
+                    return;
+                }
+
+                // Fetch existing bookings to filter out taken slots
+                const bookingsRes = await fetch(
+                    `${SUPABASE_URL}/rest/v1/availability_bookings?share_id=eq.${shareData.id}&status=eq.confirmed&select=slot_start,slot_end`,
+                    { headers: { 'apikey': SUPABASE_ANON_KEY, 'Accept': 'application/json' } }
+                );
+                const bookings = await bookingsRes.json();
+
+                renderAvailability(shareData, bookings || []);
+            } catch (err) {
+                showError('Failed to load availability. Please try again.');
+                console.error(err);
+            }
+        }
+
+        function renderAvailability(share, bookings) {
+            const slots = share.available_slots || [];
+            const duration = share.meeting_duration_minutes;
+            const tz = share.timezone || 'America/Los_Angeles';
+
+            // Split slots into bookable chunks of meeting_duration_minutes
+            const chunks = [];
+            for (const slot of slots) {
+                const start = new Date(slot.start);
+                const end = new Date(slot.end);
+                let current = new Date(start);
+                while (current.getTime() + duration * 60000 <= end.getTime()) {
+                    const chunkEnd = new Date(current.getTime() + duration * 60000);
+                    // Check if this chunk overlaps with any existing booking
+                    const isBooked = bookings.some(b =>
+                        new Date(b.slot_start) < chunkEnd && new Date(b.slot_end) > current
+                    );
+                    // Skip past slots
+                    if (chunkEnd > new Date() && !isBooked) {
+                        chunks.push({ start: new Date(current), end: chunkEnd });
+                    }
+                    current = chunkEnd;
+                }
+            }
+
+            if (chunks.length === 0) {
+                showExpired('All time slots have been booked or have passed.');
+                return;
+            }
+
+            // Group by day
+            const dayGroups = {};
+            for (const chunk of chunks) {
+                const dayKey = chunk.start.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: tz });
+                if (!dayGroups[dayKey]) dayGroups[dayKey] = [];
+                dayGroups[dayKey].push(chunk);
+            }
+
+            let html = `
+                <div class="header">
+                    <img src="../logo.png" alt="AllTime">
+                    <h1>${escapeHtml(share.title)}</h1>
+                    <p>Pick a time that works for you</p>
+                    <span class="duration-badge">${duration} min</span>
+                </div>
+                <div class="slots-container">
+            `;
+
+            for (const [day, daySlots] of Object.entries(dayGroups)) {
+                html += `<div class="day-group"><div class="day-label">${day}</div>`;
+                for (let i = 0; i < daySlots.length; i++) {
+                    const s = daySlots[i];
+                    const timeStr = s.start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz })
+                        + ' \u2013 ' + s.end.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz });
+                    html += `<div class="slot" data-start="${s.start.toISOString()}" data-end="${s.end.toISOString()}" onclick="selectSlot(this)">
+                        <span class="slot-time">${timeStr}</span>
+                    </div>`;
+                }
+                html += `</div>`;
+            }
+
+            html += `</div>
+                <div id="booking-form" class="booking-form" style="display:none">
+                    <h3>Confirm Booking</h3>
+                    <div id="selected-time" style="margin-bottom:12px; font-weight:600; color:var(--color-primary)"></div>
+                    <div class="form-field">
+                        <label>Your Name *</label>
+                        <input type="text" id="booker-name" placeholder="Jane Smith" required>
+                    </div>
+                    <div class="form-field">
+                        <label>Email (optional)</label>
+                        <input type="email" id="booker-email" placeholder="jane@example.com">
+                    </div>
+                    <div class="form-field">
+                        <label>Message (optional)</label>
+                        <textarea id="booker-message" placeholder="Looking forward to meeting!"></textarea>
+                    </div>
+                    <div id="booking-error" class="error" style="display:none"></div>
+                    <button class="btn-book" onclick="submitBooking()">Book This Time</button>
+                </div>
+            `;
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').innerHTML = html;
+            document.getElementById('content').style.display = 'block';
+        }
+
+        function selectSlot(el) {
+            document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedSlot = { start: el.dataset.start, end: el.dataset.end };
+
+            const tz = shareData.timezone || 'America/Los_Angeles';
+            const start = new Date(selectedSlot.start);
+            const end = new Date(selectedSlot.end);
+            const timeStr = start.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: tz })
+                + ', ' + start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz })
+                + ' \u2013 ' + end.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz });
+
+            document.getElementById('selected-time').textContent = timeStr;
+            document.getElementById('booking-form').style.display = 'block';
+            document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function submitBooking() {
+            if (!selectedSlot) return;
+            const name = document.getElementById('booker-name').value.trim();
+            if (!name) {
+                document.getElementById('booking-error').textContent = 'Please enter your name.';
+                document.getElementById('booking-error').style.display = 'block';
+                return;
+            }
+
+            const btn = document.querySelector('.btn-book');
+            btn.disabled = true;
+            btn.textContent = 'Booking...';
+            document.getElementById('booking-error').style.display = 'none';
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/functions/v1/book-availability`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'apikey': SUPABASE_ANON_KEY,
+                    },
+                    body: JSON.stringify({
+                        share_code: shareData.share_code,
+                        slot_start: selectedSlot.start,
+                        slot_end: selectedSlot.end,
+                        booker_name: name,
+                        booker_email: document.getElementById('booker-email').value.trim() || null,
+                        message: document.getElementById('booker-message').value.trim() || null,
+                    }),
+                });
+
+                const result = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(result.error || 'Booking failed');
+                }
+
+                showSuccess(result);
+            } catch (err) {
+                document.getElementById('booking-error').textContent = err.message;
+                document.getElementById('booking-error').style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Book This Time';
+            }
+        }
+
+        function showSuccess(result) {
+            const tz = shareData.timezone || 'America/Los_Angeles';
+            const start = new Date(result.slot_start);
+            const timeStr = start.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: tz })
+                + ' at ' + start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz });
+
+            document.getElementById('content').innerHTML = `
+                <div class="success">
+                    <div class="success-icon">\u2705</div>
+                    <h2>Booked!</h2>
+                    <p style="margin-top:8px; color:var(--text-secondary)">${escapeHtml(result.share_title)}</p>
+                    <p style="margin-top:12px; font-weight:600">${timeStr}</p>
+                    <p style="margin-top:4px; color:var(--text-secondary)">${result.duration_minutes} minutes</p>
+                    <p style="margin-top:20px; color:var(--text-secondary); font-size:0.9rem">
+                        The organizer has been notified and the event has been added to their calendar.
+                    </p>
+                </div>
+            `;
+        }
+
+        function showExpired(msg) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').innerHTML = `
+                <div class="expired">
+                    <div class="expired-icon">\u23F0</div>
+                    <h2>No Longer Available</h2>
+                    <p style="margin-top:8px; color:var(--text-secondary)">${msg || 'This availability share has expired or been deactivated.'}</p>
+                </div>
+            `;
+            document.getElementById('content').style.display = 'block';
+        }
+
+        function showError(msg) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').innerHTML = `
+                <div class="expired">
+                    <div class="expired-icon">\u26A0\uFE0F</div>
+                    <h2>Something went wrong</h2>
+                    <p style="margin-top:8px; color:var(--text-secondary)">${msg}</p>
+                </div>
+            `;
+            document.getElementById('content').style.display = 'block';
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        init();
+    </script>
+</body>
+</html>
