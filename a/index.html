@@ -195,14 +195,24 @@
         }
         .slot {
             background: var(--color-glass);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-radius: var(--radius); padding: 12px 14px; margin-bottom: 6px;
             cursor: pointer; transition: all 0.2s ease;
-            border: 2px solid transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: var(--shadow-card);
         }
+        @media (prefers-color-scheme: dark) { .slot { border-color: rgba(255,255,255,0.08); } }
+        body.dark-mode .slot { border-color: rgba(255,255,255,0.08); }
         .slot:hover { border-color: var(--color-primary); }
-        .slot.selected { border-color: var(--color-primary); background: rgba(0,122,255,0.12); }
+        .slot.selected { border-color: var(--color-primary); background: rgba(0,122,255,0.15); }
+        .slot.hidden-slot { display: none; }
         .slot-time { font-weight: 600; font-size: 0.9rem; }
+        .change-time-btn {
+            background: none; border: none; cursor: pointer; color: var(--color-primary);
+            font-size: 0.85rem; font-weight: 500; padding: 8px 0; margin-top: 4px;
+            transition: opacity 0.2s ease;
+        }
+        .change-time-btn:hover { opacity: 0.7; }
 
         /* Booking form */
         .booking-form {
@@ -544,8 +554,12 @@
         }
 
         function selectSlot(el) {
-            document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+            document.querySelectorAll('.slot').forEach(s => {
+                s.classList.remove('selected');
+                s.classList.add('hidden-slot');
+            });
             el.classList.add('selected');
+            el.classList.remove('hidden-slot');
             selectedSlot = { start: el.dataset.start, end: el.dataset.end };
             const tz = shareData.timezone || 'America/Los_Angeles';
             const start = new Date(selectedSlot.start), end = new Date(selectedSlot.end);
@@ -554,7 +568,24 @@
                 + ' \u2013 ' + end.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz });
             document.getElementById('selected-time').textContent = timeStr;
             document.getElementById('booking-form').style.display = 'block';
-            document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
+
+            // Add "Change time" button if not already present
+            if (!document.getElementById('change-time-btn')) {
+                const btn = document.createElement('button');
+                btn.id = 'change-time-btn';
+                btn.className = 'change-time-btn';
+                btn.textContent = 'Change time';
+                btn.onclick = expandSlots;
+                el.insertAdjacentElement('afterend', btn);
+            }
+        }
+
+        function expandSlots() {
+            document.querySelectorAll('.slot').forEach(s => s.classList.remove('hidden-slot'));
+            const btn = document.getElementById('change-time-btn');
+            if (btn) btn.remove();
+            document.getElementById('booking-form').style.display = 'none';
+            selectedSlot = null;
         }
 
         async function submitBooking() {
