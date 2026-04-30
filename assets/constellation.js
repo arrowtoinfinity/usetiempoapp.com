@@ -57,6 +57,27 @@
             [0, 90, 170, 0.5],
             [28, 117, 188, 0.45],
         ],
+        // Press kit — sunrise progression (blue → magenta → orange → yellow)
+        pressBlue: [
+            [28, 117, 188, 0.6],  [0, 122, 255, 0.5],   [88, 86, 214, 0.5],
+            [28, 117, 188, 0.5],  [120, 60, 200, 0.4],  [0, 122, 255, 0.45],
+        ],
+        pressPurple: [
+            [120, 60, 200, 0.6],  [175, 82, 222, 0.55], [236, 0, 140, 0.5],
+            [88, 86, 214, 0.5],   [175, 82, 222, 0.45], [236, 0, 140, 0.4],
+        ],
+        pressMagenta: [
+            [236, 0, 140, 0.6],   [242, 101, 34, 0.5],  [175, 82, 222, 0.5],
+            [236, 0, 140, 0.5],   [242, 101, 34, 0.45], [175, 82, 222, 0.4],
+        ],
+        pressOrange: [
+            [242, 101, 34, 0.6],  [236, 0, 140, 0.5],   [249, 237, 50, 0.5],
+            [242, 101, 34, 0.5],  [255, 149, 0, 0.45],  [236, 0, 140, 0.4],
+        ],
+        pressYellow: [
+            [249, 237, 50, 0.55], [242, 101, 34, 0.5],  [255, 149, 0, 0.5],
+            [249, 237, 50, 0.45], [242, 101, 34, 0.45], [255, 149, 0, 0.4],
+        ],
     };
 
     const orbDefs = [
@@ -115,6 +136,17 @@
             { sel: '#macos-hero', palette: 'macos' },
             { sel: '.how-it-works', palette: 'howItWorks' },
             { sel: '.cta-section', palette: 'cta' },
+            // Press kit sections — reverse sunrise (yellow → orange → magenta → purple → blue)
+            // #press-hero comes after .hero so getActiveZone() prefers it on the press page
+            // (both selectors resolve on the press hero <section>; later entries win on tie)
+            { sel: '#press-hero',        palette: 'pressYellow'  },
+            { sel: '#press-about',       palette: 'pressYellow'  },
+            { sel: '#press-facts',       palette: 'pressOrange'  },
+            { sel: '#press-screenshots', palette: 'pressOrange'  },
+            { sel: '#press-brand',       palette: 'pressMagenta' },
+            { sel: '#press-pricing',     palette: 'pressMagenta' },
+            { sel: '#press-quotes',      palette: 'pressPurple'  },
+            { sel: '#press-download',    palette: 'pressBlue'    },
         ];
         sectionPositions = [];
         defs.forEach(function(d) {

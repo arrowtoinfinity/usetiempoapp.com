@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AllTime Press Kit — AllTime</title>
+    <meta name="description" content="Press resources for AllTime — the AI calendar that integrates Apple Health.">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="canonical" href="https://usealltimeapp.com/press">
+    <link rel="alternate" hreflang="en" href="https://usealltimeapp.com/press">
+    <link rel="alternate" hreflang="x-default" href="https://usealltimeapp.com/press">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://usealltimeapp.com/press">
+    <meta property="og:title" content="AllTime Press Kit">
+    <meta property="og:description" content="Press resources for AllTime — the AI calendar that integrates Apple Health.">
+    <meta property="og:image" content="https://usealltimeapp.com/press/og-press.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AllTime Press Kit">
+    <meta name="twitter:description" content="Press resources for AllTime — the AI calendar that integrates Apple Health.">
+    <meta name="twitter:image" content="https://usealltimeapp.com/press/og-press.jpg">
+
+    <link rel="stylesheet" href="../assets/brand.css?v=20260220h6">
+    <script defer src="../assets/brand.js?v=20260220h6"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NBB94Y0ELK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NBB94Y0ELK');
+    </script>
+
+    <style>
+        :root {
+            --color-yellow: #f9ed32;
+            --color-orange: #f26522;
+            --color-magenta: #ec008c;
+            --color-sunrise-blue: #1c75bc;
+
+            --color-primary: #007AFF;
+            --color-success: #34C759;
+            --color-warning: #FF9500;
+            --color-danger: #FF3B30;
+            --color-purple: #AF52DE;
+
+            --color-white: #FFFFFF;
+            --color-background: #F2F2F7;
+            --color-card: #FFFFFF;
+            --color-gray-100: #F2F2F7;
+            --color-gray-200: #E5E5EA;
+            --color-gray-400: #C7C7CC;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #C7C7CC;
+
+            --gradient-sunrise: linear-gradient(45deg, var(--color-sunrise-blue) 0%, var(--color-magenta) 30%, var(--color-orange) 65%, var(--color-yellow) 100%);
+
+            --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --shadow-card: 0 4px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 12px;
+            --space-lg: 16px;
+            --space-xl: 20px;
+            --space-2xl: 24px;
+
+            --radius-sm: 10px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.8s ease, color 0.8s ease;
+        }
+
+        body.dark-mode {
+            --color-white: #1C1C1E;
+            --color-background: #000000;
+            --color-card: #2C2C2E;
+            --color-gray-100: #2C2C2E;
+            --color-gray-200: #424245;
+            --color-gray-400: #6C6C70;
+            --text-primary: #F2F2F7;
+            --text-secondary: #A9A9B3;
+            --text-tertiary: #6C6C70;
+        }
+
+        /* ============== ANIMATED BACKGROUND ============== */
+        #constellation-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(80px);
+        }
+
+        .page-frost {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background 0.8s ease;
+        }
+        body.dark-mode .page-frost { background: rgba(28, 28, 30, 0.55); }
+
+        main, footer { position: relative; z-index: 1; }
+
+        a { color: var(--color-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        :focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* ============== HEADER (matches sitewide pattern) ============== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px clamp(20px, 5vw, 64px);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--color-gray-200);
+            transition: background 0.6s ease;
+        }
+        body.dark-mode header { background: rgba(28, 28, 30, 0.6); border-bottom-color: rgba(255,255,255,0.08); }
+        header .logo { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; }
+        header .logo img { height: 32px; width: auto; }
+        header .logo .logo-text {
+            font-family: var(--font-brand);
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            font-size: 1.25rem;
+        }
+        header nav { display: flex; gap: 22px; align-items: center; }
+        header nav a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        header nav a:hover { color: var(--text-primary); text-decoration: none; }
+        @media (max-width: 600px) {
+            header nav { gap: 14px; }
+            header nav a:not(.btn) { display: none; }
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: var(--text-primary);
+            color: var(--color-white);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .btn:hover { text-decoration: none; transform: translateY(-1px); opacity: 0.9; }
+        .btn-primary {
+            background: var(--gradient-sunrise);
+            color: white;
+            font-weight: 700;
+        }
+        .btn-secondary {
+            background: var(--color-gray-100);
+            color: var(--text-primary);
+        }
+        body.dark-mode .btn-secondary { background: var(--color-gray-200); color: var(--text-primary); }
+
+        /* ============== LAYOUT ============== */
+        main { display: block; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 32px); position: relative; z-index: 1; }
+        section { padding: clamp(48px, 8vw, 96px) 0; position: relative; z-index: 1; }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            background: rgba(0, 122, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            margin-bottom: 20px;
+        }
+        body.dark-mode .section-label { color: #5A9FFF; background: rgba(0, 122, 255, 0.15); }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.15;
+        }
+        .section-subtitle {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin-bottom: 48px;
+        }
+
+        /* ============== HERO ============== */
+        .hero {
+            text-align: center;
+            padding: clamp(56px, 10vw, 120px) 0 clamp(40px, 6vw, 80px);
+        }
+        .hero-wordmark {
+            display: block;
+            height: clamp(40px, 6vw, 56px);
+            width: auto;
+            margin: 0 auto 32px;
+        }
+        .hero h1 {
+            font-family: var(--font-brand);
+            font-weight: 900;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            letter-spacing: -0.01em;
+            line-height: 1;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .hero p {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 48px;
+        }
+        .hero-video-wrap {
+            max-width: 360px;
+            margin: 0 auto;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: #000;
+            aspect-ratio: 9 / 16;
+        }
+        .hero-video-wrap video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ============== ABOUT ============== */
+        .about-grid {
+            display: grid;
+            gap: 32px;
+        }
+        .one-liner {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 600;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+        .desc-block {
+            --card-color: #007AFF;
+            background: color-mix(in srgb, var(--card-color) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-color) 35%, transparent);
+            border-radius: var(--radius-lg);
+            padding: clamp(20px, 3vw, 28px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+        .desc-block:hover { transform: scale(1.02); }
+        .about-grid .desc-block:nth-of-type(1) { --card-color: #AF52DE; }
+        .about-grid .desc-block:nth-of-type(2) { --card-color: #007AFF; }
+
+        /* Event-bubble resize handles (top-left + bottom-right) */
+        .desc-block::before, .desc-block::after,
+        .quote-card::before, .quote-card::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid color-mix(in srgb, var(--card-color) 40%, transparent);
+            border-radius: 100px;
+            opacity: 0;
+            transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+            pointer-events: none;
+        }
+        body.dark-mode .desc-block::before, body.dark-mode .desc-block::after,
+        body.dark-mode .quote-card::before, body.dark-mode .quote-card::after {
+            background: rgba(28, 28, 30, 0.55);
+        }
+        .desc-block::before, .quote-card::before { top: -6px; left: 14px; }
+        .desc-block::after,  .quote-card::after  { bottom: -6px; right: 14px; }
+
+        .desc-block:hover::before, .desc-block:hover::after,
+        .quote-card:hover::before, .quote-card:hover::after {
+            opacity: 1;
+            border-width: 2px;
+            border-color: color-mix(in srgb, var(--card-color) 80%, transparent);
+        }
+        .desc-block h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        .desc-block p { color: var(--text-primary); font-size: 1rem; line-height: 1.7; }
+        .placeholder { color: var(--text-secondary); font-style: italic; }
+
+        .founder {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 32px;
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 1px solid var(--color-gray-200);
+            align-items: start;
+        }
+        body.dark-mode .founder { border-top-color: rgba(255,255,255,0.08); }
+        .founder-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        body.dark-mode .founder-photo {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .founder-photo-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 16px;
+        }
+        .founder-bio h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .founder-role { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
+        .founder-bio p { font-size: 1rem; line-height: 1.7; }
+        @media (max-width: 720px) {
+            .founder { grid-template-columns: 1fr; }
+            .founder-photo { max-width: 200px; }
+        }
+
+        /* ============== KEY FACTS ============== */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .fact {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease;
+        }
+        body.dark-mode .fact {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .fact:hover { transform: scale(1.02); }
+        .fact-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .fact-value { font-size: 1rem; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+        .fact-value small { display: block; font-weight: 400; color: var(--text-secondary); margin-top: 2px; font-size: 0.875rem; }
+
+        /* ============== SCREENSHOTS ============== */
+        .shot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .shot-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: left;
+            padding: 0;
+            font-family: inherit;
+            color: inherit;
+            width: 100%;
+            display: block;
+        }
+        body.dark-mode .shot-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .shot-card:hover { transform: scale(1.02); }
+        .shot-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            object-fit: contain;
+            background: transparent;
+        }
+        .shot-caption {
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        body.dark-mode .shot-caption { border-top-color: rgba(255, 255, 255, 0.08); }
+
+        /* ============== LIGHTBOX ============== */
+        dialog.lightbox {
+            border: none;
+            background: transparent;
+            padding: 0;
+            max-width: 95vw;
+            max-height: 95vh;
+            margin: auto;
+        }
+        dialog.lightbox::backdrop {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+        }
+        dialog.lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            display: block;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        dialog.lightbox .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1C1C1E;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        dialog.lightbox .close-btn:hover { background: white; }
+        dialog.lightbox figcaption {
+            color: white;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.875rem;
+        }
+
+        /* ============== BRAND ASSETS ============== */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .brand-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+        body.dark-mode .brand-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .brand-card:hover { transform: scale(1.02); }
+        .brand-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            padding: 20px;
+        }
+        body.dark-mode .brand-preview { background: rgba(255, 255, 255, 0.04); }
+        .brand-preview.dark { background: #1C1C1E; }
+        .brand-preview.gradient { background: var(--gradient-sunrise); }
+        .brand-preview img { max-width: 100%; max-height: 100px; height: auto; object-fit: contain; }
+        .brand-name { font-weight: 600; font-size: 1rem; margin-bottom: 4px; }
+        .brand-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; }
+        .brand-downloads { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+        .brand-downloads a {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            background: rgba(0, 122, 255, 0.12);
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 122, 255, 0.25);
+        }
+        body.dark-mode .brand-downloads a {
+            background: rgba(90, 159, 255, 0.15);
+            color: #5A9FFF;
+            border-color: rgba(90, 159, 255, 0.3);
+        }
+        .brand-downloads a:hover {
+            text-decoration: none;
+            background: rgba(0, 122, 255, 0.2);
+        }
+        .brand-downloads .disabled { opacity: 0.5; pointer-events: none; }
+
+        /* ============== COMPARISON ============== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 720px) { .compare-grid { grid-template-columns: 1fr; } }
+        .compare-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease;
+        }
+        body.dark-mode .compare-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .compare-card:hover { transform: scale(1.02); }
+        .compare-tier {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .compare-price {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .compare-vs {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .compare-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .compare-list li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .compare-list li:last-child { border-bottom: none; }
+        body.dark-mode .compare-list li { border-bottom-color: rgba(255, 255, 255, 0.08); }
+        .compare-list .check { color: var(--color-success); font-weight: 700; flex-shrink: 0; }
+        .compare-list .x { color: var(--text-tertiary); flex-shrink: 0; }
+
+        /* ============== QUOTES ============== */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .quote-card {
+            --card-color: #ec008c;
+            background: color-mix(in srgb, var(--card-color) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-color) 35%, transparent);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        .quote-card:hover { transform: scale(1.02); }
+        .quotes-grid .quote-card:nth-child(1) { --card-color: #f26522; } /* orange */
+        .quotes-grid .quote-card:nth-child(2) { --card-color: #ec008c; } /* magenta */
+        .quotes-grid .quote-card:nth-child(3) { --card-color: #007AFF; } /* blue */
+        .quote-card blockquote {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            line-height: 1.5;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        .quote-card cite {
+            font-style: normal;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 16px;
+        }
+        .copy-btn {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-primary);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            font-family: inherit;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        body.dark-mode .copy-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .copy-btn:hover { background: rgba(255, 255, 255, 0.8); }
+        body.dark-mode .copy-btn:hover { background: rgba(255, 255, 255, 0.18); }
+
+        /* ============== DOWNLOAD ALL ============== */
+        .download-all {
+            text-align: center;
+            background: var(--color-white);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: var(--radius-xl);
+            padding: clamp(40px, 6vw, 64px) clamp(24px, 5vw, 48px);
+            color: var(--text-primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 1;
+        }
+        body.dark-mode .download-all {
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .download-all h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        .download-all p {
+            font-size: 1.0625rem;
+            margin-bottom: 32px;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-all .btn {
+            background: var(--color-primary);
+            color: white;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .download-all .btn:hover { transform: translateY(-1px); opacity: 0.92; }
+        .download-all small {
+            display: block;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ============== FOOTER ============== */
+        footer {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            padding: clamp(40px, 6vw, 64px) 0;
+            margin-top: 48px;
+            position: relative;
+            z-index: 1;
+        }
+        body.dark-mode footer {
+            background: rgba(28, 28, 30, 0.4);
+            border-top-color: rgba(255, 255, 255, 0.08);
+        }
+        footer .container {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 32px;
+            align-items: center;
+        }
+        @media (max-width: 860px) {
+            footer .container { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+        }
+        .footer-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 860px) { .footer-actions { justify-content: center; } }
+        .app-store-badges {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .app-store-badges a {
+            display: inline-flex;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+        .app-store-badges a:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }
+        .app-store-badges img { height: 44px; width: auto; display: block; }
+        .app-store-badges .light-badge { display: inline-flex; }
+        .app-store-badges .dark-badge { display: none; }
+        body.dark-mode .app-store-badges .light-badge { display: none; }
+        body.dark-mode .app-store-badges .dark-badge { display: inline-flex; }
+        footer h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        footer a.contact-email {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        footer .social {
+            display: flex;
+            gap: 12px;
+        }
+        footer .social a {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+        body.dark-mode footer .social a {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        footer .social a:hover {
+            text-decoration: none;
+            transform: translateY(-1px);
+            border-color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+            padding: 24px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            margin-top: 32px;
+        }
+        body.dark-mode .footer-bottom { border-top-color: rgba(255, 255, 255, 0.08); }
+
+        /* Reduce motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="constellation-bg" aria-hidden="true"></canvas>
+<div class="page-frost" aria-hidden="true"></div>
+
+<header>
+    <a href="/" class="logo" aria-label="AllTime home">
+        <img src="../assets/brand/AllTime-Icon.png" alt="">
+        <span class="logo-text brand-wordmark-text">AllTime</span>
+    </a>
+    <nav aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/faq">FAQ</a>
+        <a href="mailto:press@usealltimeapp.com" class="btn">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <!-- ============== HERO ============== -->
+    <section class="hero" id="press-hero">
+        <div class="container">
+            <img class="hero-wordmark" src="../assets/brand/AllTime-Wordmark-Sunrise.png" alt="AllTime">
+            <h1>Press Kit</h1>
+            <p>Everything you need to cover AllTime.</p>
+            <div class="hero-video-wrap">
+                <video autoplay muted loop playsinline preload="metadata"
+                       poster="AllTime-Launch-poster.jpg"
+                       aria-label="AllTime launch video showing the app in action">
+                    <source src="AllTime-Launch.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== ABOUT ============== -->
+    <section id="press-about">
+        <div class="container">
+            <span class="section-label">About</span>
+            <h2 class="section-title">What is AllTime?</h2>
+            <div class="about-grid">
+                <p class="one-liner">AllTime is the AI calendar that integrates Apple Health — including cycle tracking, sleep, and workouts — and plans your week around your body.</p>
+
+                <div class="desc-block">
+                    <h3>50-word description</h3>
+                    <p class="placeholder">[50-word description — to be supplied]</p>
+                </div>
+
+                <div class="desc-block">
+                    <h3>200-word description</h3>
+                    <p class="placeholder">[200-word description — to be supplied]</p>
+                </div>
+            </div>
+
+            <div class="founder">
+                <img class="founder-photo founder-photo-placeholder" src="" alt="Daniel Carrera, founder of AllTime"
+                     onerror="this.outerHTML='<div class=&quot;founder-photo founder-photo-placeholder&quot; role=&quot;img&quot; aria-label=&quot;Daniel Carrera, founder of AllTime&quot;>Founder photo<br>(to be supplied)</div>'">
+                <div class="founder-bio">
+                    <h3>Daniel Carrera</h3>
+                    <p class="founder-role">Founder &amp; Solo Developer, AllTime</p>
+                    <p class="placeholder">[200-word founder bio — to be supplied. Will cover: solo founder, built AllTime in 6 months, bootstrapped, no investors.]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== KEY FACTS ============== -->
+    <section id="press-facts">
+        <div class="container">
+            <span class="section-label">At a glance</span>
+            <h2 class="section-title">Key facts</h2>
+            <div class="facts-grid">
+                <div class="fact">
+                    <div class="fact-label">Launch date</div>
+                    <div class="fact-value">May 5, 2026</div>
+                </div>
+                <div class="fact">
+                    <div class="fact-label">Platforms</div>
+                    <div class="fact-value">iPhone, Apple Watch, Mac</div>
+                </div>
+                <div class="fact">
+                    <div class="fact-label">Pricing</div>
+                    <div class="fact-value">Free
+                        <small>Pro $9.99/mo · Premium $14.99/mo</small>
+                    </div>
+                </div>
+                <div class="fact">
+                    <div class="fact-label">Founder</div>
+                    <div class="fact-value">Daniel Carrera
+                        <small>Solo, bootstrapped, no investors</small>
+                    </div>
+                </div>
+                <div class="fact">
+                    <div class="fact-label">Built in</div>
+                    <div class="fact-value">6 months</div>
+                </div>
+                <div class="fact">
+                    <div class="fact-label">Press contact</div>
+                    <div class="fact-value"><a href="mailto:press@usealltimeapp.com">press@usealltimeapp.com</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== SCREENSHOTS ============== -->
+    <section id="press-screenshots">
+        <div class="container">
+            <span class="section-label">Product</span>
+            <h2 class="section-title">Screenshots</h2>
+            <p class="section-subtitle">Click any screenshot to view full size. All images are 1080 × 1920 PNG iPhone mockups, free for editorial use.</p>
+            <div class="shot-grid">
+                <button class="shot-card" data-src="../screenshots/mockups/01-Timeline.png" data-caption="Timeline — your full day at a glance, with calendar, tasks, and health woven into one view.">
+                    <img loading="lazy" src="../screenshots/mockups/01-Timeline.png" alt="Timeline view showing AllTime's unified daily timeline with calendar events, tasks, and health data">
+                    <div class="shot-caption">Timeline</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/02-DailyBriefing.png" data-caption="Daily Briefing — your morning summary, AI-generated from your body and your calendar.">
+                    <img loading="lazy" src="../screenshots/mockups/02-DailyBriefing.png" alt="Daily Briefing screen with AI-generated morning summary based on body and calendar data">
+                    <div class="shot-caption">Daily Briefing</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/03-AIChat.png" data-caption="AI Chat — talk to your calendar in plain language.">
+                    <img loading="lazy" src="../screenshots/mockups/03-AIChat.png" alt="AI chat interface for conversational calendar assistance">
+                    <div class="shot-caption">AI Chat</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/04-CycleTracker.png" data-caption="Cycle Tracker — phase-aware planning, native to your calendar.">
+                    <img loading="lazy" src="../screenshots/mockups/04-CycleTracker.png" alt="Cycle Tracker visualization built into the calendar">
+                    <div class="shot-caption">Cycle Tracker</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/05-FocusTimer.png" data-caption="Focus Timer — distraction-free deep work with body-aware session lengths.">
+                    <img loading="lazy" src="../screenshots/mockups/05-FocusTimer.png" alt="Focus Timer showing a deep work session with body-aware session length">
+                    <div class="shot-caption">Focus Timer</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/06-Analytics.png" data-caption="Analytics — see how your time, energy, and health align over weeks.">
+                    <img loading="lazy" src="../screenshots/mockups/06-Analytics.png" alt="Analytics dashboard correlating time, energy, and health metrics over weeks">
+                    <div class="shot-caption">Analytics</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/07-Workouts.png" data-caption="Workouts — pulled from Apple Health and woven into your weekly plan.">
+                    <img loading="lazy" src="../screenshots/mockups/07-Workouts.png" alt="Workout statistics pulled from Apple Health and integrated into the weekly plan">
+                    <div class="shot-caption">Workouts</div>
+                </button>
+                <button class="shot-card" data-src="../screenshots/mockups/08-Checklist.png" data-caption="Checklist — daily tasks and habits, AI-prioritized for your energy.">
+                    <img loading="lazy" src="../screenshots/mockups/08-Checklist.png" alt="Daily Checklist with AI-prioritized tasks aligned to the user's energy level">
+                    <div class="shot-caption">Checklist</div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== BRAND ASSETS ============== -->
+    <section id="press-brand">
+        <div class="container">
+            <span class="section-label">Brand</span>
+            <h2 class="section-title">Logos &amp; brand assets</h2>
+            <p class="section-subtitle">Right-click → Save, or use the download buttons. All assets are PNG.</p>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <div class="brand-preview">
+                        <img src="../assets/brand/AllTime-Icon.png" alt="AllTime app icon">
+                    </div>
+                    <div class="brand-name">App Icon</div>
+                    <div class="brand-meta">1024 × 1024 · PNG</div>
+                    <div class="brand-downloads">
+                        <a href="../assets/brand/AllTime-Icon.png" download>PNG</a>
+                    </div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-preview">
+                        <img src="../assets/brand/AllTime-Wordmark-Sunrise.png" alt="AllTime wordmark in sunrise gradient">
+                    </div>
+                    <div class="brand-name">Wordmark — Sunrise</div>
+                    <div class="brand-meta">924 × 257 · For light backgrounds</div>
+                    <div class="brand-downloads">
+                        <a href="../assets/brand/AllTime-Wordmark-Sunrise.png" download>PNG</a>
+                    </div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-preview">
+                        <img src="../assets/brand/AllTime-Wordmark-Black.png" alt="AllTime wordmark in black">
+                    </div>
+                    <div class="brand-name">Wordmark — Black</div>
+                    <div class="brand-meta">924 × 257 · For light backgrounds</div>
+                    <div class="brand-downloads">
+                        <a href="../assets/brand/AllTime-Wordmark-Black.png" download>PNG</a>
+                    </div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-preview dark">
+                        <img src="../assets/brand/AllTime-Wordmark-White.png" alt="AllTime wordmark in white on a dark background">
+                    </div>
+                    <div class="brand-name">Wordmark — White</div>
+                    <div class="brand-meta">924 × 257 · For dark backgrounds</div>
+                    <div class="brand-downloads">
+                        <a href="../assets/brand/AllTime-Wordmark-White.png" download>PNG</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== WHAT'S NEW ============== -->
+    <section id="press-pricing">
+        <div class="container">
+            <span class="section-label">What's new</span>
+            <h2 class="section-title">One subscription replaces four</h2>
+            <p class="section-subtitle">AllTime Pro is cheaper than Calendly Premium. AllTime Premium replaces Cal AI, Flo, Strava, and your calendar app — for one subscription.</p>
+            <div class="compare-grid">
+                <div class="compare-card">
+                    <div class="compare-tier">AllTime Pro</div>
+                    <div class="compare-price">$9.99<small style="font-size:1rem;font-weight:400;color:var(--text-secondary);">/mo</small></div>
+                    <div class="compare-vs">vs Calendly Premium · $12/mo</div>
+                    <ul class="compare-list">
+                        <li><span class="check">✓</span> AI scheduling assistant</li>
+                        <li><span class="check">✓</span> Apple Health integration</li>
+                        <li><span class="check">✓</span> Cycle, sleep, and workout-aware planning</li>
+                        <li><span class="check">✓</span> Native iOS, Watch, and Mac apps</li>
+                        <li><span class="check">✓</span> Daily Briefing and Focus Timer</li>
+                    </ul>
+                </div>
+                <div class="compare-card">
+                    <div class="compare-tier">AllTime Premium</div>
+                    <div class="compare-price">$14.99<small style="font-size:1rem;font-weight:400;color:var(--text-secondary);">/mo</small></div>
+                    <div class="compare-vs">Replaces Cal AI + Flo + Strava + your calendar</div>
+                    <ul class="compare-list">
+                        <li><span class="check">✓</span> Everything in Pro</li>
+                        <li><span class="check">✓</span> Advanced AI planning &amp; nutrition</li>
+                        <li><span class="check">✓</span> Cycle insights &amp; symptom tracking</li>
+                        <li><span class="check">✓</span> Workout analytics &amp; training plans</li>
+                        <li><span class="check">✓</span> Unified across calendar, body, and goals</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== QUOTES ============== -->
+    <section id="press-quotes">
+        <div class="container">
+            <span class="section-label">Pull-quotes</span>
+            <h2 class="section-title">Founder quotes</h2>
+            <p class="section-subtitle">Use any of these directly. Attribution: Daniel Carrera, founder of AllTime.</p>
+            <div class="quotes-grid">
+                <div class="quote-card">
+                    <blockquote>"Every productivity app understands a sliver of you. AllTime is the first that understands all of you."</blockquote>
+                    <cite>— Daniel Carrera, founder of AllTime</cite>
+                    <button class="copy-btn" type="button" data-quote='"Every productivity app understands a sliver of you. AllTime is the first that understands all of you." — Daniel Carrera, founder of AllTime'>Copy quote</button>
+                </div>
+                <div class="quote-card">
+                    <blockquote>"I built this in six months because nothing else integrated calendar, cycle, workouts, and AI into one place."</blockquote>
+                    <cite>— Daniel Carrera, founder of AllTime</cite>
+                    <button class="copy-btn" type="button" data-quote='"I built this in six months because nothing else integrated calendar, cycle, workouts, and AI into one place." — Daniel Carrera, founder of AllTime'>Copy quote</button>
+                </div>
+                <div class="quote-card">
+                    <blockquote>"AllTime Pro is cheaper than Calendly Premium and does ten times more."</blockquote>
+                    <cite>— Daniel Carrera, founder of AllTime</cite>
+                    <button class="copy-btn" type="button" data-quote='"AllTime Pro is cheaper than Calendly Premium and does ten times more." — Daniel Carrera, founder of AllTime'>Copy quote</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== DOWNLOAD ALL ============== -->
+    <section id="press-download">
+        <div class="container">
+            <div class="download-all">
+                <h2>Download the full press kit</h2>
+                <p>Screenshots, brand assets, founder bio, and press release — all in one ZIP.</p>
+                <a href="AllTime-Press-Kit.zip" download class="btn">Download Press Kit (ZIP)</a>
+                <small>Last updated April 30, 2026</small>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ============== FOOTER ============== -->
+<footer id="contact">
+    <div class="container">
+        <div>
+            <h3>Press &amp; demos</h3>
+            <a class="contact-email" href="mailto:press@usealltimeapp.com">press@usealltimeapp.com</a>
+        </div>
+        <div class="footer-actions">
+            <div class="social" aria-label="Social media">
+                <a href="https://x.com/usealltime" aria-label="AllTime on X (Twitter)" rel="me">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/daniel-carrera-alltime" aria-label="Daniel Carrera on LinkedIn" rel="me">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12M7.12 20.45H3.56V9h3.56zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0"/></svg>
+                </a>
+            </div>
+            <div class="app-store-badges" aria-label="Download AllTime">
+                <a href="https://apps.apple.com/app/alltime" aria-label="Download AllTime on the App Store">
+                    <img class="light-badge" src="../assets/app-store/app-store-badge-black.svg" alt="Download on the App Store" width="148" height="44">
+                    <img class="dark-badge"  src="../assets/app-store/app-store-badge-white.svg" alt="" aria-hidden="true" width="148" height="44">
+                </a>
+                <a href="https://apps.apple.com/app/alltime" aria-label="Download AllTime on the Mac App Store">
+                    <img class="light-badge" src="../assets/app-store/mac-app-store-badge-black.svg" alt="Download on the Mac App Store" width="148" height="44">
+                    <img class="dark-badge"  src="../assets/app-store/mac-app-store-badge-white.svg" alt="" aria-hidden="true" width="148" height="44">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 AllTime. All rights reserved.
+    </div>
+</footer>
+
+<!-- ============== LIGHTBOX ============== -->
+<dialog class="lightbox" id="lightbox" aria-label="Screenshot full size">
+    <button type="button" class="close-btn" aria-label="Close">×</button>
+    <figure>
+        <img id="lightbox-img" src="" alt="">
+        <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+</dialog>
+
+<script src="../assets/constellation.js?v=20260430b"></script>
+<script>
+    // Lightbox
+    (function() {
+        var dialog = document.getElementById('lightbox');
+        var img = document.getElementById('lightbox-img');
+        var caption = document.getElementById('lightbox-caption');
+        var closeBtn = dialog.querySelector('.close-btn');
+
+        document.querySelectorAll('.shot-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                var src = card.getAttribute('data-src');
+                var cap = card.getAttribute('data-caption') || '';
+                var alt = card.querySelector('img')?.alt || '';
+                img.src = src;
+                img.alt = alt;
+                caption.textContent = cap;
+                if (typeof dialog.showModal === 'function') {
+                    dialog.showModal();
+                } else {
+                    dialog.setAttribute('open', '');
+                }
+            });
+        });
+
+        closeBtn.addEventListener('click', function() { dialog.close(); });
+        dialog.addEventListener('click', function(e) {
+            // Click on backdrop closes
+            if (e.target === dialog) dialog.close();
+        });
+    })();
+
+    // Copy-quote buttons
+    (function() {
+        document.querySelectorAll('.copy-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var text = btn.getAttribute('data-quote') || '';
+                var original = btn.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        btn.textContent = 'Copied ✓';
+                        btn.setAttribute('aria-live', 'polite');
+                        setTimeout(function() { btn.textContent = original; }, 2000);
+                    }).catch(function() {
+                        btn.textContent = 'Copy failed';
+                        setTimeout(function() { btn.textContent = original; }, 2000);
+                    });
+                } else {
+                    btn.textContent = 'Copy unsupported';
+                    setTimeout(function() { btn.textContent = original; }, 2000);
+                }
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>
