@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2130274254502921');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=2130274254502921&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <title>AllTime — AI Daily Planner for Health & Habits</title>
     <meta name="description" content="AllTime is an AI-powered daily planner that combines your calendar, habits, and health goals into one beautiful app.">
     <link rel="icon" type="image/png" href="logo.png">
@@ -2777,12 +2795,6 @@
                 return;
             }
 
-            // Skip wall for returning waitlist users
-            if (localStorage.getItem('alltime_waitlist')) {
-                if (overlay) overlay.style.display = 'none';
-                return;
-            }
-
             // Coming Soon word cycling animation
             const container = document.querySelector('.coming-soon-word-container');
             const words = document.querySelectorAll('.coming-soon-word');
@@ -2850,21 +2862,15 @@
             if (form && wlContainer && successMsg) {
                 form.addEventListener('submit', function() {
                     submitBtn.disabled = true;
-                    localStorage.setItem('alltime_waitlist', 'true');
                     setTimeout(function() {
                         form.style.display = 'none';
                         successMsg.style.display = 'block';
                         if (typeof gtag !== 'undefined') {
                             gtag('event', 'waitlist_signup', { 'event_category': 'engagement', 'event_label': 'Coming Soon Overlay' });
                         }
-                        // Fade out overlay and reveal site
-                        setTimeout(function() {
-                            overlay.style.transition = 'opacity 0.5s ease';
-                            overlay.style.opacity = '0';
-                            overlay.addEventListener('transitionend', function() {
-                                overlay.style.display = 'none';
-                            }, { once: true });
-                        }, 1500);
+                        if (typeof fbq !== 'undefined') {
+                            fbq('track', 'Lead');
+                        }
                     }, 500);
                 });
 

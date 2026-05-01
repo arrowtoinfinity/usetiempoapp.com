@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2130274254502921');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=2130274254502921&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <title>AllTime Press Kit — AllTime</title>
     <meta name="description" content="Press resources for AllTime — the AI calendar that integrates Apple Health.">
     <meta name="theme-color" content="#FFFFFF">
@@ -353,7 +371,7 @@
 
         .founder {
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 180px 1fr;
             gap: 32px;
             margin-top: 48px;
             padding-top: 48px;
@@ -362,10 +380,12 @@
         }
         body.dark-mode .founder { border-top-color: rgba(255,255,255,0.08); }
         .founder-photo {
-            width: 100%;
+            width: 180px;
+            height: 180px;
             aspect-ratio: 1 / 1;
             border-radius: var(--radius-lg);
             object-fit: cover;
+            display: block;
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: 0 4px 16px rgba(0,0,0,0.08);
@@ -392,8 +412,7 @@
         .founder-role { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
         .founder-bio p { font-size: 1rem; line-height: 1.7; }
         @media (max-width: 720px) {
-            .founder { grid-template-columns: 1fr; }
-            .founder-photo { max-width: 200px; }
+            .founder { grid-template-columns: 1fr; justify-items: start; }
         }
 
         /* ============== KEY FACTS ============== */
@@ -898,8 +917,7 @@
             </div>
 
             <div class="founder">
-                <img class="founder-photo founder-photo-placeholder" src="" alt="Daniel Carrera, founder of AllTime"
-                     onerror="this.outerHTML='<div class=&quot;founder-photo founder-photo-placeholder&quot; role=&quot;img&quot; aria-label=&quot;Daniel Carrera, founder of AllTime&quot;>Founder photo<br>(to be supplied)</div>'">
+                <img class="founder-photo" src="daniel-carrera.jpg" alt="Daniel Carrera, founder of AllTime" width="800" height="800" loading="lazy">
                 <div class="founder-bio">
                     <h3>Daniel Carrera</h3>
                     <p class="founder-role">Founder &amp; Solo Developer, AllTime</p>
