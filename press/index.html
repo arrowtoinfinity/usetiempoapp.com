@@ -162,41 +162,62 @@
             border-radius: 4px;
         }
 
-        /* ============== HEADER (matches sitewide pattern) ============== */
+        /* ============== HEADER (matches sitewide pattern from index.html) ============== */
         header {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 100;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-gray-200);
+            transition: background 0.8s ease, border-color 0.8s ease;
+        }
+        body.dark-mode header { background: rgba(28, 28, 30, 0.5); border-bottom-color: rgba(255,255,255,0.08); }
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 14px clamp(20px, 5vw, 64px);
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 1px solid var(--color-gray-200);
-            transition: background 0.6s ease;
+            gap: 0.75rem;
+            text-decoration: none;
         }
-        body.dark-mode header { background: rgba(28, 28, 30, 0.6); border-bottom-color: rgba(255,255,255,0.08); }
-        header .logo { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; }
-        header .logo img { height: 32px; width: auto; }
-        header .logo .logo-text {
-            font-family: var(--font-brand);
-            font-weight: 900;
-            letter-spacing: 0.02em;
-            font-size: 1.25rem;
+        .logo img {
+            height: 49px;
+            width: auto;
         }
-        header nav { display: flex; gap: 22px; align-items: center; }
-        header nav a {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color 0.8s ease;
+        }
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        nav a {
+            font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.2s;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.8s ease;
         }
-        header nav a:hover { color: var(--text-primary); text-decoration: none; }
-        @media (max-width: 600px) {
-            header nav { gap: 14px; }
-            header nav a:not(.btn) { display: none; }
+        nav a:hover {
+            color: var(--text-primary);
+        }
+        nav .btn {
+            border-radius: var(--radius-full);
+            color: #FFFFFF;
+        }
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
         }
         .btn {
             display: inline-flex;
@@ -261,7 +282,7 @@
         /* ============== HERO ============== */
         .hero {
             text-align: center;
-            padding: clamp(56px, 10vw, 120px) 0 clamp(40px, 6vw, 80px);
+            padding: clamp(120px, 12vw, 160px) 0 clamp(40px, 6vw, 80px);
         }
         .hero-wordmark {
             display: block;
@@ -869,13 +890,11 @@
 <div class="page-frost" aria-hidden="true"></div>
 
 <header>
-    <a href="/" class="logo" aria-label="AllTime home">
-        <img src="../assets/brand/AllTime-Icon.png" alt="">
-        <span class="logo-text brand-wordmark-text">AllTime</span>
+    <a href="/" class="logo">
+        <img src="../logo.png" alt="AllTime Logo">
+        <span class="logo-text">AllTime</span>
     </a>
-    <nav aria-label="Primary">
-        <a href="/">Home</a>
-        <a href="/faq">FAQ</a>
+    <nav>
         <a href="mailto:press@usealltimeapp.com" class="btn">Contact</a>
     </nav>
 </header>
