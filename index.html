@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://usealltimeapp.com/">
     <link rel="alternate" hreflang="en" href="https://usealltimeapp.com/">
     <link rel="alternate" hreflang="x-default" href="https://usealltimeapp.com/">
-    <link rel="stylesheet" href="assets/brand.css?v=20260220h6">
+    <link rel="stylesheet" href="assets/brand.css?v=20260503a">
     <script defer src="assets/brand.js?v=20260220h6"></script>
 
     <!-- Google tag (gtag.js) -->
@@ -2737,6 +2737,51 @@
             margin: 0;
         }
 
+        .launch-countdown {
+            margin: 1.5rem 0 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            font-variant-numeric: tabular-nums;
+        }
+        .countdown-segments {
+            display: flex;
+            justify-content: center;
+            gap: clamp(12px, 3vw, 28px);
+        }
+        .countdown-segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 56px;
+        }
+        .countdown-number {
+            font-size: clamp(1.75rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1;
+        }
+        .countdown-label {
+            margin-top: 6px;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        .countdown-launched {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            background: var(--gradient-sunrise);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+        @media (max-width: 480px) {
+            .countdown-segments { gap: 14px; }
+            .countdown-segment { min-width: 48px; }
+        }
+
         @keyframes fadeInSlideUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -2759,6 +2804,16 @@
     <div class="coming-soon-overlay" id="comingSoonOverlay">
         <img src="logo.png" alt="AllTime">
         <h1><span class="coming-soon-word-container"><span class="coming-soon-word active">Coming Soon</span><span class="coming-soon-word">Próximamente</span><span class="coming-soon-word">Bientôt</span><span class="coming-soon-word">Prossimamente</span><span class="coming-soon-word">即将推出</span><span class="coming-soon-word">जल्द आ रहा है</span><span class="coming-soon-word">قريباً</span><span class="coming-soon-word">Em Breve</span><span class="coming-soon-word">Скоро</span><span class="coming-soon-word">近日公開</span><span class="coming-soon-word">Demnächst</span><span class="coming-soon-word">곧 출시</span></span></h1>
+
+        <div class="launch-countdown" id="launchCountdown" aria-live="polite">
+            <div class="countdown-segments">
+                <div class="countdown-segment"><span class="countdown-number" id="cdDays">--</span><span class="countdown-label">Days</span></div>
+                <div class="countdown-segment"><span class="countdown-number" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
+                <div class="countdown-segment"><span class="countdown-number" id="cdMinutes">--</span><span class="countdown-label">Minutes</span></div>
+                <div class="countdown-segment"><span class="countdown-number" id="cdSeconds">--</span><span class="countdown-label">Seconds</span></div>
+            </div>
+            <div class="countdown-launched" id="cdLaunched" hidden>Launching now</div>
+        </div>
 
         <div class="waitlist-container" id="waitlistContainer">
             <form class="waitlist-form" id="waitlistForm"
@@ -2790,6 +2845,42 @@
                 if (overlay) overlay.style.display = 'none';
                 return;
             }
+
+            // Launch countdown to 6 AM Pacific (UTC-7 in May = 13:00 UTC) on Tuesday May 5, 2026
+            (function initLaunchCountdown() {
+                const target = Date.UTC(2026, 4, 5, 13, 0, 0);
+                const dEl = document.getElementById('cdDays');
+                const hEl = document.getElementById('cdHours');
+                const mEl = document.getElementById('cdMinutes');
+                const sEl = document.getElementById('cdSeconds');
+                const segmentsEl = document.querySelector('.countdown-segments');
+                const launchedEl = document.getElementById('cdLaunched');
+                if (!dEl || !segmentsEl || !launchedEl) return;
+
+                let timer = null;
+                function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+                function tick() {
+                    const diff = target - Date.now();
+                    if (diff <= 0) {
+                        segmentsEl.style.display = 'none';
+                        launchedEl.hidden = false;
+                        if (timer) { clearInterval(timer); timer = null; }
+                        return;
+                    }
+                    const days = Math.floor(diff / 86400000);
+                    const hours = Math.floor((diff % 86400000) / 3600000);
+                    const minutes = Math.floor((diff % 3600000) / 60000);
+                    const seconds = Math.floor((diff % 60000) / 1000);
+                    dEl.textContent = pad(days);
+                    hEl.textContent = pad(hours);
+                    mEl.textContent = pad(minutes);
+                    sEl.textContent = pad(seconds);
+                }
+
+                tick();
+                timer = setInterval(tick, 1000);
+            })();
 
             // Coming Soon word cycling animation
             const container = document.querySelector('.coming-soon-word-container');

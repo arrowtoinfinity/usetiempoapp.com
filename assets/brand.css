@@ -1,13 +1,5 @@
-@font-face {
-  font-family: "HelveticaNeueCondensedBlack";
-  src: url("/assets/fonts/helvetica-neue-condensed-black.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-}
-
 :root {
-  --font-brand: "HelveticaNeueCondensedBlack", "Helvetica Neue Condensed Black", "Helvetica Neue", "Arial Narrow", "Arial Black", sans-serif;
+  --font-brand: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
 }
 
 /* Keep the sunrise mark rendered at the legacy header size for visual parity. */
@@ -18,6 +10,6 @@ header .logo img {
 
 html[data-brand="alltime"] .brand-wordmark-text {
   font-family: var(--font-brand) !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.02em;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
 }
