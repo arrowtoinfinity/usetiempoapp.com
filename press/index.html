@@ -327,14 +327,6 @@
             display: grid;
             gap: 32px;
         }
-        .one-liner {
-            font-family: var(--font-display);
-            font-size: clamp(1.25rem, 3vw, 1.75rem);
-            font-weight: 600;
-            line-height: 1.35;
-            letter-spacing: -0.01em;
-            margin-bottom: 8px;
-        }
         .desc-block {
             --card-color: #007AFF;
             background: color-mix(in srgb, var(--card-color) 12%, transparent);
@@ -389,6 +381,7 @@
             margin-bottom: 12px;
         }
         .desc-block p { color: var(--text-primary); font-size: 1rem; line-height: 1.7; }
+        .desc-block p + p { margin-top: 1em; }
         .placeholder { color: var(--text-secondary); font-style: italic; }
 
         .founder {
@@ -433,6 +426,7 @@
         }
         .founder-role { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
         .founder-bio p { font-size: 1rem; line-height: 1.7; }
+        .founder-bio p + p { margin-top: 1em; }
         @media (max-width: 720px) {
             .founder { grid-template-columns: 1fr; justify-items: start; }
         }
@@ -923,8 +917,6 @@
             <span class="section-label">About</span>
             <h2 class="section-title">What is AllTime?</h2>
             <div class="about-grid">
-                <p class="one-liner">AllTime is the AI calendar that integrates Apple Health — including cycle tracking, sleep, and workouts — so you can plan your week with your body in mind.</p>
-
                 <div class="desc-block">
                     <h3>Short description</h3>
                     <p>AllTime is the iOS and macOS calendar that pulls cycle, sleep, and workout data from Apple Health into your timeline. AI Chat schedules events when you ask. Smart suggestions learn your patterns — tap to add at the current time, or drag onto the timeline to drop at any moment. You stay in control.</p>
