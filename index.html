@@ -2604,43 +2604,11 @@
             margin-bottom: 2rem;
         }
 
-        .coming-soon-overlay h1 {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
         .coming-soon-overlay p {
             font-family: var(--font-body);
             font-size: 1.1rem;
             color: var(--text-secondary);
             max-width: 400px;
-        }
-
-        .coming-soon-word-container {
-            display: inline-block;
-            position: relative;
-            vertical-align: bottom;
-            overflow: visible;
-            height: 1.1em;
-            clip-path: inset(-100% -100% 0 -100%);
-        }
-
-        .coming-soon-word {
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            white-space: nowrap;
-            opacity: 0;
-            transform: translateX(-50%) translateY(100%);
-            color: var(--text-primary);
-        }
-
-        .coming-soon-word.active {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
         }
 
         .waitlist-container {
@@ -2803,8 +2771,6 @@
     <!-- Coming Soon Overlay -->
     <div class="coming-soon-overlay" id="comingSoonOverlay">
         <img src="logo.png" alt="AllTime">
-        <h1><span class="coming-soon-word-container"><span class="coming-soon-word active">Coming Soon</span><span class="coming-soon-word">Próximamente</span><span class="coming-soon-word">Bientôt</span><span class="coming-soon-word">Prossimamente</span><span class="coming-soon-word">即将推出</span><span class="coming-soon-word">जल्द आ रहा है</span><span class="coming-soon-word">قريباً</span><span class="coming-soon-word">Em Breve</span><span class="coming-soon-word">Скоро</span><span class="coming-soon-word">近日公開</span><span class="coming-soon-word">Demnächst</span><span class="coming-soon-word">곧 출시</span></span></h1>
-
         <div class="launch-countdown" id="launchCountdown" aria-live="polite">
             <div class="countdown-segments">
                 <div class="countdown-segment"><span class="countdown-number" id="cdDays">--</span><span class="countdown-label">Days</span></div>
@@ -2881,63 +2847,6 @@
                 tick();
                 timer = setInterval(tick, 1000);
             })();
-
-            // Coming Soon word cycling animation
-            const container = document.querySelector('.coming-soon-word-container');
-            const words = document.querySelectorAll('.coming-soon-word');
-            if (!container || words.length === 0) return;
-
-            let currentIndex = 0;
-            const DISPLAY_DURATION = 2500;
-            const ANIMATION_DURATION = 500;
-
-            const firstWord = words[0];
-            container.style.width = firstWord.offsetWidth + 'px';
-
-            words.forEach((word, i) => {
-                word.style.transition = 'none';
-                if (i === 0) {
-                    word.style.transform = 'translateX(-50%) translateY(0)';
-                    word.style.opacity = '1';
-                } else {
-                    word.style.transform = 'translateX(-50%) translateY(100%)';
-                    word.style.opacity = '1';
-                }
-            });
-
-            function cycleWord() {
-                const currentWord = words[currentIndex];
-                const nextIndex = (currentIndex + 1) % words.length;
-                const nextWord = words[nextIndex];
-
-                const tempSpan = document.createElement('span');
-                tempSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit;';
-                tempSpan.textContent = nextWord.textContent;
-                container.appendChild(tempSpan);
-                const nextWidth = tempSpan.offsetWidth;
-                container.removeChild(tempSpan);
-
-                currentWord.style.transition = `transform ${ANIMATION_DURATION}ms ease-in-out, opacity ${ANIMATION_DURATION}ms ease-in-out`;
-                nextWord.style.transition = `transform ${ANIMATION_DURATION}ms ease-in-out`;
-                container.style.transition = `width ${ANIMATION_DURATION}ms ease-in-out`;
-
-                currentWord.style.transform = 'translateX(-50%) translateY(-75%)';
-                currentWord.style.opacity = '0';
-                nextWord.style.transform = 'translateX(-50%) translateY(0)';
-                container.style.width = nextWidth + 'px';
-
-                setTimeout(() => {
-                    currentWord.style.transition = 'none';
-                    currentWord.style.transform = 'translateX(-50%) translateY(100%)';
-                    currentWord.style.opacity = '1';
-                    currentWord.classList.remove('active');
-                    nextWord.classList.add('active');
-                }, ANIMATION_DURATION);
-
-                currentIndex = nextIndex;
-            }
-
-            setTimeout(() => setInterval(cycleWord, DISPLAY_DURATION), 1500);
 
             // Waitlist form handling
             const form = document.getElementById('waitlistForm');
